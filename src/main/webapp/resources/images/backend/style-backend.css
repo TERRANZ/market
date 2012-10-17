@@ -1,0 +1,77 @@
+/* style for template #0  */
+
+p, body, font, div, td, a
+{ font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
+}
+
+a
+{ color: navy;
+}
+
+.mainmenu_gradient{background: #F2F2F2 url(gradient.png) repeat-x bottom;margin: 0px;border-top:1px solid #CCC;}
+
+.mainmenu_selected_custord{background-color: #703150;margin: 0px;color: white;font-weight:bold;text-align:center}
+.mainmenu_selected_conf{background-color: #514663;margin: 0px;color: white;font-weight:bold;text-align:center}
+.mainmenu_selected_catalog{background-color: #465163;margin: 0px;color: white;font-weight:bold;text-align:center}
+
+.bg_white{background-color: white};
+.bg_conf{background-color: #F0EFFF};
+.bg_custord{background-color: #FFEFF5};
+.bg_catalog{background-color: #EFF5FA};
+
+h1
+{ font-size: 150%;
+}
+
+.menufont_core_light
+{ font-size:		130%;
+  text-decoration:	none;
+  text-align:		left;
+  font-weight:		bold;
+  color:			white;
+}
+
+.menufont_sub_light
+{ font-size:		90%;
+  text-decoration:	none;
+  text-align:		center;
+  font-weight:		bold;
+  color:			white;
+}
+
+input
+{
+  font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
+  margin: 1px;
+  padding: 1px;
+}
+
+.light
+{ color:			white;
+}
+
+.no_underline
+{ text-decoration:	none;
+}
+.small
+{ font-size:		90%;
+}
+.faq
+{ font-size:		14px;
+}
+.big
+{ font-size:		16px;
+}
+.headertext
+{ font-size:		160%;
+  font-weight:		bold;
+}
+.mainsection
+{ font-size:		110%;
+  text-decoration:	none;
+  font-weight:		bold;
+}
+a:hover
+{
+  text-decoration:	underline;
+}

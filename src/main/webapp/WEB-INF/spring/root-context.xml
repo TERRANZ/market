@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<constructor-arg value="256" />
+		<property name="iterations" value="1024" />
+	</bean>
+
+	<bean id="http403EntryPoint"
+		class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
+	</bean>
+
+	<bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+	<beans:bean class="ru.terra.market.web.JsonpCallbackFilter"
+		id="jsonpCallbackFilter" />
+
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+
+	<bean id="lowerCaseUsernamePasswordAuthenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="filterProcessesUrl" value="/do.login" />
+		<property name="sessionAuthenticationStrategy" ref="sas" />
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+	<beans:bean id="UserDetailsService"
+		class="ru.terra.market.web.security.TUserDetailService">
+	</beans:bean>
+</beans:beans>

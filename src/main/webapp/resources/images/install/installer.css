@@ -1,0 +1,77 @@
+H1 {
+	PADDING-LEFT: 4px; FONT-WEIGHT: normal; FONT-SIZE: 14pt; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #000000; PADDING-TOP: 7px; FONT-FAMILY: Tahoma, Verdana, Arial; black: 
+}
+H2 {
+	PADDING-LEFT: 4px; FONT-WEIGHT: normal; FONT-SIZE: 12pt; BACKGROUND: none transparent scroll repeat 0% 0%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+P {
+	FONT-WEIGHT: normal; COLOR: black
+}
+.home-content {
+	BACKGROUND: url(banner-shadow.gif) repeat-x left top
+}
+.text-body {
+	PADDING-RIGHT: 0px; FONT-SIZE: 8.5pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H4 SPAN {
+	FONT-SIZE: 10pt; COLOR: #008cdc
+}
+
+.copyright {
+	FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+A {
+	COLOR: #006633; FONT-FAMILY: Tahoma; TEXT-DECORATION: none
+}
+.copyright A {
+	FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+.copyright A:hover {
+	FONT-SIZE: 8pt; COLOR: #0074b9; TEXT-DECORATION: underline
+}
+H5 {
+	BACKGROUND-POSITION: left bottom; FONT-WEIGHT: bold; FONT-SIZE: 10pt; MARGIN-BOTTOM: 0px; PADDING-BOTTOM: 2px; COLOR: #656565; BACKGROUND-REPEAT: repeat-x; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+
+.blockhead {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.blockhead DIV {
+	PADDING-RIGHT: 13px; BACKGROUND-POSITION: center bottom; PADDING-LEFT: 13px; FONT-WEIGHT: normal; FONT-SIZE: 8pt; PADDING-BOTTOM: 7px; MARGIN-LEFT: -13px; COLOR: black; MARGIN-RIGHT: -13px; PADDING-TOP: 2px; BACKGROUND-REPEAT: repeat-x; FONT-FAMILY: Verdana, Arial, sans-serif
+}
+
+TD {
+	FONT-SIZE: 8.5pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+
+.textmenu {
+	FONT-SIZE: 11px; PADDING-BOTTOM: 2px; COLOR: #656565
+}
+.textmenu A {
+	FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+
+HTML {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 100%; BACKGROUND-COLOR: #ffffff
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 100%; BACKGROUND-COLOR: #ffffff
+}
+FORM {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 100%
+}
+
+
+.header2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica
+}
+
+.header2 A {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+STRONG {
+	COLOR: #000000
+}

@@ -1,0 +1,94 @@
+p, font
+{ font-family:		'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+}
+td, th 
+{ font-family:		'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+ font-size: 85%;
+}
+
+h1
+{ color:			black;
+  font-size:		180%;
+}
+h5
+{
+  font-size:		115%;
+}
+.header
+{ font-size:		125%;
+  color:			black;
+  font-weight:		bold;
+  text-decoration:	underline;
+}
+.no_underline
+{ text-decoration:		none;
+}
+a
+{font-weight:		bold;
+ color:			navy;
+}
+.small
+{ font-size:		80%;
+}
+.faq
+{ font-size:		110%;
+}
+.price_brief
+{ font-size:		120%;
+}
+.big
+{ font-size:		150%;
+  text-decoration:	none;
+}
+.cat
+{ font-size:		150%;
+}
+.standard
+{ font-weight:		normal;
+}
+.white
+{ color:			white;
+}
+.pink
+{ color:			pink;
+}
+.menu
+{ color:			white;
+  font-weight:		bold;
+  font-size:		100%;
+}
+div.topmenu_selected
+{
+  background:		#203560;
+  padding:			7px;
+}
+div.topmenu_notselected
+{
+  background:		#4E679F;
+  padding:			7px;
+}
+.footer
+{
+  font-size:		60%;
+  color:			gray;
+}
+.lightsmall
+{ color:			black;
+  font-size:		80%;
+}
+.category_child
+{
+  font-weight:		normal;
+}
+.cart
+{
+  font-size:		90%;
+  BORDER-BOTTOM:	0px solid;	
+  BORDER-LEFT:		0px solid;
+  BORDER-RIGHT:		0px solid;	
+  BORDER-TOP:		0px solid;
+  margin:			0px;
+  font-weight:		bold;
+  color:			navy;
+  background-color:  transparent;
+}
