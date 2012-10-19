@@ -9,8 +9,7 @@ function loadLeftCategories() {
 			if (data.size != -1) {
 				var newHtml = "";
 				$.each(data.data, function(i, d) {
-					newHtml += "<a href=/market/category?id=" + d.id + "> "
-							+ d.name + "</a>";
+					newHtml += "<a href=/market/category?id=" + d.id + "> " + d.name + "</a></br>";
 				});
 				categoryWrapper.html(newHtml);
 			} else {
@@ -34,14 +33,12 @@ function loadCenterCategories() {
 				id : parentid
 			},
 			success : function(data) {
-				if (data.size == 0) {
+				if (data.size != -1) {
 					loadProducts(parentid);
-				} else if (data.size != -1) {
 					var newHtml = "";
 					$.each(data.data, function(i, d) {
 						newHtml += "<tr><td align=center>";
-						newHtml += "<a href='/market/category?id=" + d.id
-								+ "'> " + d.name + "</a>";
+						newHtml += "<a href='/market/category?id=" + d.id + "'> " + d.name + "</a>";
 						newHtml += "</td>";
 						newHtml += "<td>" + d.count + "</td>";
 						newHtml += "</tr>";
@@ -55,7 +52,7 @@ function loadCenterCategories() {
 }
 
 function loadProducts(category) {
-	var categoryWrapper = $("#category_with_count");
+	var categoryWrapper = $("#category_products");
 	$.ajax({
 		url : '/market/product/get.products.json',
 		async : false,

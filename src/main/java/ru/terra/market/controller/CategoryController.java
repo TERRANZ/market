@@ -37,8 +37,27 @@ public class CategoryController
 		String id = request.getParameter("id");
 		if (id != null)
 		{
-			//egory id = " + id);
-			model.addAttribute(ModelConstants.CATEGORY_ID, id);
+			// egory id = " + id);
+
+			Integer catId = null;
+			try
+			{
+				catId = Integer.parseInt(id);
+			} catch (NumberFormatException e)
+			{
+				return URLConstants.Views.ERROR404;
+			}
+
+			Category category = ce.getCategories(catId);
+			if (category != null)
+			{
+				model.addAttribute(ModelConstants.CATEGORY_ID, id);
+				model.addAttribute(ModelConstants.CATEGORY_NAME, category.getName());
+			}
+			else
+			{
+				return URLConstants.Views.ERROR404;
+			}
 		}
 		return URLConstants.Views.CATEGORY;
 	}
@@ -50,7 +69,7 @@ public class CategoryController
 		CategoryListDTO ret = new CategoryListDTO();
 		if (parentId == null)
 			parentId = "0";
-		//logger.info("parent id = " + parentId);
+		// logger.info("parent id = " + parentId);
 		try
 		{
 			Integer pid = Integer.parseInt(parentId);

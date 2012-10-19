@@ -22,6 +22,6 @@ public class ProductDTO
 		this.name = p.getName();
 		this.rating = p.getRating();
 		this.avail = p.getAvail();
-		//this.category = new CategoryDTO(p.getCategory());
+		// this.category = new CategoryDTO(p.getCategory());
 	}
 }

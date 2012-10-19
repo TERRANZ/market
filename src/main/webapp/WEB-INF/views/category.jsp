@@ -10,11 +10,11 @@
 		<a name="catalog">Категория</a>
 	</h1> <br>
 	<h1 align="center">
-		<a id="catname"></a>
+		<a id="catname">${catname}</a>
 	</h1>
 	<p>
-	<table width=100% border=0 cellpadding=5 id="category_with_count">
-	</table>
+	<table width=100% border=0 cellpadding=5 id="category_with_count"></table>
+	<table width=100% border=0 cellpadding=5 id="category_products"></table>
 </td>
 <script type="text/javascript" src="resources/js/category.js"></script>
 <%@ include file="/WEB-INF/jsp/footer.jsp"%>

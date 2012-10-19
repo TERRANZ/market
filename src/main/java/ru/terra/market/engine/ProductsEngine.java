@@ -34,11 +34,34 @@ public class ProductsEngine
 
 	public List<Product> getProducts(Integer categoryId)
 	{
-		return pjc.findProductByCategory(categoryId);
+		Category cat = cjc.findCategory(categoryId);
+		if (cat != null)
+			return cat.getProductList();
+		return null;
 	}
 
 	public Product getProduct(Integer id)
 	{
 		return pjc.findProduct(id);
+	}
+
+	public Product createProduct(Integer category, String name, Integer rating, Boolean avail)
+	{
+		Product p = new Product();
+		p.setCategory(cjc.findCategory(category));
+		p.setAvail(avail);
+		p.setName(name);
+		p.setRating(rating);
+		return p;
+	}
+
+	public void updateProduct(Product p)
+	{
+		pjc.create(p);
+	}
+
+	public void bulkCreate(List<Product> prods)
+	{
+		pjc.create(prods);
 	}
 }

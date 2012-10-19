@@ -6,15 +6,13 @@ package ru.terra.market.db.entity.controller;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
 import ru.terra.market.db.entity.User;
 import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityException;
 
@@ -37,14 +35,14 @@ public class UserJpaController implements Serializable
 		return emf.createEntityManager();
 	}
 
-	public void create(User users)
+	public void create(User user)
 	{
 		EntityManager em = null;
 		try
 		{
 			em = getEntityManager();
 			em.getTransaction().begin();
-			em.persist(users);
+			em.persist(user);
 			em.getTransaction().commit();
 		} finally
 		{
@@ -55,24 +53,24 @@ public class UserJpaController implements Serializable
 		}
 	}
 
-	public void edit(User users) throws NonexistentEntityException, Exception
+	public void edit(User user) throws NonexistentEntityException, Exception
 	{
 		EntityManager em = null;
 		try
 		{
 			em = getEntityManager();
 			em.getTransaction().begin();
-			users = em.merge(users);
+			user = em.merge(user);
 			em.getTransaction().commit();
 		} catch (Exception ex)
 		{
 			String msg = ex.getLocalizedMessage();
 			if (msg == null || msg.length() == 0)
 			{
-				Integer id = users.getId();
+				Integer id = user.getId();
 				if (findUser(id) == null)
 				{
-					throw new NonexistentEntityException("The users with id " + id + " no longer exists.");
+					throw new NonexistentEntityException("The user with id " + id + " no longer exists.");
 				}
 			}
 			throw ex;
@@ -92,16 +90,16 @@ public class UserJpaController implements Serializable
 		{
 			em = getEntityManager();
 			em.getTransaction().begin();
-			User users;
+			User user;
 			try
 			{
-				users = em.getReference(User.class, id);
-				users.getId();
+				user = em.getReference(User.class, id);
+				user.getId();
 			} catch (EntityNotFoundException enfe)
 			{
-				throw new NonexistentEntityException("The users with id " + id + " no longer exists.", enfe);
+				throw new NonexistentEntityException("The user with id " + id + " no longer exists.", enfe);
 			}
-			em.remove(users);
+			em.remove(user);
 			em.getTransaction().commit();
 		} finally
 		{
@@ -112,17 +110,17 @@ public class UserJpaController implements Serializable
 		}
 	}
 
-	public List<User> findUsersEntities()
+	public List<User> findUserEntities()
 	{
-		return findUsersEntities(true, -1, -1);
+		return findUserEntities(true, -1, -1);
 	}
 
-	public List<User> findUsersEntities(int maxResults, int firstResult)
+	public List<User> findUserEntities(int maxResults, int firstResult)
 	{
-		return findUsersEntities(false, maxResults, firstResult);
+		return findUserEntities(false, maxResults, firstResult);
 	}
 
-	private List<User> findUsersEntities(boolean all, int maxResults, int firstResult)
+	private List<User> findUserEntities(boolean all, int maxResults, int firstResult)
 	{
 		EntityManager em = getEntityManager();
 		try
@@ -136,6 +134,9 @@ public class UserJpaController implements Serializable
 				q.setFirstResult(firstResult);
 			}
 			return q.getResultList();
+		} catch (NoResultException e)
+		{
+			return null;
 		} finally
 		{
 			em.close();
@@ -157,7 +158,7 @@ public class UserJpaController implements Serializable
 		}
 	}
 
-	public int getUsersCount()
+	public int getUserCount()
 	{
 		EntityManager em = getEntityManager();
 		try
@@ -167,6 +168,9 @@ public class UserJpaController implements Serializable
 			cq.select(em.getCriteriaBuilder().count(rt));
 			Query q = em.createQuery(cq);
 			return ((Long) q.getSingleResult()).intValue();
+		} catch (NoResultException e)
+		{
+			return 0;
 		} finally
 		{
 			em.close();

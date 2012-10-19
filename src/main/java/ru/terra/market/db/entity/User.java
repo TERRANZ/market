@@ -5,17 +5,7 @@
 package ru.terra.market.db.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,8 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
 		@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
 		@NamedQuery(name = "User.findByLogin", query = "SELECT u FROM User u WHERE u.login = :login"),
-		@NamedQuery(name = "User.findByLoginAndPassword", query = "SELECT u FROM User u WHERE u.login = :login AND u.password = :password"),
-		@NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password") })
+		@NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+		@NamedQuery(name = "User.findByLevel", query = "SELECT u FROM User u WHERE u.level = :level") })
 public class User implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -44,17 +34,8 @@ public class User implements Serializable
 	@Basic(optional = false)
 	@Column(name = "password", nullable = false, length = 128)
 	private String password;
+	@Column(name = "level")
 	private Integer level;
-
-	public Integer getLevel()
-	{
-		return level;
-	}
-
-	public void setLevel(Integer level)
-	{
-		this.level = level;
-	}
 
 	public User()
 	{
@@ -102,6 +83,16 @@ public class User implements Serializable
 		this.password = password;
 	}
 
+	public Integer getLevel()
+	{
+		return level;
+	}
+
+	public void setLevel(Integer level)
+	{
+		this.level = level;
+	}
+
 	@Override
 	public int hashCode()
 	{
@@ -129,7 +120,7 @@ public class User implements Serializable
 	@Override
 	public String toString()
 	{
-		return "ru.terra.market.newpackage.db.entity.Users[ id=" + id + " ]";
+		return "ru.terra.market.db.entity.User[ id=" + id + " ]";
 	}
 
 }

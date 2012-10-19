@@ -1,5 +1,6 @@
 package ru.terra.market.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -9,6 +10,7 @@ import javax.persistence.Persistence;
 import org.springframework.stereotype.Component;
 
 import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
 import ru.terra.market.dto.category.CategoryDTO;
 
@@ -32,12 +34,24 @@ public class CategoriesEngine
 
 	public Category getCategories(Integer id)
 	{
-		return cjc.findCategory(id);
+		if (id != null)
+			return cjc.findCategory(id);
+		return null;
 	}
 
 	public List<Category> getCategoriesByParent(Integer parentId)
 	{
 		return cjc.findCategoryByParent(parentId);
+	}
+
+	public Category createCategory(String name)
+	{
+		Category c = new Category();
+		c.setName(name);
+		c.setParent(0);
+		c.setProductList(new ArrayList<Product>());
+		cjc.create(c);
+		return c;
 	}
 
 }

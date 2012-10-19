@@ -17,161 +17,162 @@ import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityExceptio
 import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityException;
 
 /**
- *
+ * 
  * @author terranz
  */
 public class SettingsJpaController implements Serializable
 {
 
-    public SettingsJpaController(EntityManagerFactory emf)
-    {
-        this.emf = emf;
-    }
-    private EntityManagerFactory emf = null;
+	public SettingsJpaController(EntityManagerFactory emf)
+	{
+		this.emf = emf;
+	}
 
-    public EntityManager getEntityManager()
-    {
-        return emf.createEntityManager();
-    }
+	private EntityManagerFactory emf = null;
 
-    public void create(Settings settings) throws PreexistingEntityException, Exception
-    {
-        EntityManager em = null;
-        try
-        {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(settings);
-            em.getTransaction().commit();
-        } catch (Exception ex)
-        {
-            if (findSettings(settings.getKey()) != null)
-            {
-                throw new PreexistingEntityException("Settings " + settings + " already exists.", ex);
-            }
-            throw ex;
-        } finally
-        {
-            if (em != null)
-            {
-                em.close();
-            }
-        }
-    }
+	public EntityManager getEntityManager()
+	{
+		return emf.createEntityManager();
+	}
 
-    public void edit(Settings settings) throws NonexistentEntityException, Exception
-    {
-        EntityManager em = null;
-        try
-        {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            settings = em.merge(settings);
-            em.getTransaction().commit();
-        } catch (Exception ex)
-        {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0)
-            {
-                String id = settings.getKey();
-                if (findSettings(id) == null)
-                {
-                    throw new NonexistentEntityException("The settings with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally
-        {
-            if (em != null)
-            {
-                em.close();
-            }
-        }
-    }
+	public void create(Settings settings) throws PreexistingEntityException, Exception
+	{
+		EntityManager em = null;
+		try
+		{
+			em = getEntityManager();
+			em.getTransaction().begin();
+			em.persist(settings);
+			em.getTransaction().commit();
+		} catch (Exception ex)
+		{
+			if (findSettings(settings.getKey()) != null)
+			{
+				throw new PreexistingEntityException("Settings " + settings + " already exists.", ex);
+			}
+			throw ex;
+		} finally
+		{
+			if (em != null)
+			{
+				em.close();
+			}
+		}
+	}
 
-    public void destroy(String id) throws NonexistentEntityException
-    {
-        EntityManager em = null;
-        try
-        {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Settings settings;
-            try
-            {
-                settings = em.getReference(Settings.class, id);
-                settings.getKey();
-            } catch (EntityNotFoundException enfe)
-            {
-                throw new NonexistentEntityException("The settings with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(settings);
-            em.getTransaction().commit();
-        } finally
-        {
-            if (em != null)
-            {
-                em.close();
-            }
-        }
-    }
+	public void edit(Settings settings) throws NonexistentEntityException, Exception
+	{
+		EntityManager em = null;
+		try
+		{
+			em = getEntityManager();
+			em.getTransaction().begin();
+			settings = em.merge(settings);
+			em.getTransaction().commit();
+		} catch (Exception ex)
+		{
+			String msg = ex.getLocalizedMessage();
+			if (msg == null || msg.length() == 0)
+			{
+				String id = settings.getKey();
+				if (findSettings(id) == null)
+				{
+					throw new NonexistentEntityException("The settings with id " + id + " no longer exists.");
+				}
+			}
+			throw ex;
+		} finally
+		{
+			if (em != null)
+			{
+				em.close();
+			}
+		}
+	}
 
-    public List<Settings> findSettingsEntities()
-    {
-        return findSettingsEntities(true, -1, -1);
-    }
+	public void destroy(String id) throws NonexistentEntityException
+	{
+		EntityManager em = null;
+		try
+		{
+			em = getEntityManager();
+			em.getTransaction().begin();
+			Settings settings;
+			try
+			{
+				settings = em.getReference(Settings.class, id);
+				settings.getKey();
+			} catch (EntityNotFoundException enfe)
+			{
+				throw new NonexistentEntityException("The settings with id " + id + " no longer exists.", enfe);
+			}
+			em.remove(settings);
+			em.getTransaction().commit();
+		} finally
+		{
+			if (em != null)
+			{
+				em.close();
+			}
+		}
+	}
 
-    public List<Settings> findSettingsEntities(int maxResults, int firstResult)
-    {
-        return findSettingsEntities(false, maxResults, firstResult);
-    }
+	public List<Settings> findSettingsEntities()
+	{
+		return findSettingsEntities(true, -1, -1);
+	}
 
-    private List<Settings> findSettingsEntities(boolean all, int maxResults, int firstResult)
-    {
-        EntityManager em = getEntityManager();
-        try
-        {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Settings.class));
-            Query q = em.createQuery(cq);
-            if (!all)
-            {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally
-        {
-            em.close();
-        }
-    }
+	public List<Settings> findSettingsEntities(int maxResults, int firstResult)
+	{
+		return findSettingsEntities(false, maxResults, firstResult);
+	}
 
-    public Settings findSettings(String id)
-    {
-        EntityManager em = getEntityManager();
-        try
-        {
-            return em.find(Settings.class, id);
-        } finally
-        {
-            em.close();
-        }
-    }
+	private List<Settings> findSettingsEntities(boolean all, int maxResults, int firstResult)
+	{
+		EntityManager em = getEntityManager();
+		try
+		{
+			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+			cq.select(cq.from(Settings.class));
+			Query q = em.createQuery(cq);
+			if (!all)
+			{
+				q.setMaxResults(maxResults);
+				q.setFirstResult(firstResult);
+			}
+			return q.getResultList();
+		} finally
+		{
+			em.close();
+		}
+	}
 
-    public int getSettingsCount()
-    {
-        EntityManager em = getEntityManager();
-        try
-        {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Settings> rt = cq.from(Settings.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally
-        {
-            em.close();
-        }
-    }
-    
+	public Settings findSettings(String id)
+	{
+		EntityManager em = getEntityManager();
+		try
+		{
+			return em.find(Settings.class, id);
+		} finally
+		{
+			em.close();
+		}
+	}
+
+	public int getSettingsCount()
+	{
+		EntityManager em = getEntityManager();
+		try
+		{
+			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+			Root<Settings> rt = cq.from(Settings.class);
+			cq.select(em.getCriteriaBuilder().count(rt));
+			Query q = em.createQuery(cq);
+			return ((Long) q.getSingleResult()).intValue();
+		} finally
+		{
+			em.close();
+		}
+	}
+
 }

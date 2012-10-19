@@ -24,12 +24,12 @@ CREATE TABLE `category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(512) NOT NULL,
   `parent` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`,`parent`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
 
 /*Data for the table `category` */
 
-insert  into `category`(`id`,`name`,`parent`) values (2,'Товары',0);
+insert  into `category`(`id`,`name`,`parent`) values (2,'Товары',0),(3,'Шнуры',2),(4,'Дистанционки',2),(5,'Лампочки',2),(6,'Бытовая техника',2);
 
 /*Table structure for table `product` */
 
@@ -43,10 +43,12 @@ CREATE TABLE `product` (
   `avail` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_category` (`category`),
-  CONSTRAINT `fk_category` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_category` FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
+
+insert  into `product`(`id`,`name`,`category`,`rating`,`avail`) values (1,'Шнур 3.5 - 3.5 1.5м',3,0,1);
 
 /*Table structure for table `settings` */
 
@@ -56,7 +58,7 @@ CREATE TABLE `settings` (
   `key` varchar(128) NOT NULL,
   `value` varchar(512) NOT NULL,
   PRIMARY KEY (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `settings` */
 
@@ -71,7 +73,7 @@ CREATE TABLE `users` (
   `level` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
