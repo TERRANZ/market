@@ -81,34 +81,37 @@ function loadProducts(category) {
 }
 
 function loadMainPagePrices() {
+	var newHtml = "";
 	var productsWrapper = $("#main_page_prices");
-	$(".category_link").each(function(i, domEle) {
-		$.ajax({
-			url : '/market/product/get.products.json',
-			async : false,
-			type : 'get',
-			dataType : 'jsonp',
-			data : {
-				category : domEle.id,
-				limit : 3
-			},
-			success : function(data) {
-				if (data.size != -1) {
-					var newHtml = productsWrapper.html();
-					newHtml += "<tr>";
-					$.each(data.data, function(i, d) {
-						newHtml += "<td align=center>";
-						newHtml += "<td><a href='/market/product?id="+d.id+"'>";
-						newHtml += d.name;
-						newHtml += "</a></td>";
-						newHtml += "<td>";
-						newHtml += d.avail ? "Доступен" : "Не доступен";
-						newHtml += "</td>";
-					});
-					newHtml += "</tr>";
-					productsWrapper.html(newHtml);
-				}
+	$.ajax({
+		url : '/market/product/get.products.main.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			limit : 3
+		},
+		success : function(data) {
+			if (data.size != -1) {
+				var j = 0;
+				$.each(data.data, function(i, d) {
+					if (j == 0)
+						newHtml += "<tr>";
+					j++;
+					newHtml += "<td align=center>";
+					newHtml += "<td><a href='/market/product?id=" + d.id + "'>";
+					newHtml += d.name;
+					newHtml += "</a></td>";
+					newHtml += "<td>";
+					newHtml += d.avail ? "Доступен" : "Не доступен";
+					newHtml += "</td>";
+					if (j == 3) {
+						newHtml += "</tr>";
+						j = 0;
+					}
+				});
 			}
-		});
+		}
 	});
+	productsWrapper.html(newHtml);
 }

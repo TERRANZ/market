@@ -131,4 +131,36 @@ public class ProductController
 		String json = new JSONSerializer().serialize(ret);
 		return ResponceUtils.makeResponce(json);
 	}
+
+	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, method = RequestMethod.GET)
+	public ResponseEntity<String> getProductMainProducts(HttpServletRequest request)
+	{
+		ProductListDTO ret = new ProductListDTO();
+		String limit = request.getParameter("limit");
+		Integer lim = -1;
+		try
+		{
+			if (limit != null)
+			{
+				lim = Integer.parseInt(limit);
+			}
+		} catch (NumberFormatException e)
+		{
+		}
+		List<Product> products = pe.getAllProductsLimited(lim);
+		if (products != null)
+		{
+			for (Product p : products)
+			{
+				ret.data.add(new ProductDTO(p));
+			}
+			ret.size = ret.data.size();
+		}
+		else
+		{
+			ret.size = -1;
+		}
+		String json = new JSONSerializer().deepSerialize(ret);
+		return ResponceUtils.makeResponce(json);
+	}
 }

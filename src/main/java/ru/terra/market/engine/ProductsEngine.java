@@ -89,10 +89,37 @@ public class ProductsEngine
 						else
 							return 1;
 					}
-				});				
+				});
 				return ret;
 			}
 		}
 		return null;
+	}
+
+	public List<Product> getAllProductsLimited(Integer lim)
+	{
+		List<Product> ret = new ArrayList<Product>();
+		for (Category cat : cjc.findCategoryEntities())
+		{
+			List<Product> prods = pjc.findProductByCategory(cat, lim);
+			if (prods != null)
+			{
+				ret.addAll(prods);
+			}
+		}
+		Collections.sort(ret, new Comparator<Product>()
+		{
+			@Override
+			public int compare(Product o1, Product o2)
+			{
+				if (o1.getRating() < o2.getRating())
+					return -1;
+				else if (o1.getRating() == o2.getRating())
+					return 0;
+				else
+					return 1;
+			}
+		});
+		return ret;
 	}
 }

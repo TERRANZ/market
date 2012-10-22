@@ -27,6 +27,7 @@ public class URLConstants
 		public class Products
 		{
 			public static final String PRODUCT_GET_PRODUCTS = "/product/get.products.json";
+			public static final String PRODUCT_GET_MAIN_PRODUCTS = "/product/get.products.main.json";
 			public static final String PRODUCT_GET_PRODUCT = "/product/get.product.json";
 		}
 
