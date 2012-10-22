@@ -1,5 +1,9 @@
 package ru.terra.market.engine;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -63,5 +67,32 @@ public class ProductsEngine
 	public void bulkCreate(List<Product> prods)
 	{
 		pjc.create(prods);
+	}
+
+	public List<Product> getProducts(Integer catId, Integer lim)
+	{
+		Category cat = cjc.findCategory(catId);
+		if (cat != null)
+		{
+			List<Product> ret = pjc.findProductByCategory(cat, lim);
+			if (ret != null)
+			{
+				Collections.sort(ret, new Comparator<Product>()
+				{
+					@Override
+					public int compare(Product o1, Product o2)
+					{
+						if (o1.getRating() < o2.getRating())
+							return -1;
+						else if (o1.getRating() == o2.getRating())
+							return 0;
+						else
+							return 1;
+					}
+				});				
+				return ret;
+			}
+		}
+		return null;
 	}
 }

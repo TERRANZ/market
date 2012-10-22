@@ -39,10 +39,21 @@ public class ProductController
 		String cat = request.getParameter("category");
 		if (cat != null)
 		{
+			String limit = request.getParameter("limit");
+			Integer lim = -1;
+			try
+			{
+				if (limit != null)
+				{
+					lim = Integer.parseInt(limit);
+				}
+			} catch (NumberFormatException e)
+			{
+			}
 			try
 			{
 				Integer catId = Integer.parseInt(cat);
-				List<Product> products = pe.getProducts(catId);
+				List<Product> products = pe.getProducts(catId, lim);
 				if (products != null)
 				{
 					for (Product p : products)

@@ -9,7 +9,7 @@ function loadLeftCategories() {
 			if (data.size != -1) {
 				var newHtml = "";
 				$.each(data.data, function(i, d) {
-					newHtml += "<a href=/market/category?id=" + d.id + "> " + d.name + "</a></br>";
+					newHtml += "<a class='category_link' id='" + d.id + "' href=/market/category?id=" + d.id + "> " + d.name + "</a></br>";
 				});
 				categoryWrapper.html(newHtml);
 			} else {
@@ -77,5 +77,38 @@ function loadProducts(category) {
 				categoryWrapper.html(newHtml);
 			}
 		}
+	});
+}
+
+function loadMainPagePrices() {
+	var productsWrapper = $("#main_page_prices");
+	$(".category_link").each(function(i, domEle) {
+		$.ajax({
+			url : '/market/product/get.products.json',
+			async : false,
+			type : 'get',
+			dataType : 'jsonp',
+			data : {
+				category : domEle.id,
+				limit : 3
+			},
+			success : function(data) {
+				if (data.size != -1) {
+					var newHtml = productsWrapper.html();
+					newHtml += "<tr>";
+					$.each(data.data, function(i, d) {
+						newHtml += "<td align=center>";
+						newHtml += "<td>";
+						newHtml += d.name;
+						newHtml += "</td>";
+						newHtml += "<td>";
+						newHtml += d.avail ? "Доступен" : "Не доступен";
+						newHtml += "</td>";
+					});
+					newHtml += "</tr>";
+					productsWrapper.html(newHtml);
+				}
+			}
+		});
 	});
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -201,6 +202,9 @@ public class ProductJpaController implements Serializable
 				q.setFirstResult(firstResult);
 			}
 			return q.getResultList();
+		} catch (NoResultException e)
+		{
+			return null;
 		} finally
 		{
 			em.close();
@@ -213,6 +217,9 @@ public class ProductJpaController implements Serializable
 		try
 		{
 			return em.find(Product.class, id);
+		} catch (NoResultException e)
+		{
+			return null;
 		} finally
 		{
 			em.close();
@@ -237,8 +244,25 @@ public class ProductJpaController implements Serializable
 
 	public List<Product> findProductByCategory(Integer categoryId)
 	{
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<Product> findProductByCategory(Category cat, Integer lim)
+	{
+		EntityManager em = getEntityManager();
+		try
+		{
+			Query q = em.createNamedQuery("Product.findByCategory").setParameter("category", cat);
+			q.setFirstResult(0);
+			q.setMaxResults(lim);
+			return q.getResultList();
+		} catch (NoResultException e)
+		{
+			return null;
+		} finally
+		{
+			em.close();
+		}
 	}
 
 }

@@ -1,14 +1,3 @@
-//var oldonload = window.onload;
-//if (typeof (oldonload) == 'function')
-//	window.onload = function() {
-//		oldonload();
-//		marketLoad();
-//	};
-//else
-//	window.onload = function() {
-//		marketLoad();
-//	};
-
 $("#main_table").ready(marketLoad());
 
 function marketLoad() {

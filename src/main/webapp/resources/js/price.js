@@ -1,0 +1,1 @@
+$("#main_page_prices").ready(loadMainPagePrices());
