@@ -35,8 +35,19 @@ a:hover {
 	text-decoration: none;
 }
 
-div {
+#header {
 	border-style: inset;
 	border-width: 1px;
 	border-color: green;
+}
+
+a.topmenu_selected
+{
+  background:		#203560;
+  padding:			7px;
+}
+a.topmenu_notselected
+{
+  background:		#4E679F;
+  padding:			7px;
 }
