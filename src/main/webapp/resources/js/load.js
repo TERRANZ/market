@@ -98,9 +98,9 @@ function loadMainPagePrices() {
 					newHtml += "<tr>";
 					$.each(data.data, function(i, d) {
 						newHtml += "<td align=center>";
-						newHtml += "<td>";
+						newHtml += "<td><a href='/market/product?id="+d.id+"'>";
 						newHtml += d.name;
-						newHtml += "</td>";
+						newHtml += "</a></td>";
 						newHtml += "<td>";
 						newHtml += d.avail ? "Доступен" : "Не доступен";
 						newHtml += "</td>";
