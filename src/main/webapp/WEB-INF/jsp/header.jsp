@@ -10,8 +10,13 @@
 	<input type="hidden" id="currentMenuId" value="${currentMenuId}" />
 	<%@include file="/WEB-INF/jsp/jsinclude.jsp"%>
 	<div id="header">
-		<a href="/market" class="logo"><img src="resources/images/companyname.gif" /></a> <a clas="topmenu_notselected" href="/market">Главная</a> <a
-			clas="topmenu_selected" href="/market/price">Прайс</a>
+		<table align="center">
+			<tr>
+				<td><a href="/market" class="logo"><img src="resources/images/companyname.gif" /></a></td>
+				<td><a clas="topmenu_notselected" href="/market">Главная</a></td>
+				<td><a clas="topmenu_selected" href="/market/price">Прайс</a></td>
+			</tr>
+		</table>
 	</div>
 	<div id="main_page">
 		<%@include file="/WEB-INF/jsp/left.jsp"%>

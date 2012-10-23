@@ -5,4 +5,8 @@
 	<h1>Товары по категориям</h1>
 	<div id="category_wrapper" border="1"></div>
 </div>
+<
+<script type="text/javascript">
+$("#categories").ready(loadLeftCategories(${categoryId}));
+</script>
 <%@include file="/WEB-INF/jsp/footer.jsp"%>
