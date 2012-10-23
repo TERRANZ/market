@@ -26,41 +26,38 @@ function loadLeftCategories(selectedId) {
 	});
 }
 
-function loadCenterCategories() {
-	var parentid = $("#currentCategoryId").val();
-	var categoryWrapper = $("#category_with_count");
-	if (parentid == "")
-		loadLeftCategories();
-	else
-		$.ajax({
-			url : '/market/category/get.category.tree.json',
-			async : false,
-			type : 'get',
-			dataType : 'jsonp',
-			data : {
-				id : parentid
-			},
-			success : function(data) {
-				if (data.size != -1) {
-					loadProducts(parentid);
-					var newHtml = "";
-					$.each(data.data, function(i, d) {
-						newHtml += "<tr><td align=center>";
-						newHtml += "<a href='/market/category?id=" + d.id + "'> " + d.name + "</a>";
-						newHtml += "</td>";
-						newHtml += "<td>" + d.count + "</td>";
-						newHtml += "</tr>";
-					});
-					categoryWrapper.html(newHtml);
-				} else {
-					alert("Ошибка при загрузке списка категорий");
-				}
+function loadCenterCategories(parentId) {
+	var categoryWrapper = $("#category_wrapper");
+	$.ajax({
+		url : '/market/category/get.category.tree.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			id : parentId
+		},
+		success : function(data) {
+			if (data.size != -1) {
+				loadProducts(parentId);
+				var newHtml = "<table>";
+				$.each(data.data, function(i, d) {
+					newHtml += "<tr><td align=center>";
+					newHtml += "<a href='/market/category?id=" + d.id + "'> " + d.name + "</a>";
+					newHtml += "</td>";
+					newHtml += "<td>" + d.count + "</td>";
+					newHtml += "</tr>";
+				});
+				newHtml += "</table>";
+				categoryWrapper.html(newHtml);
+			} else {
+				alert("Ошибка при загрузке списка категорий");
 			}
-		});
+		}
+	});
 }
 
 function loadProducts(category) {
-	var categoryWrapper = $("#category_products");
+	var categoryWrapper = $("#category_products_wrapper");
 	$.ajax({
 		url : '/market/product/get.products.json',
 		async : false,
@@ -71,7 +68,7 @@ function loadProducts(category) {
 		},
 		success : function(data) {
 			if (data.size != -1) {
-				var newHtml = "";
+				var newHtml = "<table>";
 				$.each(data.data, function(i, d) {
 					newHtml += "<tr><td align=center>";
 					newHtml += "<td>";
@@ -82,6 +79,7 @@ function loadProducts(category) {
 					newHtml += "</td>";
 					newHtml += "</tr>";
 				});
+				newHtml += "</table>";
 				categoryWrapper.html(newHtml);
 			}
 		}

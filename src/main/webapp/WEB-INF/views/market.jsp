@@ -5,6 +5,5 @@
 	<h1>Товары по категориям</h1>
 	<table id="main_page_prices" ></table>
 </div>
-<script type="text/javascript" src="resources/js/category.js"></script>
 <script type="text/javascript" src="resources/js/market.js"></script>
 <%@include file="/WEB-INF/jsp/footer.jsp"%>

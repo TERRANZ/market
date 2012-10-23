@@ -253,8 +253,11 @@ public class ProductJpaController implements Serializable
 		try
 		{
 			Query q = em.createNamedQuery("Product.findByCategory").setParameter("category", cat);
-			q.setFirstResult(0);
-			q.setMaxResults(lim);
+			if (lim != -1)
+			{
+				q.setFirstResult(0);
+				q.setMaxResults(lim);
+			}
 			return q.getResultList();
 		} catch (NoResultException e)
 		{
