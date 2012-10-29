@@ -12,7 +12,7 @@ public class CategoryDTO
 	public Integer id;
 	public String name;
 	public Integer parent;
-	public Integer count;
+	public Long count;
 
 	private ProductsEngine pe = new ProductsEngine();
 
@@ -21,7 +21,6 @@ public class CategoryDTO
 		this.id = c.getId();
 		this.name = c.getName();
 		this.parent = c.getParent();
-		List res = pe.getProducts(id);
-		this.count = res != null ? res.size() : 0;
+		this.count = pe.getProductCount(c.getId());
 	}
 }

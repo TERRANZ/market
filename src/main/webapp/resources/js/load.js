@@ -71,9 +71,9 @@ function loadProducts(category) {
 				var newHtml = "<table>";
 				$.each(data.data, function(i, d) {
 					newHtml += "<tr><td align=center>";
-					newHtml += "<td>";
+					newHtml += "<td><a href='/market/product?id=" + d.id + "'>";
 					newHtml += d.name;
-					newHtml += "</td>";
+					newHtml += "</a></td>";
 					newHtml += "<td>";
 					newHtml += d.avail ? "Доступен" : "Не доступен";
 					newHtml += "</td>";
@@ -120,4 +120,38 @@ function loadMainPagePrices() {
 		}
 	});
 	productsWrapper.html(newHtml);
+}
+
+function loadProduct(prodId) {
+	var newHtml = "";
+	var productWrapper = $("#product_wrapper");
+	var ratingWrapper = $("#product_rating");
+	$.ajax({
+		url : '/market/product/get.product.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			id : prodId
+		},
+		success : function(data) {
+			$("#prodname").html(data.name);
+			var r_count = 0;
+			if (data.rating == 0) {
+				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+			} else {
+				for ( var i = 0; i < data.rating; i++) {
+					newHtml += "<img src='resources/images/redstar_big.gif'></img>";
+				}
+				for ( var i = data.rating; i < 5; i++) {
+					newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+				}
+			}
+			productWrapper.html(newHtml);
+		}
+	});
 }

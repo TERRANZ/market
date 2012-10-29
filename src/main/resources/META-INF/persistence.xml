@@ -7,6 +7,7 @@
 		<class>ru.terra.market.db.entity.Settings</class>
 		<class>ru.terra.market.db.entity.User</class>
 		<class>ru.terra.market.db.entity.Category</class>
+		<class>ru.terra.market.db.entity.Photo</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/market" />

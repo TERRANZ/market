@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.terra.market.ResponceUtils;
+import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.dto.product.ProductDTO;
@@ -27,8 +28,23 @@ public class ProductController
 	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.Pages.PRODUCT, method = RequestMethod.GET)
-	public String product(Locale locale, Model model)
+	public String product(HttpServletRequest request, Locale locale, Model model)
 	{
+		if (request.getParameter("id") == null)
+			return URLConstants.Views.ERROR404;
+		Integer prodId = 0;
+		try
+		{
+			prodId = Integer.parseInt(request.getParameter("id"));
+			Product prod = pe.getProduct(prodId);
+			if (prod == null)
+				return URLConstants.Views.ERROR404;
+			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getCategory().getId());
+			model.addAttribute("id", prodId);
+		} catch (NumberFormatException e)
+		{
+			return URLConstants.Views.ERROR404;
+		}
 		return URLConstants.Views.PRODUCT;
 	}
 
@@ -128,7 +144,7 @@ public class ProductController
 			ret.ok = false;
 		}
 
-		String json = new JSONSerializer().serialize(ret);
+		String json = new JSONSerializer().deepSerialize(ret);
 		return ResponceUtils.makeResponce(json);
 	}
 

@@ -16,6 +16,7 @@ import ru.terra.market.db.entity.Category;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
 import ru.terra.market.db.entity.controller.ProductJpaController;
+import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityException;
 
 @Singleton
 @Component
@@ -44,6 +45,14 @@ public class ProductsEngine
 		return null;
 	}
 
+	public Long getProductCount(Integer categoryId)
+	{
+		Category cat = cjc.findCategory(categoryId);
+		if (cat != null)
+			return pjc.getProductCount(cat);
+		return -1L;
+	}
+
 	public Product getProduct(Integer id)
 	{
 		return pjc.findProduct(id);
@@ -61,7 +70,18 @@ public class ProductsEngine
 
 	public void updateProduct(Product p)
 	{
-		pjc.create(p);
+		try
+		{
+			pjc.create(p);
+		} catch (PreexistingEntityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void bulkCreate(List<Product> prods)
