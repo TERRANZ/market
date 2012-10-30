@@ -41,7 +41,10 @@ public class CategoriesEngine
 
 	public List<Category> getCategoriesByParent(Integer parentId)
 	{
-		return cjc.findCategoryByParent(parentId);
+		if (parentId == -1)
+			return cjc.findCategoryEntities();
+		else
+			return cjc.findCategoryByParent(parentId);
 	}
 
 	public Category createCategory(String name)

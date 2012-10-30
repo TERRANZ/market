@@ -68,7 +68,7 @@ public class CategoryController
 		String parentId = request.getParameter("id");
 		CategoryListDTO ret = new CategoryListDTO();
 		if (parentId == null)
-			parentId = "0";
+			parentId = "-1";
 		// logger.info("parent id = " + parentId);
 		try
 		{

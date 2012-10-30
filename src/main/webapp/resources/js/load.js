@@ -151,7 +151,7 @@ function loadProduct(prodId) {
 					newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
 				}
 			}
-			productWrapper.html(newHtml);
+			ratingWrapper.html(newHtml);
 		}
 	});
 }

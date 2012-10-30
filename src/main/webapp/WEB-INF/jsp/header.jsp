@@ -14,7 +14,6 @@
 			<tr>
 				<td><a href="/market" class="logo"><img src="resources/images/companyname.gif" /></a></td>
 				<td><a clas="topmenu_notselected" href="/market">Главная</a></td>
-				<td><a clas="topmenu_selected" href="/market/price">Прайс</a></td>
 			</tr>
 		</table>
 	</div>

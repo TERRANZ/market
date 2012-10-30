@@ -6,6 +6,8 @@
 	<h1 id="prodname"></h1>
 	<div id="product_wrapper">
 		<div id="product_rating"></div>
+		<div id="product_info"></div>
+		<div id="product_photos"></div>
 	</div>
 </div>
 <script type="text/javascript" src="resources/js/product.js"></script>
