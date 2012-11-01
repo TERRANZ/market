@@ -1,9 +1,5 @@
 package ru.terra.market.dto.category;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.engine.ProductsEngine;
 

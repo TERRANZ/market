@@ -1,7 +1,6 @@
 package ru.terra.market.dto.photo;
 
 import ru.terra.market.db.entity.Photo;
-import ru.terra.market.db.entity.Product;
 
 public class PhotoDTO
 {

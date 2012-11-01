@@ -1,5 +1,6 @@
 package ru.terra.market.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,15 +15,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import flexjson.JSONSerializer;
-
 import ru.terra.market.ResponceUtils;
 import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.dto.category.CategoryDTO;
 import ru.terra.market.dto.category.CategoryListDTO;
+import ru.terra.market.dto.category.CategoryTreeDTO;
 import ru.terra.market.engine.CategoriesEngine;
+import flexjson.JSONSerializer;
 
 @Controller
 public class CategoryController
@@ -48,7 +49,7 @@ public class CategoryController
 				return URLConstants.Views.ERROR404;
 			}
 
-			Category category = ce.getCategories(catId);
+			Category category = ce.getCategory(catId);
 			if (category != null)
 			{
 				model.addAttribute(ModelConstants.CATEGORY_ID, id);
@@ -65,34 +66,41 @@ public class CategoryController
 	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORY_TREE, method = RequestMethod.GET)
 	public ResponseEntity<String> getCategoryTree(HttpServletRequest request)
 	{
+		String json = new JSONSerializer().deepSerialize(getCategoriesRecursive(1));
+		return ResponceUtils.makeResponce(json);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_BY_PARENT, method = RequestMethod.GET)
+	public ResponseEntity<String> getCategoryByParent(HttpServletRequest request)
+	{
 		String parentId = request.getParameter("id");
 		CategoryListDTO ret = new CategoryListDTO();
 		if (parentId == null)
 			parentId = "-1";
-		// logger.info("parent id = " + parentId);
 		try
 		{
 			Integer pid = Integer.parseInt(parentId);
-			List<Category> cs = ce.getCategoriesByParent(pid);
-			if (cs != null)
+			for (Category cat : ce.getCategoriesByParent(pid))
 			{
-				for (Category c : cs)
-				{
-					ret.data.add(new CategoryDTO(c));
-				}
-				ret.size = ret.data.size();
+				ret.data.add(new CategoryDTO(cat));
 			}
-			else
-			{
-				ret.size = -1;
-			}
+			ret.size = ret.data.size();
+			String json = new JSONSerializer().deepSerialize(ret);
+			return ResponceUtils.makeResponce(json);
 		} catch (NumberFormatException e)
 		{
-			ret.size = -1;
+			return ResponceUtils.makeErrorResponce("");
 		}
+	}
 
-		String json = new JSONSerializer().deepSerialize(ret);
-		return ResponceUtils.makeResponce(json);
+	private CategoryTreeDTO getCategoriesRecursive(Integer parent)
+	{
+		List<CategoryTreeDTO> childs = new ArrayList<CategoryTreeDTO>();
+		for (Category child : ce.getCategoriesByParent(parent))
+		{
+			childs.add(getCategoriesRecursive(child.getId()));
+		}
+		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getCategory(parent)));
 	}
 
 }

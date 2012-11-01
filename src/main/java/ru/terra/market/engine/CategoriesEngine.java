@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
-import ru.terra.market.dto.category.CategoryDTO;
 
 @Singleton
 @Component
@@ -32,7 +31,7 @@ public class CategoriesEngine
 		return cjc.findCategoryEntities();
 	}
 
-	public Category getCategories(Integer id)
+	public Category getCategory(Integer id)
 	{
 		if (id != null)
 			return cjc.findCategory(id);

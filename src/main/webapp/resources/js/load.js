@@ -6,30 +6,39 @@ function loadLeftCategories(selectedId) {
 		type : 'get',
 		dataType : 'jsonp',
 		success : function(data) {
-			if (data.size != -1) {
-				var newHtml = "<table align='center'>";
-				$.each(data.data, function(i, d) {
-					var id = d.id;
-					if (selectedId != "undefinded" && selectedId == id)
-						newHtml += "<tr class='category_selected' id='left_category_id" + id + "'><td>";
-					else
-						newHtml += "<tr id='left_category_id" + id + "'><td>";
-					newHtml += "<a class='category_link' id='" + id + "' href=/market/category?id=" + id + "> " + d.name + "</a>";
-					newHtml += "</td></tr>";
-				});
-				newHtml += "</table>";
-				categoryWrapper.html(newHtml);
-			} else {
-				alert("Ошибка при загрузке списка категорий");
-			}
+			var newHtml = "<table align='center'>";
+			newHtml += buildCategoryTree(data, selectedId, 0);
+			newHtml += "</table>";
+			categoryWrapper.html(newHtml);
 		}
 	});
+}
+
+function buildCategoryTree(categoryTree, selectedId, level) {
+	var newHtml = "";
+	var id = categoryTree.category.id;
+	var padding = 10 * level;
+	if (selectedId != "undefinded" && selectedId == id)
+		newHtml += "<tr class='category_selected'  id='left_category_id" + id + "'><td>";
+	else
+		newHtml += "<tr  id='left_category_id" + id + "'><td>";
+	newHtml += "<a style='padding-left: " + padding + "px;' class='category_link' id='" + id + "'href=/market/category?id=" + id + "> "
+			+ categoryTree.category.name + "</a>";
+	newHtml += "</td>";
+	newHtml += "</tr>";
+	if (categoryTree.hasChilds) {
+		var newLevel = level + 1;
+		$.each(categoryTree.childs, function(i, d) {
+			newHtml += buildCategoryTree(d, selectedId, newLevel);
+		});
+	}
+	return newHtml;
 }
 
 function loadCenterCategories(parentId) {
 	var categoryWrapper = $("#category_wrapper");
 	$.ajax({
-		url : '/market/category/get.category.tree.json',
+		url : '/market/category/get.categories.byparent.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',

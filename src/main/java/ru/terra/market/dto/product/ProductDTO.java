@@ -5,7 +5,6 @@ import java.util.List;
 
 import ru.terra.market.db.entity.Photo;
 import ru.terra.market.db.entity.Product;
-import ru.terra.market.dto.category.CategoryDTO;
 import ru.terra.market.dto.photo.PhotoDTO;
 
 public class ProductDTO
