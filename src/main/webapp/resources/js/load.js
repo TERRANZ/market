@@ -123,8 +123,8 @@ function loadMainPagePrices() {
 }
 
 function loadProduct(prodId) {
-	var newHtml = "";
-	var productWrapper = $("#product_wrapper");
+	var productPhotos = $("#product_photos");
+	var productInfo = $("#product_info");
 	var ratingWrapper = $("#product_rating");
 	$.ajax({
 		url : '/market/product/get.product.json',
@@ -136,7 +136,24 @@ function loadProduct(prodId) {
 		},
 		success : function(data) {
 			$("#prodname").html(data.name);
-			var r_count = 0;
+
+			var newHtml = "";
+			var j = 0;
+			$.each(data.photos, function(i, d) {
+				if (j == 0)
+					newHtml += "<tr>";
+				j++;
+				newHtml += "<td align=center>";
+				newHtml += "<td><a href='/market/" + d.path + "'>";
+				newHtml += "<img  width='200' height='150' src='/market/" + d.path + "'></img>";
+				newHtml += "</a></td>";
+				if (j == 3) {
+					newHtml += "</tr>";
+					j = 0;
+				}
+			});
+			productPhotos.html(newHtml);
+			newHtml = "";
 			if (data.rating == 0) {
 				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
 				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";

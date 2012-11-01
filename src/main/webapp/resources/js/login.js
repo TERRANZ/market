@@ -6,7 +6,7 @@ function userLogin(user, pass) {
 	} else {
 
 		$.ajax({
-					url : '/spending/login/do.login.json',
+					url : '/market/login/do.login.json',
 					async : false,
 					type : 'post',
 					dataType : 'jsonp',
@@ -35,7 +35,7 @@ function userLogin(user, pass) {
 function register(user, pass) {
 	$
 			.ajax({
-				url : '/spending/login/do.register.json',
+				url : '/market/login/do.register.json',
 				async : false,
 				type : 'post',
 				dataType : 'jsonp',
