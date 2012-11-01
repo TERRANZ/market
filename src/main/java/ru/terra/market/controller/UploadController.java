@@ -96,6 +96,6 @@ public class UploadController
 
 		pe.newPhoto(uploadDTO.getName(), subPath + "/" + outFileName, uploadDTO.getTargetId());
 
-		return "redirect:/";
+		return "redirect:/product?id=" + uploadDTO.getTargetId();
 	}
 }
