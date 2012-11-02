@@ -1,103 +1,36 @@
-function loadLeftCategories(selectedId) {
-	var categoryWrapper = $("#category-wrapper");
+function loadLeftCategories() {
+	var categoryWrapper = $("#categories");
 	$.ajax({
 		url : '/market/category/get.category.tree.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',
 		success : function(data) {
-			var newHtml = "<table align='center'>";
-			newHtml += buildCategoryTree(data, selectedId, 0);
-			newHtml += "</table>";
+			var newHtml = "";
+			newHtml += buildCategoryTree(data, 0);
 			categoryWrapper.html(newHtml);
 		}
 	});
 }
 
-function buildCategoryTree(categoryTree, selectedId, level) {
+function buildCategoryTree(categoryTree, level) {
 	var newHtml = "";
 	var id = categoryTree.category.id;
 	var padding = 10 * level;
-	if (selectedId != "undefinded" && selectedId == id)
-		newHtml += "<tr class='category_selected'  id='left_category_id" + id + "'><td>";
-	else
-		newHtml += "<tr  id='left_category_id" + id + "'><td>";
+	newHtml += "<li class='odd'>";
 	newHtml += "<a style='padding-left: " + padding + "px;' class='category_link' id='" + id + "'href=/market/category?id=" + id + "> "
 			+ categoryTree.category.name + "</a>";
-	newHtml += "</td>";
-	newHtml += "</tr>";
+	newHtml += "</li>";
 	if (categoryTree.hasChilds) {
 		var newLevel = level + 1;
 		$.each(categoryTree.childs, function(i, d) {
-			newHtml += buildCategoryTree(d, selectedId, newLevel);
+			newHtml += buildCategoryTree(d, newLevel);
 		});
 	}
 	return newHtml;
 }
 
-function loadCenterCategories(parentId) {
-	var categoryWrapper = $("#category_wrapper");
-	$.ajax({
-		url : '/market/category/get.categories.byparent.json',
-		async : false,
-		type : 'get',
-		dataType : 'jsonp',
-		data : {
-			id : parentId
-		},
-		success : function(data) {
-			if (data.size != -1) {
-				loadProducts(parentId);
-				var newHtml = "<table>";
-				$.each(data.data, function(i, d) {
-					newHtml += "<tr><td align=center>";
-					newHtml += "<a href='/market/category?id=" + d.id + "'> " + d.name + "</a>";
-					newHtml += "</td>";
-					newHtml += "<td>" + d.count + "</td>";
-					newHtml += "</tr>";
-				});
-				newHtml += "</table>";
-				categoryWrapper.html(newHtml);
-			} else {
-				alert("Ошибка при загрузке списка категорий");
-			}
-		}
-	});
-}
-
-function loadProducts(category) {
-	var categoryWrapper = $("#category_products_wrapper");
-	$.ajax({
-		url : '/market/product/get.products.json',
-		async : false,
-		type : 'get',
-		dataType : 'jsonp',
-		data : {
-			category : category
-		},
-		success : function(data) {
-			if (data.size != -1) {
-				var newHtml = "<table>";
-				$.each(data.data, function(i, d) {
-					newHtml += "<tr><td align=center>";
-					newHtml += "<td><a href='/market/product?id=" + d.id + "'>";
-					newHtml += d.name;
-					newHtml += "</a></td>";
-					newHtml += "<td>";
-					newHtml += d.avail ? "Доступен" : "Не доступен";
-					newHtml += "</td>";
-					newHtml += "</tr>";
-				});
-				newHtml += "</table>";
-				categoryWrapper.html(newHtml);
-			}
-		}
-	});
-}
-
-function loadMainPagePrices() {
-	var newHtml = "";
-	var productsWrapper = $("#main_page_prices");
+function loadLatestAdds() {
 	$.ajax({
 		url : '/market/product/get.products.main.json',
 		async : false,
@@ -108,76 +41,89 @@ function loadMainPagePrices() {
 		},
 		success : function(data) {
 			if (data.size != -1) {
-				var j = 0;
-				$.each(data.data, function(i, d) {
-					if (j == 0)
-						newHtml += "<tr>";
-					j++;
-					newHtml += "<td align=center>";
-					newHtml += "<td><a href='/market/product?id=" + d.id + "'>";
-					newHtml += d.name;
-					newHtml += "</a></td>";
-					newHtml += "<td>";
-					newHtml += d.avail ? "Доступен" : "Не доступен";
-					newHtml += "</td>";
-					if (j == 3) {
-						newHtml += "</tr>";
-						j = 0;
-					}
+				var htmlRet = "";
+				$.each(data.data, function(i, product) {
+					htmlRet += buildProductInfo(product);
 				});
+				$("#latest_adds").html(htmlRet);
 			}
 		}
 	});
-	productsWrapper.html(newHtml);
+
 }
 
-function loadProduct(prodId) {
-	var productPhotos = $("#product_photos");
-	var productInfo = $("#product_info");
-	var ratingWrapper = $("#product_rating");
+function loadRecommended() {
+	$.ajax({
+		url : '/market/product/get.products.main.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			limit : 3
+		},
+		success : function(data) {
+			if (data.size != -1) {
+				var htmlRet = "";
+				$.each(data.data, function(i, product) {
+					htmlRet += buildProductInfo(product);
+				});
+				$("#recommended").html(htmlRet);
+			}
+		}
+	});
+}
+
+function loadProduct() {
+	var id = $("#productid").val();
 	$.ajax({
 		url : '/market/product/get.product.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',
 		data : {
-			id : prodId
+			id : id
 		},
 		success : function(data) {
-			$("#prodname").html(data.name);
-
-			var newHtml = "";
-			var j = 0;
-			$.each(data.photos, function(i, d) {
-				if (j == 0)
-					newHtml += "<tr>";
-				j++;
-				newHtml += "<td align=center>";
-				newHtml += "<td><a href='/market/" + d.path + "'>";
-				newHtml += "<img  width='200' height='150' src='/market/" + d.path + "'></img>";
-				newHtml += "</a></td>";
-				if (j == 3) {
-					newHtml += "</tr>";
-					j = 0;
-				}
-			});
-			productPhotos.html(newHtml);
-			newHtml = "";
-			if (data.rating == 0) {
-				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
-				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
-				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
-				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
-				newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
+			$("#center_title_bar").html(data.name);
+			$("#product_title_big").html(data.name);
+			$(".price").html(data.price);
+			if (data.photos.length > 0) {
 			} else {
-				for ( var i = 0; i < data.rating; i++) {
-					newHtml += "<img src='resources/images/redstar_big.gif'></img>";
-				}
-				for ( var i = data.rating; i < 5; i++) {
-					newHtml += "<img src='resources/images/blackstar_big.gif'></img>";
-				}
+				$("#product_img_main").attr("src", '/market/qr?product=' + data.id);
 			}
-			ratingWrapper.html(newHtml);
 		}
 	});
+
+}
+
+function buildProductInfo(product) {
+	var htmlRet = "";
+	htmlRet += '<div class="prod_box">';
+	htmlRet += '<div class="center_prod_box">';
+	htmlRet += '<div class="product_title">';
+	htmlRet += '<a href="/market/product?id=' + product.id + '">' + product.name + '</a>';
+	htmlRet += '</div>';
+	if (product.photos.length > 0) {
+		$.each(product.photos, function(i, photo) {
+			htmlRet += '<div class="product_img">';
+			htmlRet += '<a href="/market/product?id=' + product.id + '"><img src="' + photo.path
+					+ '" width=200 heigth=200 alt="" title="" border="0" /></a>';
+			htmlRet += '</div>';
+		});
+	} else {
+		htmlRet += '<div class="product_img">';
+		htmlRet += '<a href="/market/product?id=' + product.id + '"><img src="/market/qr?product=' + product.id
+				+ '" width=100 heigth=100 alt="" title="" border="0" /></a>';
+		htmlRet += '</div>';
+	}
+	htmlRet += '<div class="prod_price">';
+	htmlRet += '<span class="price">' + product.price + '</span>';
+	htmlRet += '</div>';
+	htmlRet += '</div>';
+	htmlRet += '<div class="prod_details_tab">';
+	htmlRet += '<a href="/market/product?id=' + product.id + '" class="prod_details">Подробности...</a>';
+	htmlRet += '</div>';
+	htmlRet += '</div>';
+	// htmlRet += '</div>';
+	return htmlRet;
 }

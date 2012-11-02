@@ -118,14 +118,7 @@ public class ProductsEngine
 	public List<Product> getAllProductsLimited(Integer lim)
 	{
 		List<Product> ret = new ArrayList<Product>();
-		for (Category cat : cjc.findCategoryEntities())
-		{
-			List<Product> prods = pjc.findProductByCategory(cat, lim);
-			if (prods != null)
-			{
-				ret.addAll(prods);
-			}
-		}
+		ret = pjc.findProductEntities(lim, 0);
 		Collections.sort(ret, new Comparator<Product>()
 		{
 			@Override
