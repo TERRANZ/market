@@ -1,5 +1,6 @@
 <%@page import="ru.terra.market.web.security.SessionHelper"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="/WEB-INF/jsp/header.jsp"%>
 <div id="content" align="center">
@@ -20,6 +21,7 @@
 
 		</div>
 		<div id="product_info">
+		<img align="right" src="/market/qr?product=${id}" width="200" height="200"></img>
 			<div id="product_rating"></div>
 			<table id="product_photos"></table>
 		</div>

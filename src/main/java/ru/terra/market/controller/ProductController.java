@@ -12,13 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ru.terra.market.ResponceUtils;
 import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.dto.product.ProductDTO;
 import ru.terra.market.dto.product.ProductListDTO;
 import ru.terra.market.engine.ProductsEngine;
+import ru.terra.market.util.ResponceUtils;
 import flexjson.JSONSerializer;
 
 @Controller

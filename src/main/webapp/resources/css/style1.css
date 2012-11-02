@@ -1,94 +1,107 @@
-p, font
-{ font-family:		'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
-}
-td, th 
-{ font-family:		'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
- 
+p,font {
+	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
 }
 
-h1
-{ color:			black;
-  font-size:		180%;
+td,th {
+	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
 }
-h5
-{
-  font-size:		115%;
+
+h1 {
+	color: black;
+	font-size: 180%;
 }
-.header
-{ font-size:		125%;
-  color:			black;
-  font-weight:		bold;
-  text-decoration:	underline;
+
+h5 {
+	font-size: 115%;
 }
-.no_underline
-{ text-decoration:		none;
+
+.header {
+	font-size: 125%;
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
 }
-a
-{font-weight:		bold;
- color:			navy;
+
+.no_underline {
+	text-decoration: none;
 }
-.small
-{ font-size:		80%;
+
+a {
+	font-weight: bold;
+	color: navy;
 }
-.faq
-{ font-size:		110%;
+
+.small {
+	font-size: 80%;
 }
-.price_brief
-{ font-size:		120%;
+
+.faq {
+	font-size: 110%;
 }
-.big
-{ font-size:		150%;
-  text-decoration:	none;
+
+.price_brief {
+	font-size: 120%;
 }
-.cat
-{ font-size:		150%;
+
+.big {
+	font-size: 150%;
+	text-decoration: none;
 }
-.standard
-{ font-weight:		normal;
+
+.cat {
+	font-size: 150%;
 }
-.white
-{ color:			white;
+
+.standard {
+	font-weight: normal;
 }
-.pink
-{ color:			pink;
+
+.white {
+	color: white;
 }
-.menu
-{ color:			white;
-  font-weight:		bold;
-  font-size:		100%;
+
+.pink {
+	color: pink;
 }
-div.topmenu_selected
-{
-  background:		#203560;
-  padding:			7px;
+
+.menu {
+	color: white;
+	font-weight: bold;
+	font-size: 100%;
 }
-div.topmenu_notselected
-{
-  background:		#4E679F;
-  padding:			7px;
+
+div.topmenu_selected {
+	background: #203560;
+	padding: 7px;
 }
-.footer
-{
-  font-size:		60%;
-  color:			gray;
+
+div.topmenu_notselected {
+	background: #4E679F;
+	padding: 7px;
 }
-.lightsmall
-{ color:			black;
-  font-size:		80%;
+
+.footer {
+	font-size: 60%;
+	color: gray;
 }
-.category_child
-{
-  font-weight:		normal;
+
+.lightsmall {
+	color: black;
+	font-size: 80%;
 }
-.cart
-{
-  font-size:		90%;
-  BORDER-BOTTOM:	0px solid;	
-  BORDER-LEFT:		0px solid;
-  BORDER-RIGHT:		0px solid;	
-  BORDER-TOP:		0px solid;
-  margin:			0px;
-  font-weight:		bold;
-  color:			navy;
-  background-color:  transparent;
+
+.category_child {
+	font-weight: normal;
+}
+
+.cart {
+	font-size: 90%;
+	BORDER-BOTTOM: 0px solid;
+	BORDER-LEFT: 0px solid;
+	BORDER-RIGHT: 0px solid;
+	BORDER-TOP: 0px solid;
+	margin: 0px;
+	font-weight: bold;
+	color: navy;
+	background-color: transparent;
 }

@@ -9,7 +9,8 @@
 <title>Добавление фотографий</title>
 </head>
 <body>
-	<form:form modelAttribute="uploadDTO" method="post" enctype="multipart/form-data">
+	<form:form modelAttribute="uploadDTO" method="post"
+		enctype="multipart/form-data">
 		<fieldset>
 			<legend>Новая фотография</legend>
 

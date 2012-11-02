@@ -1,6 +1,5 @@
 package ru.terra.market.util;
 
-
 public class FilePathUtil
 {
 

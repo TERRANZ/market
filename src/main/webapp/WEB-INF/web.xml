@@ -55,7 +55,14 @@
       org.springframework.security.web.session.HttpSessionEventPublisher
     </listener-class>
   </listener>
-	
+	<servlet>
+        <servlet-name>QRServlet</servlet-name>
+        <servlet-class>ru.terra.market.web.QRServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QRServlet</servlet-name>
+        <url-pattern>/qr</url-pattern>
+    </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>

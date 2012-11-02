@@ -6,6 +6,7 @@
 <title>Home</title>
 </head>
 <body>
-	<a href="/market/market">Вход</a><p>
+	<a href="/market/market">Вход</a>
+	<p>
 </body>
 </html>

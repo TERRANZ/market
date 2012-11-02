@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ru.terra.market.ResponceUtils;
 import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Category;
@@ -23,6 +22,7 @@ import ru.terra.market.dto.category.CategoryDTO;
 import ru.terra.market.dto.category.CategoryListDTO;
 import ru.terra.market.dto.category.CategoryTreeDTO;
 import ru.terra.market.engine.CategoriesEngine;
+import ru.terra.market.util.ResponceUtils;
 import flexjson.JSONSerializer;
 
 @Controller

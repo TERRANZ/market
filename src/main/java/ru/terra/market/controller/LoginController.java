@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.terra.market.ResponceUtils;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.User;
 import ru.terra.market.dto.LoginDTO;
 import ru.terra.market.engine.UsersEngine;
+import ru.terra.market.util.ResponceUtils;
 import ru.terra.market.web.security.SessionHelper;
 import flexjson.JSONSerializer;
 
