@@ -83,13 +83,14 @@ function loadProduct() {
 		data : {
 			id : id
 		},
-		success : function(data) {
-			$("#center_title_bar").html(data.name);
-			$("#product_title_big").html(data.name);
-			$(".price").html(data.price);
-			if (data.photos.length > 0) {
+		success : function(product) {
+			$(".center_title_bar").html(product.name);
+			$(".product_title_big").html(product.name);
+			$(".price").html(product.price);
+			$("#avail").html(product.avail ? "В продаже" : "Нет в продаже");
+			if (product.photos.length > 0) {
 			} else {
-				$("#product_img_main").attr("src", '/market/qr?product=' + data.id);
+				$("#product_img_main").attr("src", '/market/qr?product=' + product.id);
 			}
 		}
 	});

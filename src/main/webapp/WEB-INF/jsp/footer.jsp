@@ -99,6 +99,6 @@
 
 	</div>
 	<!-- end of main_container -->
-	
+	<script src="resources/js/market.js"></script>
 </body>
 </html>

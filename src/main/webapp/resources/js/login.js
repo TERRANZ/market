@@ -1,3 +1,4 @@
+
 function userLogin(user, pass) {
 	if (user == null || user.length == 0) {
 		alert('Не указан логин');

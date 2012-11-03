@@ -1,3 +1,4 @@
+<%@page import="ru.terra.market.web.security.SessionHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -55,13 +56,16 @@
 					<li class="divider"></li>
 					<li><a href="#" class="nav">Новинки</a></li>
 					<li class="divider"></li>
-					<li><a href="#" class="nav">Мой аккаунт</a></li>
+					<% if (SessionHelper.isUserCurrentAuthorized()){ %>
+					<li><a href="/market/my" class="nav">Мой аккаунт</a></li>
 					<li class="divider"></li>
-					<li><a href="#" class="nav">Авторизация</a></li>
+					<% }else{ %>
+					<li><a href="/market/login" class="nav">Авторизация</a></li>
 					<li class="divider"></li>
-					<li><a href="#" class="nav">Доставка </a></li>
-					<li class="divider"></li>
-					<li><a href="contact.html" class="nav">Связь с нами</a></li>
+					<% } %>
+<!-- 					<li><a href="#" class="nav">Доставка </a></li> -->
+<!-- 					<li class="divider"></li> -->
+					<li><a href="/market/about" class="nav">Связь с нами</a></li>
 
 				</ul>
 

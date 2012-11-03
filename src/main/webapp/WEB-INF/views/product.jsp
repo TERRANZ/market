@@ -11,7 +11,7 @@
 		<div class="center_prod_box_big">
 
 			<div class="product_img_big">
-			<img id="product_img_main" src="" alt="" title="" border="0" />
+			<img id="product_img_main" src="" alt="" title="" width="100" height="100" border="0" />
 				<!--                  <a href="javascript:popImage('images/big_pic.jpg','Some Title')" title="header=[Zoom] body=[&nbsp;] fade=[on]"><img src="images/p3.jpg" alt="" title="" border="0" /></a> -->
 				<div class="thumbs">
 					<!--                  <a href="#" title="header=[Thumb1] body=[] fade=[on]"><img src="images/thumb1.jpg" alt="" title="" border="0" /></a> -->
@@ -22,7 +22,7 @@
 			<div class="details_big_box">
 				<div class="product_title_big"></div>
 				<div class="specifications">
-					Доступность: <span class="blue">In stock</span><br /> Описание: <span
+					Доступность: <span class="blue" id="avail"></span><br /> Описание: <span
 						class="blue" id="details_description"> </span><br />
 				</div>
 				<div class="prod_price_big">

@@ -19,6 +19,7 @@ public class URLConstants
 		public static final String PRODUCT = "product";
 		public static final String ERROR404 = "error404";
 		public static final String UPLOAD = "upload";
+		public static final String MY_PAGE = "my";
 	}
 
 	public class DoJson
@@ -56,5 +57,6 @@ public class URLConstants
 		public static final String PRODUCT = "product";
 		public static final String ERROR404 = "error404";
 		public static final String UPLOAD = "upload";
+		public static final String MY_PAGE = "my";
 	}
 }

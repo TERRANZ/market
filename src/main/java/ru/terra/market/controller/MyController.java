@@ -11,17 +11,11 @@ import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 
 @Controller
-public class MarketController
+public class MyController
 {
-	@RequestMapping(value = URLConstants.Pages.MARKET_HOME, method = RequestMethod.GET)
+	@RequestMapping(value = URLConstants.Pages.MY_PAGE, method = RequestMethod.GET)
 	public String mhome(Locale locale, Model model)
-	{	
-		return URLConstants.Views.MARKET_HOME;
-	}
-
-	@RequestMapping(value = URLConstants.Pages.ABOUT, method = RequestMethod.GET)
-	public String about(Locale locale, Model model)
 	{
-		return URLConstants.Views.ABOUT;
+		return URLConstants.Views.MY_PAGE;
 	}
 }
