@@ -5,7 +5,7 @@
 				<div class="title_box">Поиск</div>
 				<div class="border_box">
 					<input type="text" name="newsletter" class="newsletter_input"
-						value="что ищем?" /> <a href="#" class="join">поиск</a>
+						value="что ищем?" /> <a href="/market/search" class="join">поиск</a>
 				</div>
 
 
@@ -89,9 +89,7 @@
 			</div>
 
 			<div class="right_footer">
-				<a href="index.html">home</a> <a href="details.html">about</a> <a
-					href="details.html">sitemap</a> <a href="details.html">rss</a> <a
-					href="contact.html">contact us</a>
+				<a href="/market/market">home</a> <a href="/market/about">about</a> 
 			</div>
 
 		</div>
@@ -99,6 +97,6 @@
 
 	</div>
 	<!-- end of main_container -->
-	<script src="resources/js/market.js"></script>
+	<script src="resources/js/categories.js"></script>
 </body>
 </html>

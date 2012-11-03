@@ -117,9 +117,9 @@ function buildProductInfo(product) {
 				+ '" width=100 heigth=100 alt="" title="" border="0" /></a>';
 		htmlRet += '</div>';
 	}
-	htmlRet += '<div class="prod_price">';
-	htmlRet += '<span class="price">' + product.price + '</span>';
-	htmlRet += '</div>';
+//	htmlRet += '<div class="prod_price">';
+//	htmlRet += '<span class="price">' + product.price + '</span>';
+//	htmlRet += '</div>';
 	htmlRet += '</div>';
 	htmlRet += '<div class="prod_details_tab">';
 	htmlRet += '<a href="/market/product?id=' + product.id + '" class="prod_details">Подробности...</a>';
@@ -127,4 +127,27 @@ function buildProductInfo(product) {
 	htmlRet += '</div>';
 	// htmlRet += '</div>';
 	return htmlRet;
+}
+
+function loadCategoryProducts() {
+	var catId = $("#category_id").val();
+	$.ajax({
+		url : '/market/product/get.products.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			category : catId
+		},
+		success : function(data) {
+			if (data.size != -1) {
+				var htmlRet = "";
+				$.each(data.data, function(i, product) {
+					htmlRet += buildProductInfo(product);
+				});
+				$("#category_products").html(htmlRet);
+			}
+		}
+	});
+	
 }

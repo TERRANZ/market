@@ -37,7 +37,7 @@
 
 
 			<div id="logo">
-				<a href="index.html"><img src="resources/images/logo.png" alt="" title=""
+				<a href="/market/market"><img src="resources/images/logo.png" alt="" title=""
 					border="0" width="182" height="85" /></a>
 			</div>
 
@@ -50,7 +50,7 @@
 
 			<div id="menu_tab">
 				<ul class="menu">
-					<li><a href="index.html" class="nav"> Главная </a></li>
+					<li><a href="/market/market" class="nav"> Главная </a></li>
 					<li class="divider"></li>
 					<li><a href="#" class="nav">Товары</a></li>
 					<li class="divider"></li>

@@ -19,5 +19,4 @@
 
 </div>
 <!-- end of center content -->
-<script src="resources/js/market.js"></script>
 <%@include file="/WEB-INF/jsp/footer.jsp"%>

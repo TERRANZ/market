@@ -4,9 +4,8 @@
 <%@include file="/WEB-INF/jsp/header.jsp"%>
 <div class="center_content">
 
-	<div class="center_title_bar">Мой аккаунт</div>
-
+	<div class="center_title_bar">Поиск</div>
 </div>
 <!-- end of center content -->
-<script src="resources/js/my.js"></script>
+<script src="resources/js/search.js"></script>
 <%@include file="/WEB-INF/jsp/footer.jsp"%>

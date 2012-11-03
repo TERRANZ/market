@@ -65,6 +65,7 @@ public class ProductController
 				}
 			} catch (NumberFormatException e)
 			{
+				ret.size = -1;
 			}
 			try
 			{
