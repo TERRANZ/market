@@ -22,15 +22,26 @@ public class URLConstants
 
 	public class DoJson
 	{
-		public static final String LOGIN_DO_LOGIN_JSON = "/login/do.login.json";
-		public static final String LOGIN_DO_REGISTER_JSON = "/login/do.register.json";
-		public static final String LOGIN_DO_GET_MY_ID = "/login/do.getmyid.json";
+		public class Login
+		{
+			public static final String LOGIN_DO_LOGIN_JSON = "/login/do.login.json";
+			public static final String LOGIN_DO_REGISTER_JSON = "/login/do.register.json";
+			public static final String LOGIN_DO_GET_MY_ID = "/login/do.getmyid.json";
+			
+			public static final String LOGIN_PARAM_USER = "user";
+			public static final String LOGIN_PARAM_PASS = "pass";
+		}
 
 		public class Products
 		{
 			public static final String PRODUCT_GET_PRODUCTS = "/product/get.products.json";
 			public static final String PRODUCT_GET_MAIN_PRODUCTS = "/product/get.products.main.json";
 			public static final String PRODUCT_GET_PRODUCT = "/product/get.product.json";
+			
+			public static final String PRODUCT_PARAM_ID = "id";
+			public static final String PRODUCT_PARAM_CATEGORY = "category";
+			public static final String PRODUCT_PARAM_NAME = "name";
+			public static final String PRODUCT_PARAM_LIMIT = "limit";
 		}
 
 		public class Category
@@ -38,6 +49,7 @@ public class URLConstants
 			public static final String CATEGORY_GET_CATEGORY_TREE = "/category/get.category.tree.json";
 			public static final String CATEGORY_GET_CATEGORY = "/category/get.category.json";
 			public static final String CATEGORY_GET_BY_PARENT = "/category/get.categories.byparent.json";
+			public static final String CATEGORY_PARAM_ID = "id";
 		}
 	}
 

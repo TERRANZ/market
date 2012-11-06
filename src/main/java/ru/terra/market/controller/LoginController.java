@@ -68,14 +68,14 @@ public class LoginController
 		return data;
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.LOGIN_DO_LOGIN_JSON, method = RequestMethod.POST)
+	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = RequestMethod.POST)
 	public ResponseEntity<String> mobileLoginPost(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
 			@RequestParam(required = true, defaultValue = "") String pass)
 	{
 		return mobileLogin(request, user, pass);
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.LOGIN_DO_LOGIN_JSON, method = RequestMethod.GET)
+	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = RequestMethod.GET)
 	public ResponseEntity<String> mobileLoginGet(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
 			@RequestParam(required = true, defaultValue = "") String pass)
 	{
@@ -164,14 +164,14 @@ public class LoginController
 		return ResponceUtils.makeResponce(json);
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.LOGIN_DO_REGISTER_JSON, method = RequestMethod.POST)
+	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_REGISTER_JSON, method = RequestMethod.POST)
 	public ResponseEntity<String> register(HttpServletRequest request)
 	{
 		LoginDTO ret = new LoginDTO();
-		String login = request.getParameter("user");
+		String login = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_USER);
 		if (login != null && le.findUserByName(login) == null)
 		{
-			String pass = request.getParameter("pass");
+			String pass = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_PASS);
 			if (login != null && pass != null)
 			{
 				Integer retId = le.registerUser(login, pass);
@@ -207,7 +207,7 @@ public class LoginController
 		return URLConstants.Views.REGISTER;
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.LOGIN_DO_GET_MY_ID, method = RequestMethod.GET)
+	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_GET_MY_ID, method = RequestMethod.GET)
 	public ResponseEntity<String> getMyId(HttpServletRequest request)
 	{
 		LoginDTO ret = new LoginDTO();

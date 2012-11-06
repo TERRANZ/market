@@ -28,35 +28,58 @@ public class ProductController
 	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.Pages.PRODUCT, method = RequestMethod.GET)
-	public String product(HttpServletRequest request, Locale locale, Model model)
+	public String productGet(HttpServletRequest request, Locale locale, Model model)
 	{
-		if (request.getParameter("id") == null)
+		return product(request, locale, model);
+	}
+
+	@RequestMapping(value = URLConstants.Pages.PRODUCT, method = RequestMethod.POST)
+	public String productPost(HttpServletRequest request, Locale locale, Model model)
+	{
+		return product(request, locale, model);
+	}
+
+	private String product(HttpServletRequest request, Locale locale, Model model)
+	{
+		if (request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID) == null)
 			return URLConstants.Views.ERROR404;
 		Integer prodId = 0;
 		try
 		{
-			prodId = Integer.parseInt(request.getParameter("id"));
+			prodId = Integer.parseInt(request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID));
 			Product prod = pe.getProduct(prodId);
 			if (prod == null)
 				return URLConstants.Views.ERROR404;
 			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getCategory().getId());
-			model.addAttribute("id", prodId);
+			model.addAttribute(URLConstants.DoJson.Products.PRODUCT_PARAM_ID, prodId);
 		} catch (NumberFormatException e)
 		{
 			return URLConstants.Views.ERROR404;
 		}
 		return URLConstants.Views.PRODUCT;
+
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, method = RequestMethod.GET)
-	public ResponseEntity<String> getProducts(HttpServletRequest request)
+	public ResponseEntity<String> getProductsGet(HttpServletRequest request)
+	{
+		return getProducts(request);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, method = RequestMethod.POST)
+	public ResponseEntity<String> getProductsPost(HttpServletRequest request)
+	{
+		return getProducts(request);
+	}
+
+	private ResponseEntity<String> getProducts(HttpServletRequest request)
 	{
 		ProductListDTO ret = new ProductListDTO();
-		String cat = request.getParameter("category");
-		String name = request.getParameter("name");
+		String cat = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_CATEGORY);
+		String name = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_NAME);
 		if (cat != null)
 		{
-			String limit = request.getParameter("limit");
+			String limit = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_LIMIT);
 			Integer lim = -1;
 			try
 			{
@@ -135,7 +158,7 @@ public class ProductController
 
 	private ResponseEntity<String> getProduct(HttpServletRequest request)
 	{
-		String id = request.getParameter("id");
+		String id = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID);
 		ProductDTO ret = new ProductDTO();
 		if (id != null)
 		{
@@ -167,10 +190,21 @@ public class ProductController
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, method = RequestMethod.GET)
+	public ResponseEntity<String> getProductMainProductsGet(HttpServletRequest request)
+	{
+		return getProductMainProducts(request);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, method = RequestMethod.POST)
+	public ResponseEntity<String> getProductMainProductsPost(HttpServletRequest request)
+	{
+		return getProductMainProducts(request);
+	}
+
 	public ResponseEntity<String> getProductMainProducts(HttpServletRequest request)
 	{
 		ProductListDTO ret = new ProductListDTO();
-		String limit = request.getParameter("limit");
+		String limit = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_LIMIT);
 		Integer lim = -1;
 		try
 		{
@@ -197,4 +231,5 @@ public class ProductController
 		String json = new JSONSerializer().deepSerialize(ret);
 		return ResponceUtils.makeResponce(json);
 	}
+
 }

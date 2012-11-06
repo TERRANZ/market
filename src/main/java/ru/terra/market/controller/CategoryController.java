@@ -33,9 +33,20 @@ public class CategoryController
 	private CategoriesEngine ce;
 
 	@RequestMapping(value = URLConstants.Pages.CATEGORY, method = RequestMethod.GET)
-	public String category(HttpServletRequest request, Locale locale, Model model)
+	public String categoryGet(HttpServletRequest request, Locale locale, Model model)
 	{
-		String id = request.getParameter("id");
+		return category(request, locale, model);
+	}
+
+	@RequestMapping(value = URLConstants.Pages.CATEGORY, method = RequestMethod.POST)
+	public String categoryPost(HttpServletRequest request, Locale locale, Model model)
+	{
+		return category(request, locale, model);
+	}
+
+	private String category(HttpServletRequest request, Locale locale, Model model)
+	{
+		String id = request.getParameter(URLConstants.DoJson.Category.CATEGORY_PARAM_ID);
 		if (id != null)
 		{
 			// egory id = " + id);
@@ -61,19 +72,42 @@ public class CategoryController
 			}
 		}
 		return URLConstants.Views.CATEGORY;
+
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORY_TREE, method = RequestMethod.GET)
-	public ResponseEntity<String> getCategoryTree(HttpServletRequest request)
+	public ResponseEntity<String> getCategoryTreeGet(HttpServletRequest request)
+	{
+		return getCategoryTree(request);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORY_TREE, method = RequestMethod.POST)
+	public ResponseEntity<String> getCategoryTreePost(HttpServletRequest request)
+	{
+		return getCategoryTree(request);
+	}
+
+	private ResponseEntity<String> getCategoryTree(HttpServletRequest request)
 	{
 		String json = new JSONSerializer().deepSerialize(getCategoriesRecursive(1));
 		return ResponceUtils.makeResponce(json);
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_BY_PARENT, method = RequestMethod.GET)
-	public ResponseEntity<String> getCategoryByParent(HttpServletRequest request)
+	public ResponseEntity<String> getCategoryByParentGet(HttpServletRequest request)
 	{
-		String parentId = request.getParameter("id");
+		return getCategoryByParent(request);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_BY_PARENT, method = RequestMethod.POST)
+	public ResponseEntity<String> getCategoryByParentPost(HttpServletRequest request)
+	{
+		return getCategoryByParent(request);
+	}
+
+	private ResponseEntity<String> getCategoryByParent(HttpServletRequest request)
+	{
+		String parentId = request.getParameter(URLConstants.DoJson.Category.CATEGORY_PARAM_ID);
 		CategoryListDTO ret = new CategoryListDTO();
 		if (parentId == null)
 			parentId = "-1";
