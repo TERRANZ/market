@@ -29,6 +29,7 @@ import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityExceptio
  */
 public class ProductJpaController implements Serializable
 {
+	private static final long serialVersionUID = -6591200996197051814L;
 
 	public ProductJpaController(EntityManagerFactory emf)
 	{
@@ -354,6 +355,19 @@ public class ProductJpaController implements Serializable
 		{
 			Query q = em.createNativeQuery("select count(id) from product where category = " + cat.getId());
 			return (Long) q.getSingleResult();
+		} finally
+		{
+			em.close();
+		}
+	}
+
+	public List<Product> findProductsByName(String name)
+	{
+		EntityManager em = getEntityManager();
+		try
+		{
+			Query q = em.createNativeQuery("select * from product where name like %%" + name + "%%");
+			return q.getResultList();
 		} finally
 		{
 			em.close();

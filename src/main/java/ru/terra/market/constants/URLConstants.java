@@ -7,19 +7,17 @@ public class URLConstants
 	public class Pages
 	{
 		public static final String SPRING_LOGIN = "/market/do.login";
-		public static final String LOGIN = "login";
 		public static final String HOME = "/";
-		public static final String REGISTER = "registration";
-		public static final String MARKET_HOME = "market";
-		public static final String CATALOG = "catalog";
-		public static final String CATEGORY = "category";
-		public static final String PRICE = "price";
-		public static final String SEARCH = "search";
 		public static final String ABOUT = "about";
-		public static final String PRODUCT = "product";
+		public static final String CATEGORY = "category";
 		public static final String ERROR404 = "error404";
-		public static final String UPLOAD = "upload";
+		public static final String LOGIN = "login";
+		public static final String MARKET_HOME = "market";
 		public static final String MY_PAGE = "my";
+		public static final String PRODUCT = "product";
+		public static final String REGISTER = "registration";
+		public static final String SEARCH = "search";
+		public static final String UPLOAD = "upload";
 	}
 
 	public class DoJson
@@ -45,18 +43,15 @@ public class URLConstants
 
 	public class Views
 	{
-		public static final String LOGIN = "login";
-		public static final String HOME = "home";
-		public static final String REGISTER = "reg";
-		public static final String MARKET_HOME = "market";
-		public static final String CATALOG = "catalog";
-		public static final String CATEGORY = "category";
-		public static final String PRICE = "price";
-		public static final String SEARCH = "search";
 		public static final String ABOUT = "about";
-		public static final String PRODUCT = "product";
+		public static final String CATEGORY = "category";
 		public static final String ERROR404 = "error404";
-		public static final String UPLOAD = "upload";
+		public static final String LOGIN = "login";
+		public static final String MARKET_HOME = "market";
 		public static final String MY_PAGE = "my";
+		public static final String PRODUCT = "product";
+		public static final String REGISTER = "reg";
+		public static final String SEARCH = "search";
+		public static final String UPLOAD = "upload";
 	}
 }

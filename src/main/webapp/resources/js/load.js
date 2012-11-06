@@ -117,9 +117,9 @@ function buildProductInfo(product) {
 				+ '" width=100 heigth=100 alt="" title="" border="0" /></a>';
 		htmlRet += '</div>';
 	}
-//	htmlRet += '<div class="prod_price">';
-//	htmlRet += '<span class="price">' + product.price + '</span>';
-//	htmlRet += '</div>';
+	// htmlRet += '<div class="prod_price">';
+	// htmlRet += '<span class="price">' + product.price + '</span>';
+	// htmlRet += '</div>';
 	htmlRet += '</div>';
 	htmlRet += '<div class="prod_details_tab">';
 	htmlRet += '<a href="/market/product?id=' + product.id + '" class="prod_details">Подробности...</a>';
@@ -149,5 +149,33 @@ function loadCategoryProducts() {
 			}
 		}
 	});
-	
+}
+
+function loadSearch() {
+	var sname = $("#searchname").val();
+	$.ajax({
+		url : '/market/product/get.products.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		data : {
+			name : sname
+		},
+		success : function(data) {
+			if (data.size != -1) {
+				var htmlRet = "";
+				$.each(data.data, function(i, product) {
+					htmlRet += buildProductInfo(product);
+				});
+				$("#searched").html(htmlRet);
+			}
+		}
+	});
+}
+
+function loadLatest() {
+	var newHtml = '<div class="center_title_bar">Последние добавления</div>';
+	newHtml += '<div id="latest_adds"></div>';
+	$(".center_content").html(newHtml);
+	loadLatestAdds();
 }

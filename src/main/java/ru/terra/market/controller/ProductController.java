@@ -53,6 +53,7 @@ public class ProductController
 	{
 		ProductListDTO ret = new ProductListDTO();
 		String cat = request.getParameter("category");
+		String name = request.getParameter("name");
 		if (cat != null)
 		{
 			String limit = request.getParameter("limit");
@@ -84,6 +85,22 @@ public class ProductController
 					ret.size = -1;
 				}
 			} catch (NumberFormatException e)
+			{
+				ret.size = -1;
+			}
+		}
+		else if (name != null)
+		{
+			List<Product> products = pe.findProductsByName(name);
+			if (products != null)
+			{
+				for (Product p : products)
+				{
+					ret.data.add(new ProductDTO(p));
+				}
+				ret.size = ret.data.size();
+			}
+			else
 			{
 				ret.size = -1;
 			}

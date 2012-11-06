@@ -134,4 +134,24 @@ public class ProductsEngine
 		});
 		return ret;
 	}
+
+	public List<Product> findProductsByName(String name)
+	{
+		List<Product> ret = new ArrayList<Product>();
+		ret = pjc.findProductsByName(name);
+		Collections.sort(ret, new Comparator<Product>()
+		{
+			@Override
+			public int compare(Product o1, Product o2)
+			{
+				if (o1.getRating() < o2.getRating())
+					return -1;
+				else if (o1.getRating() == o2.getRating())
+					return 0;
+				else
+					return 1;
+			}
+		});
+		return ret;
+	}
 }

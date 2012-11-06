@@ -52,9 +52,9 @@
 				<ul class="menu">
 					<li><a href="/market/market" class="nav"> Главная </a></li>
 					<li class="divider"></li>
-					<li><a href="#" class="nav">Товары</a></li>
-					<li class="divider"></li>
-					<li><a href="#" class="nav">Новинки</a></li>
+<!-- 					<li><a href="#" class="nav">Товары</a></li> -->
+<!-- 					<li class="divider"></li> -->
+					<li><a href="#" onclick="loadLatest(); return false;" class="nav">Новинки</a></li>
 					<li class="divider"></li>
 					<% if (SessionHelper.isUserCurrentAuthorized()){ %>
 					<li><a href="/market/my" class="nav">Мой аккаунт</a></li>
