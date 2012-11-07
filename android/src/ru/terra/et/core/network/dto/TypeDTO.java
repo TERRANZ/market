@@ -1,7 +1,0 @@
-package ru.terra.et.core.network.dto;
-
-public class TypeDTO
-{
-	public Integer id;
-	public String name;
-}
