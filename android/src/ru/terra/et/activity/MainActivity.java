@@ -21,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -100,6 +102,17 @@ public class MainActivity extends RoboActivity
 
 		new ProductsByKindLoadingAsyncTask(this, lvRecent).execute("recent");
 		new ProductsByKindLoadingAsyncTask(this, lvRecommended).execute("recommeded");
+		OnItemClickListener l = new OnItemClickListener()
+		{
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3)
+			{
+				startActivity(new Intent(MainActivity.this, ProductActivity.class).putExtra(ProductActivity.PARAM_PRODUCTID, (Integer) v.getTag()));
+			}
+		};
+		lvRecent.setOnItemClickListener(l);
+		lvRecommended.setOnItemClickListener(l);
 
 	}
 

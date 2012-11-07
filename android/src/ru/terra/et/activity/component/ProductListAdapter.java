@@ -34,7 +34,7 @@ public class ProductListAdapter extends ArrayAdapter<ProductDTO>
 			PhotoDTO p = getItem(position).photos[0];
 			il.DisplayImage(p.path, ((ImageView) v.findViewById(R.id.iv_photo)), ImageType.full);
 		}
-
+		v.setTag(getItem(position).id);
 		return v;
 	}
 }
