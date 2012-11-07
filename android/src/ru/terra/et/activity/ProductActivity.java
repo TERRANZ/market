@@ -1,7 +1,7 @@
 package ru.terra.et.activity;
 
-import android.os.Bundle;
 import roboguice.activity.RoboActivity;
+import android.os.Bundle;
 
 public class ProductActivity extends RoboActivity
 {

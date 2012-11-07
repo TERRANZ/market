@@ -1,6 +1,5 @@
 package ru.terra.et.core.network.dto.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.terra.et.core.network.dto.photo.PhotoDTO;
