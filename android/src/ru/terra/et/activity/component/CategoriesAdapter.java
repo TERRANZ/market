@@ -1,12 +1,16 @@
 package ru.terra.et.activity.component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 import ru.terra.et.R;
 import ru.terra.et.core.cache.CategoriesCache;
 import ru.terra.et.core.network.dto.category.CategoryDTO;
+import ru.terra.et.util.Logger;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +23,7 @@ public class CategoriesAdapter extends BaseExpandableListAdapter
 
 	private Context myContext;
 	private HashMap<Integer, List<CategoryDTO>> categories = new HashMap<Integer, List<CategoryDTO>>();
-	private String[] arrGroupelements;
+	private Integer[] arrGroupelements;
 	private CategoryDTO[][] arrChildelements;
 
 	public class ViewHolder
@@ -41,19 +45,36 @@ public class CategoriesAdapter extends BaseExpandableListAdapter
 	{
 		myContext = context;
 
-		for (CategoryDTO stso : CategoriesCache.getInstance().getAll())
+		List<CategoryDTO> cats = CategoriesCache.getInstance().getAll();
+		Collections.sort(cats, new Comparator<CategoryDTO>()
 		{
-			if (categories.containsKey(stso.parent))
+
+			@Override
+			public int compare(CategoryDTO lhs, CategoryDTO rhs)
 			{
-				categories.get(stso.parent).add(stso);
+				if (lhs.id < rhs.id)
+					return -1;
+				else if (lhs.id == rhs.id)
+					return 0;
+				else
+					return 1;
 			}
-			else
-			{
-				categories.put(stso.parent, new ArrayList<CategoryDTO>());
-				categories.get(stso.parent).add(stso);
-			}
+		});
+		for (CategoryDTO stso : cats)
+		{
+			if (stso.parent != 0)
+				if (categories.containsKey(stso.parent))
+				{
+					categories.get(stso.parent).add(stso);
+				}
+				else
+				{
+					categories.put(stso.parent, new ArrayList<CategoryDTO>());
+					categories.get(stso.parent).add(stso);
+				}
 		}
-		arrGroupelements = categories.keySet().toArray(new String[categories.keySet().size()]);
+		arrGroupelements = categories.keySet().toArray(new Integer[categories.keySet().size()]);
+		Arrays.sort(arrGroupelements);
 		arrChildelements = new CategoryDTO[arrGroupelements.length][];
 		for (int i = 0; i < arrGroupelements.length; i++)
 		{
@@ -126,7 +147,12 @@ public class CategoriesAdapter extends BaseExpandableListAdapter
 		}
 
 		TextView tvGroupName = (TextView) convertView.findViewById(R.id.tv_signal_type_item_header_groupname);
-		tvGroupName.setText(arrGroupelements[groupPosition]);
+		Integer id = arrGroupelements[groupPosition];
+		Logger.i("getGroupView", "id = " + id);
+		String name = "Товары";
+		if (id > 0)
+			name = CategoriesCache.getInstance().getFromCache(id).name;
+		tvGroupName.setText(name);
 
 		return convertView;
 	}

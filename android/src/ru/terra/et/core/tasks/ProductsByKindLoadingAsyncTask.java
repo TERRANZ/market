@@ -30,6 +30,7 @@ public class ProductsByKindLoadingAsyncTask extends AsyncTask<String, Void, Prod
 	@Override
 	protected void onPostExecute(ProductDTO[] result)
 	{
-		listView.setAdapter(new ProductListAdapter(activity, R.layout.i_product_list_item, result));
+		if (result != null)
+			listView.setAdapter(new ProductListAdapter(activity, R.layout.i_product_list_item, result));
 	}
 }

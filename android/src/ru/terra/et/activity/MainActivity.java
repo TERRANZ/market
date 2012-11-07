@@ -5,7 +5,9 @@ import java.util.List;
 
 import roboguice.activity.RoboActivity;
 import ru.terra.et.R;
+import ru.terra.et.activity.component.CategoriesAdapter.ViewHolder;
 import ru.terra.et.core.constants.ActivityConstants;
+import ru.terra.et.core.tasks.CategoriesLoadingAsyncTask;
 import ru.terra.et.core.tasks.ProductsByKindLoadingAsyncTask;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +39,7 @@ public class MainActivity extends RoboActivity
 	private List<View> pages = new ArrayList<View>();
 	private String[] titles = null;
 	private ListView lvRecent, lvRecommended, lvSearch;
+	private ExpandableListView catsLV;
 
 	private class MainAcvitiyAdapter extends PagerAdapter
 	{
@@ -90,6 +95,7 @@ public class MainActivity extends RoboActivity
 		lvRecent = (ListView) main.findViewById(R.id.lv_recent);
 		lvRecommended = (ListView) main.findViewById(R.id.lv_recommend);
 		lvSearch = (ListView) search.findViewById(R.id.lv_search_result);
+		catsLV = (ExpandableListView) categories.findViewById(R.id.elv_categories);
 
 		pages.add(main);
 		pages.add(categories);
@@ -113,7 +119,17 @@ public class MainActivity extends RoboActivity
 		};
 		lvRecent.setOnItemClickListener(l);
 		lvRecommended.setOnItemClickListener(l);
-
+		new CategoriesLoadingAsyncTask(this, catsLV).execute();
+		catsLV.setOnChildClickListener(new OnChildClickListener()
+		{
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+			{
+				ViewHolder vh = (ViewHolder) v.getTag();
+				startActivity(new Intent(MainActivity.this, CategoryActivity.class).putExtra(CategoryActivity.PARAM_ID, vh.id));
+				return false;
+			}
+		});
 	}
 
 	private void firstStart()

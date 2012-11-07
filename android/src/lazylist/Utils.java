@@ -5,7 +5,6 @@ import java.io.OutputStream;
 
 import ru.terra.et.util.Logger;
 
-
 public class Utils
 {
 	public static void CopyStream(InputStream is, OutputStream os)

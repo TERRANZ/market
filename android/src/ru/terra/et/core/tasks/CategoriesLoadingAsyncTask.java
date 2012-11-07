@@ -1,22 +1,22 @@
 package ru.terra.et.core.tasks;
 
-import ru.terra.et.core.WorkIsDoneListener;
-import ru.terra.et.core.constants.ActivityConstants;
+import ru.terra.et.activity.component.CategoriesAdapter;
 import ru.terra.et.provider.CategoriesProvider;
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.widget.ExpandableListView;
 
 public class CategoriesLoadingAsyncTask extends AsyncTask<Void, Void, Void>
 {
 
 	private Activity activity;
-	private WorkIsDoneListener w;
+	private ExpandableListView expandableListView;
 
-	public CategoriesLoadingAsyncTask(Activity activity, WorkIsDoneListener w)
+	public CategoriesLoadingAsyncTask(Activity activity, ExpandableListView expandableListView)
 	{
 		super();
+		this.expandableListView = expandableListView;
 		this.activity = activity;
-		this.w = w;
 	}
 
 	@Override
@@ -29,7 +29,6 @@ public class CategoriesLoadingAsyncTask extends AsyncTask<Void, Void, Void>
 	@Override
 	protected void onPostExecute(Void result)
 	{
-		if (w != null)
-			w.workIsDone(ActivityConstants.CATEGORIES_LOADED);
+		expandableListView.setAdapter(new CategoriesAdapter(activity));
 	}
 }

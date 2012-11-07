@@ -56,7 +56,7 @@ public class LoginProvider extends JsonAbstractProvider
 
 	public void doStoredLogin()
 	{
-		
+
 	}
 
 }

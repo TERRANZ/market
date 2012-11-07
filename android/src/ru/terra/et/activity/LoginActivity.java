@@ -30,7 +30,7 @@ public class LoginActivity extends RoboActivity
 		{
 			@Override
 			public void workIsDone(int action, String... val)
-			{ 
+			{
 				if (Boolean.parseBoolean(val[0]))
 				{
 					setResult(RESULT_OK);

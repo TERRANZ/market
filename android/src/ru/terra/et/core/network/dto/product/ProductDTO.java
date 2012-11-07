@@ -2,7 +2,6 @@ package ru.terra.et.core.network.dto.product;
 
 import ru.terra.et.core.network.dto.photo.PhotoDTO;
 
-
 public class ProductDTO
 {
 	public Integer id;

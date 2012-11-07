@@ -1,8 +1,5 @@
 package ru.terra.et.provider;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.http.message.BasicNameValuePair;
 
 import ru.terra.et.core.constants.URLConstants;
@@ -24,7 +21,7 @@ public class ProductsProvider extends JsonAbstractProvider
 	public ProductDTO[] getProductsByCategory(Integer cid)
 	{
 		String json = "";
-		json = httpReqHelper.runJsonRequest(URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, new BasicNameValuePair(
+		json = httpReqHelper.runJsonRequest(URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, new BasicNameValuePair(
 				URLConstants.DoJson.Products.PRODUCT_PARAM_CATEGORY, cid.toString()));
 		ProductListDTO ret = new Gson().fromJson(json, ProductListDTO.class);
 		if (ret != null && ret.data != null && ret.data.length > 0)
@@ -38,7 +35,7 @@ public class ProductsProvider extends JsonAbstractProvider
 	public ProductDTO getProduct(Integer id)
 	{
 		String json = "";
-		json = httpReqHelper.runJsonRequest(URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, new BasicNameValuePair(
+		json = httpReqHelper.runJsonRequest(URLConstants.DoJson.Products.PRODUCT_GET_PRODUCT, new BasicNameValuePair(
 				URLConstants.DoJson.Products.PRODUCT_PARAM_ID, id.toString()));
 		return new Gson().fromJson(json, ProductDTO.class);
 	}
