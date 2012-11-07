@@ -35,6 +35,6 @@ public class ProductListAdapter extends ArrayAdapter<ProductDTO>
 			il.DisplayImage(p.path, ((ImageView) v.findViewById(R.id.iv_photo)), ImageType.full);
 		}
 
-		return super.getView(position, convertView, parent);
+		return v;
 	}
 }
