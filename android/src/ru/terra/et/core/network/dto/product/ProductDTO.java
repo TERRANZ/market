@@ -1,7 +1,5 @@
 package ru.terra.et.core.network.dto.product;
 
-import java.util.List;
-
 import ru.terra.et.core.network.dto.photo.PhotoDTO;
 
 
@@ -14,5 +12,5 @@ public class ProductDTO
 	public Integer category;
 	public boolean ok = true;
 	public Integer price;
-	public List<PhotoDTO> photos;
+	public PhotoDTO[] photos;
 }

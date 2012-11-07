@@ -6,11 +6,14 @@ import android.os.Bundle;
 public class ProductActivity extends RoboActivity
 {
 
+	public static final String PARAM_PRODUCTID = "product_id";
+	public static final String PARAM_CATEGORYID = "category_id";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
 	}
 
 }

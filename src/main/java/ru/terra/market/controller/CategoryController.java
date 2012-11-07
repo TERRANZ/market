@@ -137,4 +137,26 @@ public class CategoryController
 		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getCategory(parent)));
 	}
 
+	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORIES, method = RequestMethod.GET)
+	public ResponseEntity<String> getCategoriestGet(HttpServletRequest request)
+	{
+		return getCategories(request);
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORIES, method = RequestMethod.POST)
+	public ResponseEntity<String> getCategoriestPost(HttpServletRequest request)
+	{
+		return getCategories(request);
+	}
+
+	public ResponseEntity<String> getCategories(HttpServletRequest request)
+	{
+		CategoryListDTO ret = new CategoryListDTO();
+		for (Category cat : ce.getCategories())
+			ret.data.add(new CategoryDTO(cat));
+		ret.size = ret.data.size();
+		String json = new JSONSerializer().deepSerialize(ret);
+		return ResponceUtils.makeResponce(json);
+	}
+
 }

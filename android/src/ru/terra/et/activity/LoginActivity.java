@@ -3,7 +3,7 @@ package ru.terra.et.activity;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 import ru.terra.et.R;
-import ru.terra.et.core.network.WorkIsDoneListener;
+import ru.terra.et.core.WorkIsDoneListener;
 import ru.terra.et.core.tasks.LoginAsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -28,7 +28,6 @@ public class LoginActivity extends RoboActivity
 	{
 		new LoginAsyncTask(this, new WorkIsDoneListener()
 		{
-
 			@Override
 			public void workIsDone(int action, String... val)
 			{ 

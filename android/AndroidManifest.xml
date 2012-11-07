@@ -25,10 +25,11 @@
             android:name=".core.db.ProjectContentProvider"
             android:authorities="ru.terra.et.entity" >
         </provider>
-        <activity android:name=".activity.LoginActivity"></activity>
-        <activity android:name=".activity.CategoryActivity"></activity>
-        <activity android:name=".activity.ProductActivity"></activity>
-        <activity android:name=".activity.SearchActivity"></activity>
+
+        <activity android:name=".activity.LoginActivity" >
+        </activity>
+        <activity android:name=".activity.ProductActivity" >
+        </activity>
     </application>
 
 </manifest>

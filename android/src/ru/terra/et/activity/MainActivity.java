@@ -6,6 +6,7 @@ import java.util.List;
 import roboguice.activity.RoboActivity;
 import ru.terra.et.R;
 import ru.terra.et.core.constants.ActivityConstants;
+import ru.terra.et.core.tasks.ProductsByKindLoadingAsyncTask;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -96,6 +97,10 @@ public class MainActivity extends RoboActivity
 		vp.setAdapter(adapter);
 		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.tpi_main_activity);
 		titleIndicator.setViewPager(vp);
+
+		new ProductsByKindLoadingAsyncTask(this, lvRecent).execute("recent");
+		new ProductsByKindLoadingAsyncTask(this, lvRecommended).execute("recommeded");
+
 	}
 
 	private void firstStart()

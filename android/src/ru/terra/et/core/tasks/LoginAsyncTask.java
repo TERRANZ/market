@@ -1,7 +1,7 @@
 package ru.terra.et.core.tasks;
 
+import ru.terra.et.core.WorkIsDoneListener;
 import ru.terra.et.core.constants.ActivityConstants;
-import ru.terra.et.core.network.WorkIsDoneListener;
 import ru.terra.et.provider.LoginProvider;
 import android.app.Activity;
 import android.app.ProgressDialog;
