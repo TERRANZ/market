@@ -117,9 +117,9 @@ function buildProductInfo(product) {
 				+ '" width=100 heigth=100 alt="" title="" border="0" /></a>';
 		htmlRet += '</div>';
 	}
-	// htmlRet += '<div class="prod_price">';
-	// htmlRet += '<span class="price">' + product.price + '</span>';
-	// htmlRet += '</div>';
+	htmlRet += '<div class="prod_price">';
+	htmlRet += '<span class="price">' + product.price + ' руб.</span>';
+	htmlRet += '</div>';
 	htmlRet += '</div>';
 	htmlRet += '<div class="prod_details_tab">';
 	htmlRet += '<a href="/market/product?id=' + product.id + '" class="prod_details">Подробности...</a>';

@@ -52,15 +52,28 @@ public class Product implements Serializable
 	private int rating;
 	@Basic(optional = false)
 	@Column(name = "price", nullable = false)
-	private int price;
+	private Integer price;
 	@JoinColumn(name = "category", referencedColumnName = "id", nullable = false)
 	@ManyToOne(optional = false)
 	private Category category;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
 	private List<Photo> photoList;
+	@Basic(optional = true)
+	@Column(name = "comment", nullable = true, length = 512)
+	private String comment;
 
 	public Product()
 	{
+	}
+
+	public String getComment()
+	{
+		return comment;
+	}
+
+	public void setComment(String comment)
+	{
+		this.comment = comment;
 	}
 
 	public Product(Integer id)

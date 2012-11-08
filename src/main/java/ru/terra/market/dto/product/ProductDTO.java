@@ -17,6 +17,7 @@ public class ProductDTO
 	public boolean ok = true;
 	public Integer price;
 	public List<PhotoDTO> photos;
+	public String comment;
 
 	public ProductDTO()
 	{
@@ -37,5 +38,7 @@ public class ProductDTO
 				this.photos.add(new PhotoDTO(photo));
 			}
 		}
+		this.comment = p.getComment();
+		this.price = p.getPrice();
 	}
 }

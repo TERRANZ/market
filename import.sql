@@ -57,9 +57,11 @@ CREATE TABLE `photo` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `photo` */
+
+insert  into `photo`(`id`,`path`,`name`,`product_id`) values (2,'/resources/images/product/09_1920x1080.jpg','awd',19),(3,'/resources/images/product/1v9d1fghr869.jpg','',19),(4,'/resources/images/product/09_1920x1080.jpg','',6),(5,'/resources/images/product/cncuquxx4rnw.jpg','',6),(6,'/resources/images/product/1v9d1fghr869.jpg','',6);
 
 /*Table structure for table `product` */
 
@@ -72,6 +74,7 @@ CREATE TABLE `product` (
   `rating` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `price` int(10) unsigned NOT NULL DEFAULT '0',
+  `comment` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_product_category` (`category`),
   CONSTRAINT `FK_product_category` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
@@ -79,7 +82,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`avail`,`name`,`rating`,`category`,`price`) values (1,0,'Электроплита мечта',1,108,0),(2,0,'Электроплита малютка',2,108,0),(3,0,'Ногтевая студия микма',1,114,0),(4,0,'Машинка для обработки ногтей',1,114,0),(5,0,'Кофемолка микма',1,111,0),(6,0,'Кофемолка бинатон',0,111,0),(7,0,'Блендер малютка',1,112,0),(8,0,'Блендер бинатон',1,112,0),(9,0,'Электробритва микма',1,113,0),(10,0,'Электробритва браун',1,113,0),(11,0,'Шнур hdmi-hdmi',1,103,0),(12,0,'Шнур 3,5-3,5 1 метр',1,103,0),(13,0,'Шнур скарт-джек',1,103,0),(14,0,'Телефон самсунг',1,106,0),(15,0,'Телефон LG',0,106,0),(16,0,'Зарядка для телефона самсунг',1,107,0),(17,0,'Шнур для телефона LG',1,107,0),(18,0,'Радиоприёмник лира 1',1,105,0),(19,0,'Радиоприёмник лира 2',1,105,0),(20,0,'Припой пос-60',1,116,0),(21,0,'Флюс',1,116,0),(22,0,'Паяльник 40 ватт',5,117,0),(23,0,'Плата макетная 30х30см',5,117,0);
+insert  into `product`(`id`,`avail`,`name`,`rating`,`category`,`price`,`comment`) values (1,0,'Электроплита мечта',1,108,0,NULL),(2,0,'Электроплита малютка',2,108,0,NULL),(3,0,'Ногтевая студия микма',1,114,0,NULL),(4,0,'Машинка для обработки ногтей',1,114,0,NULL),(5,0,'Кофемолка микма',1,111,0,NULL),(6,0,'Кофемолка бинатон',0,111,0,NULL),(7,0,'Блендер малютка',1,112,0,NULL),(8,0,'Блендер бинатон',1,112,0,NULL),(9,0,'Электробритва микма',1,113,0,NULL),(10,0,'Электробритва браун',1,113,0,NULL),(11,0,'Шнур hdmi-hdmi',1,103,0,NULL),(12,0,'Шнур 3,5-3,5 1 метр',1,103,0,NULL),(13,0,'Шнур скарт-джек',1,103,0,NULL),(14,0,'Телефон самсунг',1,106,0,NULL),(15,0,'Телефон LG',0,106,0,NULL),(16,0,'Зарядка для телефона самсунг',1,107,0,NULL),(17,0,'Шнур для телефона LG',1,107,0,NULL),(18,0,'Радиоприёмник лира 1',1,105,0,NULL),(19,0,'Радиоприёмник лира 2',1,105,0,NULL),(20,0,'Припой пос-60',1,116,0,NULL),(21,0,'Флюс',1,116,0,NULL),(22,0,'Паяльник 40 ватт',5,117,0,NULL),(23,0,'Плата макетная 30х30см',5,117,0,NULL);
 
 /*Table structure for table `settings` */
 
@@ -107,8 +110,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
-
-insert  into `users`(`id`,`level`,`login`,`password`) values (1,NULL,'terranz','6b3a88ee6760970401501e24ed03a3db87c54e8901450a4aae46614ff06f855d');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

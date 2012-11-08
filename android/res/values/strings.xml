@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">awd</string>
+    <string name="app_name">РадиоЭлектроТовары</string>
     <string name="pull_to_refresh_pull_label">Потяните для обновления</string>
     <string name="pull_to_refresh_release_label">Отпустите для обновления</string>
     <string name="pull_to_refresh_refreshing_label">Обновляем…</string>
     <string name="cache_dir">et_cache</string>    
-    <string name="server_address">http://192.168.1.1:8080/market</string>
+    <string name="server_address">http://terranout.ath.cx/market</string>
     <string name="login_form_uname">Имя пользователя</string>
     <string name="login_form_password">Пароль</string>
     <string name="login_form_login">Вход</string>
