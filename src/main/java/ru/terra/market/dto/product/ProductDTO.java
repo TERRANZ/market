@@ -31,12 +31,16 @@ public class ProductDTO
 		this.avail = p.getAvail();
 		this.category = p.getCategory().getId();
 		this.photos = new ArrayList<PhotoDTO>();
-		if (p.getPhotoList() != null)
+		if (p.getPhotoList().size() > 0)
 		{
 			for (Photo photo : p.getPhotoList())
 			{
 				this.photos.add(new PhotoDTO(photo));
 			}
+		}
+		else
+		{
+			this.photos.add(new PhotoDTO(this.id));
 		}
 		this.comment = p.getComment();
 		this.price = p.getPrice();

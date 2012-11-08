@@ -48,7 +48,7 @@ public class PhotoJpaController implements Serializable
 			if (productId != null)
 			{
 				productId = em.getReference(productId.getClass(), productId.getId());
-				photo.setProductId(productId);
+				photo.setProduct(productId);
 			}
 			em.persist(photo);
 			if (productId != null)
@@ -79,7 +79,7 @@ public class PhotoJpaController implements Serializable
 			if (productIdNew != null)
 			{
 				productIdNew = em.getReference(productIdNew.getClass(), productIdNew.getId());
-				photo.setProductId(productIdNew);
+				photo.setProduct(productIdNew);
 			}
 			photo = em.merge(photo);
 			if (productIdOld != null && !productIdOld.equals(productIdNew))

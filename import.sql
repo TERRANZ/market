@@ -54,14 +54,15 @@ CREATE TABLE `photo` (
   `path` varchar(512) NOT NULL,
   `name` varchar(128) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `photo` */
-
-insert  into `photo`(`id`,`path`,`name`,`product_id`) values (2,'/resources/images/product/09_1920x1080.jpg','awd',19),(3,'/resources/images/product/1v9d1fghr869.jpg','',19),(4,'/resources/images/product/09_1920x1080.jpg','',6),(5,'/resources/images/product/cncuquxx4rnw.jpg','',6),(6,'/resources/images/product/1v9d1fghr869.jpg','',6);
 
 /*Table structure for table `product` */
 
@@ -73,7 +74,7 @@ CREATE TABLE `product` (
   `name` varchar(512) NOT NULL,
   `rating` int(11) NOT NULL,
   `category` int(11) NOT NULL,
-  `price` int(10) unsigned NOT NULL DEFAULT '0',
+  `price` int(11) unsigned NOT NULL DEFAULT '0',
   `comment` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_product_category` (`category`),
@@ -82,7 +83,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`avail`,`name`,`rating`,`category`,`price`,`comment`) values (1,0,'Электроплита мечта',1,108,0,NULL),(2,0,'Электроплита малютка',2,108,0,NULL),(3,0,'Ногтевая студия микма',1,114,0,NULL),(4,0,'Машинка для обработки ногтей',1,114,0,NULL),(5,0,'Кофемолка микма',1,111,0,NULL),(6,0,'Кофемолка бинатон',0,111,0,NULL),(7,0,'Блендер малютка',1,112,0,NULL),(8,0,'Блендер бинатон',1,112,0,NULL),(9,0,'Электробритва микма',1,113,0,NULL),(10,0,'Электробритва браун',1,113,0,NULL),(11,0,'Шнур hdmi-hdmi',1,103,0,NULL),(12,0,'Шнур 3,5-3,5 1 метр',1,103,0,NULL),(13,0,'Шнур скарт-джек',1,103,0,NULL),(14,0,'Телефон самсунг',1,106,0,NULL),(15,0,'Телефон LG',0,106,0,NULL),(16,0,'Зарядка для телефона самсунг',1,107,0,NULL),(17,0,'Шнур для телефона LG',1,107,0,NULL),(18,0,'Радиоприёмник лира 1',1,105,0,NULL),(19,0,'Радиоприёмник лира 2',1,105,0,NULL),(20,0,'Припой пос-60',1,116,0,NULL),(21,0,'Флюс',1,116,0,NULL),(22,0,'Паяльник 40 ватт',5,117,0,NULL),(23,0,'Плата макетная 30х30см',5,117,0,NULL);
+insert  into `product`(`id`,`avail`,`name`,`rating`,`category`,`price`,`comment`) values (1,0,'Электроплита мечта',1,108,0,'awdawd'),(2,0,'Электроплита малютка',2,108,0,'awdawd'),(3,0,'Ногтевая студия микма',1,114,0,'awdawd'),(4,0,'Машинка для обработки ногтей',1,114,0,'awdawd'),(5,0,'Кофемолка микма',1,111,0,'awdawd'),(6,0,'Кофемолка бинатон',0,111,0,'awdawd'),(7,0,'Блендер малютка',1,112,0,'awdawd'),(8,0,'Блендер бинатон',1,112,0,'awdawd'),(9,0,'Электробритва микма',1,113,0,'awdawd'),(10,0,'Электробритва браун',1,113,0,'awdawd'),(11,0,'Шнур hdmi-hdmi',1,103,0,'awdawd'),(12,0,'Шнур 3,5-3,5 1 метр',1,103,0,'awdawd'),(13,0,'Шнур скарт-джек',1,103,0,'awdawd'),(14,0,'Телефон самсунг',1,106,0,'awdawd'),(15,0,'Телефон LG',0,106,0,'awdawd'),(16,0,'Зарядка для телефона самсунг',1,107,0,'awdawd'),(17,0,'Шнур для телефона LG',1,107,0,'awdawd'),(18,0,'Радиоприёмник лира 1',1,105,0,'awdawd'),(19,0,'Радиоприёмник лира 2',1,105,0,'awdawd'),(20,0,'Припой пос-60',1,116,0,'awdawd'),(21,0,'Флюс',1,116,0,'awdawd'),(22,0,'Паяльник 40 ватт',5,117,0,'awdawd'),(23,0,'Плата макетная 30х30см',5,117,0,'awdawd');
 
 /*Table structure for table `settings` */
 

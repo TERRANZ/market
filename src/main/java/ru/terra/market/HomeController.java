@@ -18,7 +18,7 @@ public class HomeController
 	@RequestMapping(value = URLConstants.Pages.HOME, method = RequestMethod.GET)
 	public String home(Locale locale, Model model)
 	{
-		return "redirect:/"+URLConstants.Views.MARKET_HOME;
+		return "redirect:/" + URLConstants.Views.MARKET_HOME;
 	}
 
 }

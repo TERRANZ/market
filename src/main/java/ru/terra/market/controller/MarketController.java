@@ -15,7 +15,7 @@ public class MarketController
 {
 	@RequestMapping(value = URLConstants.Pages.MARKET_HOME, method = RequestMethod.GET)
 	public String mhome(Locale locale, Model model)
-	{	
+	{
 		return URLConstants.Views.MARKET_HOME;
 	}
 

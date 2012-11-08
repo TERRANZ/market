@@ -76,7 +76,7 @@ public class ProductJpaController implements Serializable
 			for (Photo photoListPhoto : product.getPhotoList())
 			{
 				Product oldProductIdOfPhotoListPhoto = photoListPhoto.getProduct();
-				photoListPhoto.setProductId(product);
+				photoListPhoto.setProduct(product);
 				photoListPhoto = em.merge(photoListPhoto);
 				if (oldProductIdOfPhotoListPhoto != null)
 				{
@@ -158,7 +158,7 @@ public class ProductJpaController implements Serializable
 				if (!photoListOld.contains(photoListNewPhoto))
 				{
 					Product oldProductIdOfPhotoListNewPhoto = photoListNewPhoto.getProduct();
-					photoListNewPhoto.setProductId(product);
+					photoListNewPhoto.setProduct(product);
 					photoListNewPhoto = em.merge(photoListNewPhoto);
 					if (oldProductIdOfPhotoListNewPhoto != null && !oldProductIdOfPhotoListNewPhoto.equals(product))
 					{

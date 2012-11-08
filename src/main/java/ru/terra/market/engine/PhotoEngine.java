@@ -29,7 +29,7 @@ public class PhotoEngine
 		Photo p = new Photo();
 		p.setName(name != null ? name : "Без имени");
 		p.setPath(path);
-		p.setProductId(pe.getProduct(productId));
+		p.setProduct(pe.getProduct(productId));
 		pjc.create(p);
 		return p;
 	}

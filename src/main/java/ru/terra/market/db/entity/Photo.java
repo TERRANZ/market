@@ -5,18 +5,7 @@
 package ru.terra.market.db.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,6 +35,9 @@ public class Photo implements Serializable
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
 	@ManyToOne(optional = false)
 	private Product productId;
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+	@ManyToOne(optional = false)
+	private User userId;
 
 	public Photo()
 	{
@@ -97,9 +89,19 @@ public class Photo implements Serializable
 		return productId;
 	}
 
-	public void setProductId(Product productId)
+	public void setProduct(Product product)
 	{
-		this.productId = productId;
+		this.productId = product;
+	}
+
+	public User getUser()
+	{
+		return userId;
+	}
+
+	public void setUserId(User userId)
+	{
+		this.userId = userId;
 	}
 
 	@Override
@@ -129,7 +131,7 @@ public class Photo implements Serializable
 	@Override
 	public String toString()
 	{
-		return "ru.terra.market.db.entity.controller.Photo[ id=" + id + " ]";
+		return "ru.terra.market.db.entity.Photo[ id=" + id + " ]";
 	}
 
 }

@@ -27,7 +27,7 @@ public class URLConstants
 			public static final String LOGIN_DO_LOGIN_JSON = "/login/do.login.json";
 			public static final String LOGIN_DO_REGISTER_JSON = "/login/do.register.json";
 			public static final String LOGIN_DO_GET_MY_ID = "/login/do.getmyid.json";
-			
+
 			public static final String LOGIN_PARAM_USER = "user";
 			public static final String LOGIN_PARAM_PASS = "pass";
 		}
@@ -37,7 +37,7 @@ public class URLConstants
 			public static final String PRODUCT_GET_PRODUCTS = "/product/get.products.json";
 			public static final String PRODUCT_GET_MAIN_PRODUCTS = "/product/get.products.main.json";
 			public static final String PRODUCT_GET_PRODUCT = "/product/get.product.json";
-			
+
 			public static final String PRODUCT_PARAM_ID = "id";
 			public static final String PRODUCT_PARAM_CATEGORY = "category";
 			public static final String PRODUCT_PARAM_NAME = "name";
