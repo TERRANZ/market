@@ -192,7 +192,7 @@ public class HttpRequestHelper
 		if (localUrl == null)
 			return getNoPhotoBitmap(type);
 
-		String url = baseAddress + localUrl;
+		String url = baseAddress.substring(0, baseAddress.lastIndexOf('/')) + localUrl;
 		switch (type)
 		{
 		case thumbnail:
