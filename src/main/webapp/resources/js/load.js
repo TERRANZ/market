@@ -92,6 +92,7 @@ function loadProduct() {
 			} else {
 				$("#product_img_main").attr("src", '/market/qr?product=' + product.id);
 			}
+			$("#details_description").html(product.comment);
 		}
 	});
 

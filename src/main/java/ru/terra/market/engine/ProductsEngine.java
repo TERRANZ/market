@@ -9,8 +9,11 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.controller.CategoryController;
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
@@ -21,6 +24,9 @@ import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityExceptio
 @Component
 public class ProductsEngine
 {
+
+	private static final Logger logger = LoggerFactory.getLogger(ProductsEngine.class);
+
 	private ProductJpaController pjc;
 	private CategoryJpaController cjc;
 
@@ -90,29 +96,47 @@ public class ProductsEngine
 
 	public List<Product> getProducts(Integer catId, Integer lim)
 	{
+		List<Product> ret = new ArrayList<Product>();
+		ret.addAll(loadProductsFromCategory(catId, lim));
+		if (ret.size() > 0)
+		{
+			Collections.sort(ret, new Comparator<Product>()
+			{
+				@Override
+				public int compare(Product o1, Product o2)
+				{
+					if (o1.getRating() < o2.getRating())
+						return -1;
+					else if (o1.getRating() == o2.getRating())
+						return 0;
+					else
+						return 1;
+				}
+			});
+		}
+		return ret;
+	}
+
+	private List<Product> loadProductsFromCategory(Integer catId, Integer lim)
+	{
+		//logger.info("loadProductsFromCategory : category " + catId);
 		Category cat = cjc.findCategory(catId);
+		List<Product> ret = new ArrayList<Product>();
 		if (cat != null)
 		{
-			List<Product> ret = pjc.findProductByCategory(cat, lim);
-			if (ret != null)
+			List<Product> prods = pjc.findProductByCategory(cat, lim);
+			if (prods != null)
 			{
-				Collections.sort(ret, new Comparator<Product>()
-				{
-					@Override
-					public int compare(Product o1, Product o2)
-					{
-						if (o1.getRating() < o2.getRating())
-							return -1;
-						else if (o1.getRating() == o2.getRating())
-							return 0;
-						else
-							return 1;
-					}
-				});
-				return ret;
+				ret.addAll(prods);
+				//logger.info("loaded " + prods.size() + " products in category");
+			}
+			for (Category c : cjc.findCategoryByParent(cat.getId()))
+			{
+				//logger.info("loading products from " + c.getId() + " category ");
+				ret.addAll(loadProductsFromCategory(c.getId(), lim));
 			}
 		}
-		return null;
+		return ret;
 	}
 
 	public List<Product> getAllProductsLimited(Integer lim)
