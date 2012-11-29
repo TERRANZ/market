@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 
 @Controller

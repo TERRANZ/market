@@ -68,20 +68,7 @@ public class LoginController
 		return data;
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = RequestMethod.POST)
-	public ResponseEntity<String> mobileLoginPost(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
-			@RequestParam(required = true, defaultValue = "") String pass)
-	{
-		return mobileLogin(request, user, pass);
-	}
-
-	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = RequestMethod.GET)
-	public ResponseEntity<String> mobileLoginGet(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
-			@RequestParam(required = true, defaultValue = "") String pass)
-	{
-		return mobileLogin(request, user, pass);
-	}
-
+	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> mobileLogin(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
 			@RequestParam(required = true, defaultValue = "") String pass)
 	{

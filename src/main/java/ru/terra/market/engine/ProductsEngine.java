@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import ru.terra.market.controller.CategoryController;
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
@@ -119,7 +118,7 @@ public class ProductsEngine
 
 	private List<Product> loadProductsFromCategory(Integer catId, Integer lim)
 	{
-		//logger.info("loadProductsFromCategory : category " + catId);
+		// logger.info("loadProductsFromCategory : category " + catId);
 		Category cat = cjc.findCategory(catId);
 		List<Product> ret = new ArrayList<Product>();
 		if (cat != null)
@@ -128,11 +127,11 @@ public class ProductsEngine
 			if (prods != null)
 			{
 				ret.addAll(prods);
-				//logger.info("loaded " + prods.size() + " products in category");
+				// logger.info("loaded " + prods.size() + " products in category");
 			}
 			for (Category c : cjc.findCategoryByParent(cat.getId()))
 			{
-				//logger.info("loading products from " + c.getId() + " category ");
+				// logger.info("loading products from " + c.getId() + " category ");
 				ret.addAll(loadProductsFromCategory(c.getId(), lim));
 			}
 		}
