@@ -89,6 +89,7 @@ function loadProduct() {
 			$(".price").html(product.price);
 			$("#avail").html(product.avail ? "В продаже" : "Нет в продаже");
 			if (product.photos.length > 0) {
+				$("#product_img_main").attr("src", product.photos[0].path);
 			} else {
 				$("#product_img_main").attr("src", '/market/qr?product=' + product.id);
 			}

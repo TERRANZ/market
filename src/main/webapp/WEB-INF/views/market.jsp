@@ -5,16 +5,12 @@
 <div class="center_content">
 
 	<div class="oferta">
-		<img src="resources/images/p1.png" width="165" height="113" border="0"
+		<img src="resources/images/p1.jpg" width="165" height="113" border="0"
 			class="oferta_img" alt="" title="" />
 
 		<div class="oferta_details">
-			<div class="oferta_title">Power Tools BST18XN Cordless</div>
-			<div class="oferta_text">Lorem ipsum dolor sit amet,
-				consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-				labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-				exercitation ullamco</div>
-			<a href="details.html" class="prod_buy">подробнее</a>
+			<div class="oferta_title">Радиэлетротовары</div>
+			<div class="oferta_text">Магазин расположен в городе Новокуйбышевске</div>			
 		</div>
 	</div>
 

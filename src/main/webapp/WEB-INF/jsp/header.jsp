@@ -28,18 +28,11 @@
 <!-- 						src="resources/images/de.gif" alt="" title="" border="0" /></a> -->
 				</div>
 
-				<div class="big_banner">
-					<a href="#"><img src="resources/images/banner728.jpg" alt="" title=""
-						border="0" /></a>
-				</div>
 
 			</div>
 
 
-			<div id="logo">
-				<a href="/market/market"><img src="resources/images/logo.png" alt="" title=""
-					border="0" width="182" height="85" /></a>
-			</div>
+			
 
 
 

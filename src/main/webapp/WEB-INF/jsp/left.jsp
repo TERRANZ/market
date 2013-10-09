@@ -9,16 +9,7 @@
 
 				<div class="title_box">Новинки</div>
 				<div class="border_box">
-					<div class="product_title">
-						<a href="details.html">Makita 156 MX-VL</a>
-					</div>
-					<div class="product_img">
-						<a href="details.html"><img src="resources/images/p1.jpg" alt=""
-							title="" border="0" /></a>
-					</div>
-					<div class="prod_price">
-						<span class="reduce">350$</span> <span class="price">270$</span>
-					</div>
+									
 				</div>
 
 
