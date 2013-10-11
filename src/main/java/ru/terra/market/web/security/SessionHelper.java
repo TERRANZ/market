@@ -10,33 +10,29 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import ru.terra.market.db.entity.User;
 
-public final class SessionHelper
-{
+public final class SessionHelper {
 	private static final Logger logger = LoggerFactory.getLogger(SessionHelper.class);
 
 	/**
 	 * Проверяет, авторизован ли пользователь в указанном контексте безопасности
 	 * 
-	 * @param context Контекст безопасности
+	 * @param context
+	 *            Контекст безопасности
 	 * @return
 	 */
-	public static boolean isUserAuthorized(SecurityContext context)
-	{
+	public static boolean isUserAuthorized(SecurityContext context) {
 		if (context == null)
 			return false;
 		Authentication auth = context.getAuthentication();
-		if (auth == null)
-		{
+		if (auth == null) {
 			// logger.info("Authentication is null!");
 			return false;
 		}
 		boolean isAnonymous = false;
-		for (GrantedAuthority authority : auth.getAuthorities())
-		{
+		for (GrantedAuthority authority : auth.getAuthorities()) {
 			String authorityName = authority.getAuthority();
 			// logger.info("authorityName = " + authorityName);
-			if (RoleConstants.ROLE_ANONYMOUS.equals(authorityName))
-			{
+			if (RoleConstants.ROLE_ANONYMOUS.equals(authorityName)) {
 				isAnonymous = true;
 				// logger.info("isAnonymous = true");
 				break;
@@ -51,8 +47,7 @@ public final class SessionHelper
 	 * 
 	 * @return
 	 */
-	public static boolean isUserCurrentAuthorized()
-	{
+	public static boolean isUserCurrentAuthorized() {
 
 		return isUserAuthorized(SecurityContextHolder.getContext());
 	}
@@ -60,21 +55,21 @@ public final class SessionHelper
 	/**
 	 * Получает данные пользователя из указанного контекста безопасности
 	 * 
-	 * @param context Контекст безопасности
+	 * @param context
+	 *            Контекст безопасности
 	 * @return
 	 */
-	public static User getIUser(SecurityContext context)
-	{
+	public static User getIUser(SecurityContext context) {
 		// logger.info("getIUser");
-		if (context == null || !isUserAuthorized(context))
-		{
-			// logger.info(context == null ? "context == null" : "context is not null");
-			// logger.info(!isUserAuthorized(context) ? "!isUserAuthorized(context)" : "isUserAuthorized(context)");
+		if (context == null || !isUserAuthorized(context)) {
+			// logger.info(context == null ? "context == null" :
+			// "context is not null");
+			// logger.info(!isUserAuthorized(context) ?
+			// "!isUserAuthorized(context)" : "isUserAuthorized(context)");
 			return null;
 		}
 		Authentication auth = context.getAuthentication();
-		if (auth == null)
-		{
+		if (auth == null) {
 			// ogger.info("Authentication is null!");
 			return null;
 		}
@@ -86,49 +81,49 @@ public final class SessionHelper
 	}
 
 	/**
-	 * Получает данные текущего пользователя (null, если пользователь не авторизован)
+	 * Получает данные текущего пользователя (null, если пользователь не
+	 * авторизован)
 	 * 
 	 * @return
 	 */
-	public static User getCurrentIUser()
-	{
+	public static User getCurrentIUser() {
 		return getIUser(SecurityContextHolder.getContext());
 	}
 
 	/**
 	 * Возвращает идентификатор пользователя в указанном контексте безопасности
 	 * 
-	 * @param context Контекст безопасности
+	 * @param context
+	 *            Контекст безопасности
 	 * @return
 	 */
-	public static Integer getIUserId(SecurityContext context)
-	{
+	public static Integer getIUserId(SecurityContext context) {
 		User u = getIUser(context);
 		return u == null ? null : u.getId();
 	}
 
 	/**
-	 * Возвращает идентификатор текущего пользователя (null, если пользователь не авторизован)
+	 * Возвращает идентификатор текущего пользователя (null, если пользователь
+	 * не авторизован)
 	 * 
 	 * @return
 	 */
-	public static Integer getCurrentIUserId()
-	{
+	public static Integer getCurrentIUserId() {
 		return getIUserId(SecurityContextHolder.getContext());
 	}
 
 	/**
-	 * Обновляет в сессии данные текущего пользователя. Метод вызывается после изменения данных в профиле.
+	 * Обновляет в сессии данные текущего пользователя. Метод вызывается после
+	 * изменения данных в профиле.
 	 * 
-	 * @param newUserInfo Новые данные пользователя
+	 * @param newUserInfo
+	 *            Новые данные пользователя
 	 */
-	public static void refreshCurrentUserInfo(User newUserInfo)
-	{
+	public static void refreshCurrentUserInfo(User newUserInfo) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null)
 			logger.debug("Authentication is null!");
-		else
-		{
+		else {
 			Object principal = auth.getPrincipal();
 			if (principal instanceof TUserDetails)
 				((TUserDetails) principal).setIUser(newUserInfo);
@@ -140,15 +135,13 @@ public final class SessionHelper
 	 * 
 	 * @return
 	 */
-	public static boolean isAdmin()
-	{
+	public static boolean isAdmin() {
 		return false;
 		// User u = getCurrentIUser();
 		// return u != null && u.isAdmin();
 	}
 
-	public static void activateSession(User iuser)
-	{
+	public static void activateSession(User iuser) {
 		TUserDetails details = new TUserDetails();
 		details.setIUser(iuser);
 		FastAuthToken authToken = new FastAuthToken(details);
@@ -156,26 +149,22 @@ public final class SessionHelper
 	}
 
 	@SuppressWarnings("serial")
-	private static class FastAuthToken extends AbstractAuthenticationToken
-	{
+	private static class FastAuthToken extends AbstractAuthenticationToken {
 		private TUserDetails details;
 
-		public FastAuthToken(TUserDetails details)
-		{
+		public FastAuthToken(TUserDetails details) {
 			super(details.getAuthorities());
 			this.details = details;
 			setAuthenticated(true);
 		}
 
 		@Override
-		public Object getCredentials()
-		{
+		public Object getCredentials() {
 			return null;
 		}
 
 		@Override
-		public Object getPrincipal()
-		{
+		public Object getPrincipal() {
 			return details;
 		}
 	}

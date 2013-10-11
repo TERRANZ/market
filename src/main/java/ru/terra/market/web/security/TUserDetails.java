@@ -10,8 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import ru.terra.market.db.entity.User;
 
-public class TUserDetails implements UserDetails
-{
+public class TUserDetails implements UserDetails {
 	private static final long serialVersionUID = -7717808998423068908L;
 	private User user;
 
@@ -19,8 +18,7 @@ public class TUserDetails implements UserDetails
 
 	private Collection<GrantedAuthority> grantedAuthority;
 
-	public void setIUser(User tuser)
-	{
+	public void setIUser(User tuser) {
 
 		logger.info("setIUser");
 		this.user = tuser;
@@ -28,55 +26,46 @@ public class TUserDetails implements UserDetails
 		grantedAuthority.add(RoleConstants.GA_USER);
 	}
 
-	public User getIUser()
-	{
+	public User getIUser() {
 		return this.user;
 	}
 
 	@Override
-	public Collection<GrantedAuthority> getAuthorities()
-	{
+	public Collection<GrantedAuthority> getAuthorities() {
 		return grantedAuthority;
 	}
 
 	@Override
-	public String getPassword()
-	{
+	public String getPassword() {
 		return user.getPassword();
 	}
 
 	@Override
-	public String getUsername()
-	{
+	public String getUsername() {
 		return user.getLogin();
 	}
 
 	@Override
-	public boolean isAccountNonExpired()
-	{
+	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isAccountNonLocked()
-	{
+	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
-	public boolean isCredentialsNonExpired()
-	{
+	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isEnabled()
-	{
+	public boolean isEnabled() {
 		return true;
 	}
 
-	public long getId()
-	{
+	public long getId() {
 		return user.getId();
 	}
 

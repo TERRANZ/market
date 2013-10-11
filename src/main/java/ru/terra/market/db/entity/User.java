@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "User.findByLevel", query = "SELECT u FROM User u WHERE u.level = :level"),
 		@NamedQuery(name = "User.findByLogin", query = "SELECT u FROM User u WHERE u.login = :login"),
 		@NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password") })
-public class User implements Serializable
-{
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,100 +52,83 @@ public class User implements Serializable
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
 	private List<Photo> photoList;
 
-	public User()
-	{
+	public User() {
 	}
 
-	public User(Integer id)
-	{
+	public User(Integer id) {
 		this.id = id;
 	}
 
-	public User(Integer id, String login, String password)
-	{
+	public User(Integer id, String login, String password) {
 		this.id = id;
 		this.login = login;
 		this.password = password;
 	}
 
-	public Integer getId()
-	{
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Integer getLevel()
-	{
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level)
-	{
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
-	public String getLogin()
-	{
+	public String getLogin() {
 		return login;
 	}
 
-	public void setLogin(String login)
-	{
+	public void setLogin(String login) {
 		this.login = login;
 	}
 
-	public String getPassword()
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password)
-	{
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	@XmlTransient
-	public List<Photo> getPhotoList()
-	{
+	public List<Photo> getPhotoList() {
 		return photoList;
 	}
 
-	public void setPhotoList(List<Photo> photoList)
-	{
+	public void setPhotoList(List<Photo> photoList) {
 		this.photoList = photoList;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int hash = 0;
 		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object)
-	{
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof User))
-		{
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof User)) {
 			return false;
 		}
 		User other = (User) object;
-		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-		{
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "ru.terra.market.db.entity.User[ id=" + id + " ]";
 	}
 

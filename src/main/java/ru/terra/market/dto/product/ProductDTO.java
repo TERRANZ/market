@@ -7,8 +7,7 @@ import ru.terra.market.db.entity.Photo;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.dto.photo.PhotoDTO;
 
-public class ProductDTO
-{
+public class ProductDTO {
 	public Integer id;
 	public String name;
 	public Integer rating;
@@ -19,27 +18,21 @@ public class ProductDTO
 	public List<PhotoDTO> photos;
 	public String comment;
 
-	public ProductDTO()
-	{
+	public ProductDTO() {
 	}
 
-	public ProductDTO(Product p)
-	{
+	public ProductDTO(Product p) {
 		this.id = p.getId();
 		this.name = p.getName();
 		this.rating = p.getRating();
 		this.avail = p.getAvail();
 		this.category = p.getCategory().getId();
 		this.photos = new ArrayList<PhotoDTO>();
-		if (p.getPhotoList().size() > 0)
-		{
-			for (Photo photo : p.getPhotoList())
-			{
+		if (p.getPhotoList().size() > 0) {
+			for (Photo photo : p.getPhotoList()) {
 				this.photos.add(new PhotoDTO(photo));
 			}
-		}
-		else
-		{
+		} else {
 			this.photos.add(new PhotoDTO(this.id));
 		}
 		this.comment = p.getComment();

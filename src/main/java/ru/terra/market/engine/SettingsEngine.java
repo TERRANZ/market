@@ -10,12 +10,10 @@ import ru.terra.market.db.entity.controller.SettingsJpaController;
 
 @Singleton
 @Component
-public class SettingsEngine
-{
+public class SettingsEngine {
 	private SettingsJpaController sjpc;
 
-	public SettingsEngine()
-	{
+	public SettingsEngine() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
 		sjpc = new SettingsJpaController(emf);
 	}

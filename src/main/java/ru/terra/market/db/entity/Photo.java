@@ -30,8 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@NamedQuery(name = "Photo.findById", query = "SELECT p FROM Photo p WHERE p.id = :id"),
 		@NamedQuery(name = "Photo.findByPath", query = "SELECT p FROM Photo p WHERE p.path = :path"),
 		@NamedQuery(name = "Photo.findByName", query = "SELECT p FROM Photo p WHERE p.name = :name") })
-public class Photo implements Serializable
-{
+public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,98 +49,81 @@ public class Photo implements Serializable
 	@ManyToOne(optional = false)
 	private User userId;
 
-	public Photo()
-	{
+	public Photo() {
 	}
 
-	public Photo(Integer id)
-	{
+	public Photo(Integer id) {
 		this.id = id;
 	}
 
-	public Photo(Integer id, String path)
-	{
+	public Photo(Integer id, String path) {
 		this.id = id;
 		this.path = path;
 	}
 
-	public Integer getId()
-	{
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getPath()
-	{
+	public String getPath() {
 		return path;
 	}
 
-	public void setPath(String path)
-	{
+	public void setPath(String path) {
 		this.path = path;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Product getProduct()
-	{
+	public Product getProduct() {
 		return productId;
 	}
 
-	public void setProduct(Product product)
-	{
+	public void setProduct(Product product) {
 		this.productId = product;
 	}
 
-	public User getUser()
-	{
+	public User getUser() {
 		return userId;
 	}
 
-	public void setUserId(User userId)
-	{
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int hash = 0;
 		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object)
-	{
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof Photo))
-		{
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Photo)) {
 			return false;
 		}
 		Photo other = (Photo) object;
-		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-		{
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "ru.terra.market.db.entity.Photo[ id=" + id + " ]";
 	}
 

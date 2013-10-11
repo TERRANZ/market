@@ -1,37 +1,30 @@
 package ru.terra.market.util;
 
-public class FilePathUtil
-{
+public class FilePathUtil {
 
 	private static FilePathUtil filePathUtil = new FilePathUtil();
 	// private String webContextRelativePath = "";
 	private String webContextAbsolutePath = "";
 
-	private FilePathUtil()
-	{
+	private FilePathUtil() {
 	}
 
-	public static FilePathUtil getInstance()
-	{
+	public static FilePathUtil getInstance() {
 		return filePathUtil;
 	}
 
-	public void setAbsoluteWebContextPath(String path)
-	{
+	public void setAbsoluteWebContextPath(String path) {
 		webContextAbsolutePath = path.replace("\\", "/");
 	}
 
-	public String getAbsoluteWebContextPath()
-	{
+	public String getAbsoluteWebContextPath() {
 		return webContextAbsolutePath;
 	}
 
-	public static String concatenateAbsolutePath(String[] pathParts)
-	{
+	public static String concatenateAbsolutePath(String[] pathParts) {
 		String defaultSeparator = "/";
 		StringBuffer resultPath = new StringBuffer();
-		for (String path : pathParts)
-		{
+		for (String path : pathParts) {
 			path = path.endsWith(defaultSeparator) ? path.substring(0, path.length() - 1) : path;
 			path = path.startsWith(defaultSeparator) && resultPath.length() > 0 ? path.substring(1, path.length()) : path;
 			resultPath.append(path);

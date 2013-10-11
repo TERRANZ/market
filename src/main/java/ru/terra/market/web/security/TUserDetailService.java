@@ -9,26 +9,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ru.terra.market.db.entity.User;
 import ru.terra.market.engine.UsersEngine;
 
-public class TUserDetailService implements UserDetailsService
-{
+public class TUserDetailService implements UserDetailsService {
 	private UsersEngine ue = new UsersEngine();
 
 	private static final Logger logger = LoggerFactory.getLogger(TUserDetailService.class);
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
-	{
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		logger.info("loadUserByUsername " + userName);
 		User user = ue.findUserByName(userName);
-		if (user != null)
-		{
+		if (user != null) {
 			logger.info("loadUserByUsername : user found!");
 			TUserDetails ret = new TUserDetails();
 			ret.setIUser(user);
 			return ret;
-		}
-		else
-		{
+		} else {
 			logger.info("loadUserByUsername : user NOT found!");
 			throw new UsernameNotFoundException(userName);
 		}

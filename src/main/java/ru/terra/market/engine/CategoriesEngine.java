@@ -15,39 +15,33 @@ import ru.terra.market.db.entity.controller.CategoryJpaController;
 
 @Singleton
 @Component
-public class CategoriesEngine
-{
+public class CategoriesEngine {
 
 	private CategoryJpaController cjc;
 
-	public CategoriesEngine()
-	{
+	public CategoriesEngine() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
 		cjc = new CategoryJpaController(emf);
 	}
 
-	public List<Category> getCategories()
-	{
+	public List<Category> getCategories() {
 		return cjc.findCategoryEntities();
 	}
 
-	public Category getCategory(Integer id)
-	{
+	public Category getCategory(Integer id) {
 		if (id != null)
 			return cjc.findCategory(id);
 		return null;
 	}
 
-	public List<Category> getCategoriesByParent(Integer parentId)
-	{
+	public List<Category> getCategoriesByParent(Integer parentId) {
 		if (parentId == -1)
 			return cjc.findCategoryEntities();
 		else
 			return cjc.findCategoryByParent(parentId);
 	}
 
-	public Category createCategory(String name)
-	{
+	public Category createCategory(String name) {
 		Category c = new Category();
 		c.setName(name);
 		c.setParent(0);

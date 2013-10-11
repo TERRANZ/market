@@ -27,85 +27,68 @@ import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityExceptio
  * 
  * @author terranz
  */
-public class ProductJpaController implements Serializable
-{
+public class ProductJpaController implements Serializable {
 	private static final long serialVersionUID = -6591200996197051814L;
 
-	public ProductJpaController(EntityManagerFactory emf)
-	{
+	public ProductJpaController(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	private EntityManagerFactory emf = null;
 
-	public EntityManager getEntityManager()
-	{
+	public EntityManager getEntityManager() {
 		return emf.createEntityManager();
 	}
 
-	public void create(Product product) throws PreexistingEntityException, Exception
-	{
-		if (product.getPhotoList() == null)
-		{
+	public void create(Product product) throws PreexistingEntityException, Exception {
+		if (product.getPhotoList() == null) {
 			product.setPhotoList(new ArrayList<Photo>());
 		}
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Category category = product.getCategory();
-			if (category != null)
-			{
+			if (category != null) {
 				category = em.getReference(category.getClass(), category.getId());
 				product.setCategory(category);
 			}
 			List<Photo> attachedPhotoList = new ArrayList<Photo>();
-			for (Photo photoListPhotoToAttach : product.getPhotoList())
-			{
+			for (Photo photoListPhotoToAttach : product.getPhotoList()) {
 				photoListPhotoToAttach = em.getReference(photoListPhotoToAttach.getClass(), photoListPhotoToAttach.getId());
 				attachedPhotoList.add(photoListPhotoToAttach);
 			}
 			product.setPhotoList(attachedPhotoList);
 			em.persist(product);
-			if (category != null)
-			{
+			if (category != null) {
 				category.getProductList().add(product);
 				category = em.merge(category);
 			}
-			for (Photo photoListPhoto : product.getPhotoList())
-			{
+			for (Photo photoListPhoto : product.getPhotoList()) {
 				Product oldProductIdOfPhotoListPhoto = photoListPhoto.getProduct();
 				photoListPhoto.setProduct(product);
 				photoListPhoto = em.merge(photoListPhoto);
-				if (oldProductIdOfPhotoListPhoto != null)
-				{
+				if (oldProductIdOfPhotoListPhoto != null) {
 					oldProductIdOfPhotoListPhoto.getPhotoList().remove(photoListPhoto);
 					oldProductIdOfPhotoListPhoto = em.merge(oldProductIdOfPhotoListPhoto);
 				}
 			}
 			em.getTransaction().commit();
-		} catch (Exception ex)
-		{
-			if (findProduct(product.getId()) != null)
-			{
+		} catch (Exception ex) {
+			if (findProduct(product.getId()) != null) {
 				throw new PreexistingEntityException("Product " + product + " already exists.", ex);
 			}
 			throw ex;
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public void edit(Product product) throws IllegalOrphanException, NonexistentEntityException, Exception
-	{
+	public void edit(Product product) throws IllegalOrphanException, NonexistentEntityException, Exception {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Product persistentProduct = em.find(Product.class, product.getId());
@@ -114,262 +97,206 @@ public class ProductJpaController implements Serializable
 			List<Photo> photoListOld = persistentProduct.getPhotoList();
 			List<Photo> photoListNew = product.getPhotoList();
 			List<String> illegalOrphanMessages = null;
-			for (Photo photoListOldPhoto : photoListOld)
-			{
-				if (!photoListNew.contains(photoListOldPhoto))
-				{
-					if (illegalOrphanMessages == null)
-					{
+			for (Photo photoListOldPhoto : photoListOld) {
+				if (!photoListNew.contains(photoListOldPhoto)) {
+					if (illegalOrphanMessages == null) {
 						illegalOrphanMessages = new ArrayList<String>();
 					}
 					illegalOrphanMessages.add("You must retain Photo " + photoListOldPhoto + " since its productId field is not nullable.");
 				}
 			}
-			if (illegalOrphanMessages != null)
-			{
+			if (illegalOrphanMessages != null) {
 				throw new IllegalOrphanException(illegalOrphanMessages);
 			}
-			if (categoryNew != null)
-			{
+			if (categoryNew != null) {
 				categoryNew = em.getReference(categoryNew.getClass(), categoryNew.getId());
 				product.setCategory(categoryNew);
 			}
 			List<Photo> attachedPhotoListNew = new ArrayList<Photo>();
-			for (Photo photoListNewPhotoToAttach : photoListNew)
-			{
+			for (Photo photoListNewPhotoToAttach : photoListNew) {
 				photoListNewPhotoToAttach = em.getReference(photoListNewPhotoToAttach.getClass(), photoListNewPhotoToAttach.getId());
 				attachedPhotoListNew.add(photoListNewPhotoToAttach);
 			}
 			photoListNew = attachedPhotoListNew;
 			product.setPhotoList(photoListNew);
 			product = em.merge(product);
-			if (categoryOld != null && !categoryOld.equals(categoryNew))
-			{
+			if (categoryOld != null && !categoryOld.equals(categoryNew)) {
 				categoryOld.getProductList().remove(product);
 				categoryOld = em.merge(categoryOld);
 			}
-			if (categoryNew != null && !categoryNew.equals(categoryOld))
-			{
+			if (categoryNew != null && !categoryNew.equals(categoryOld)) {
 				categoryNew.getProductList().add(product);
 				categoryNew = em.merge(categoryNew);
 			}
-			for (Photo photoListNewPhoto : photoListNew)
-			{
-				if (!photoListOld.contains(photoListNewPhoto))
-				{
+			for (Photo photoListNewPhoto : photoListNew) {
+				if (!photoListOld.contains(photoListNewPhoto)) {
 					Product oldProductIdOfPhotoListNewPhoto = photoListNewPhoto.getProduct();
 					photoListNewPhoto.setProduct(product);
 					photoListNewPhoto = em.merge(photoListNewPhoto);
-					if (oldProductIdOfPhotoListNewPhoto != null && !oldProductIdOfPhotoListNewPhoto.equals(product))
-					{
+					if (oldProductIdOfPhotoListNewPhoto != null && !oldProductIdOfPhotoListNewPhoto.equals(product)) {
 						oldProductIdOfPhotoListNewPhoto.getPhotoList().remove(photoListNewPhoto);
 						oldProductIdOfPhotoListNewPhoto = em.merge(oldProductIdOfPhotoListNewPhoto);
 					}
 				}
 			}
 			em.getTransaction().commit();
-		} catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			String msg = ex.getLocalizedMessage();
-			if (msg == null || msg.length() == 0)
-			{
+			if (msg == null || msg.length() == 0) {
 				Integer id = product.getId();
-				if (findProduct(id) == null)
-				{
+				if (findProduct(id) == null) {
 					throw new NonexistentEntityException("The product with id " + id + " no longer exists.");
 				}
 			}
 			throw ex;
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException
-	{
+	public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Product product;
-			try
-			{
+			try {
 				product = em.getReference(Product.class, id);
 				product.getId();
-			} catch (EntityNotFoundException enfe)
-			{
+			} catch (EntityNotFoundException enfe) {
 				throw new NonexistentEntityException("The product with id " + id + " no longer exists.", enfe);
 			}
 			List<String> illegalOrphanMessages = null;
 			List<Photo> photoListOrphanCheck = product.getPhotoList();
-			for (Photo photoListOrphanCheckPhoto : photoListOrphanCheck)
-			{
-				if (illegalOrphanMessages == null)
-				{
+			for (Photo photoListOrphanCheckPhoto : photoListOrphanCheck) {
+				if (illegalOrphanMessages == null) {
 					illegalOrphanMessages = new ArrayList<String>();
 				}
 				illegalOrphanMessages.add("This Product (" + product + ") cannot be destroyed since the Photo " + photoListOrphanCheckPhoto
 						+ " in its photoList field has a non-nullable productId field.");
 			}
-			if (illegalOrphanMessages != null)
-			{
+			if (illegalOrphanMessages != null) {
 				throw new IllegalOrphanException(illegalOrphanMessages);
 			}
 			Category category = product.getCategory();
-			if (category != null)
-			{
+			if (category != null) {
 				category.getProductList().remove(product);
 				category = em.merge(category);
 			}
 			em.remove(product);
 			em.getTransaction().commit();
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public List<Product> findProductEntities()
-	{
+	public List<Product> findProductEntities() {
 		return findProductEntities(true, -1, -1);
 	}
 
-	public List<Product> findProductEntities(int maxResults, int firstResult)
-	{
+	public List<Product> findProductEntities(int maxResults, int firstResult) {
 		return findProductEntities(false, maxResults, firstResult);
 	}
 
-	private List<Product> findProductEntities(boolean all, int maxResults, int firstResult)
-	{
+	public List<Product> findProductEntities(boolean all, int maxResults, int firstResult) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 			cq.select(cq.from(Product.class));
 			Query q = em.createQuery(cq);
-			if (!all)
-			{
+			if (!all) {
 				q.setMaxResults(maxResults);
 				q.setFirstResult(firstResult);
 			}
 			return q.getResultList();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public Product findProduct(Integer id)
-	{
+	public Product findProduct(Integer id) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			return em.find(Product.class, id);
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public int getProductCount()
-	{
+	public int getProductCount() {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 			Root<Product> rt = cq.from(Product.class);
 			cq.select(em.getCriteriaBuilder().count(rt));
 			Query q = em.createQuery(cq);
 			return ((Long) q.getSingleResult()).intValue();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public void create(List<Product> prods)
-	{
+	public void create(List<Product> prods) {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			for (Product product : prods)
-			{
+			for (Product product : prods) {
 				Category category = product.getCategory();
-				if (category != null)
-				{
+				if (category != null) {
 					category = em.getReference(category.getClass(), category.getId());
 					product.setCategory(category);
 				}
 				em.persist(product);
-				if (category != null)
-				{
+				if (category != null) {
 					category.getProductList().add(product);
 					category = em.merge(category);
 				}
 			}
 			em.getTransaction().commit();
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public List<Product> findProductByCategory(Category cat, Integer lim)
-	{
+	public List<Product> findProductByCategory(Category cat, Boolean all, Integer page, Integer perpage) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			Query q = em.createNamedQuery("Product.findByCategory").setParameter("category", cat);
-			if (lim != -1)
-			{
-				q.setFirstResult(0);
-				q.setMaxResults(lim);
+			if (!all) {
+				q.setMaxResults(perpage);
+				q.setFirstResult(page * perpage);
 			}
 			return q.getResultList();
-		} catch (NoResultException e)
-		{
+		} catch (NoResultException e) {
 			return null;
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public Long getProductCount(Category cat)
-	{
+	public Long getProductCount(Category cat) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			Query q = em.createNativeQuery("select count(id) from product where category = " + cat.getId());
 			return (Long) q.getSingleResult();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public List<Product> findProductsByName(String name)
-	{
+	public List<Product> findProductsByName(String name) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			Query q = em.createNativeQuery("select * from product where name like %%" + name + "%%");
 			return q.getResultList();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}

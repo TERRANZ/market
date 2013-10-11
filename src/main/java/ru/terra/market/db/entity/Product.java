@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "Product.findByRating", query = "SELECT p FROM Product p WHERE p.rating = :rating"),
 		@NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category = :category"),
 		@NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price") })
-public class Product implements Serializable
-{
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Basic(optional = false)
@@ -62,131 +61,108 @@ public class Product implements Serializable
 	@Column(name = "comment", nullable = true, length = 512)
 	private String comment;
 
-	public Product()
-	{
+	public Product() {
 	}
 
-	public String getComment()
-	{
+	public String getComment() {
 		return comment;
 	}
 
-	public void setComment(String comment)
-	{
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	public Product(Integer id)
-	{
+	public Product(Integer id) {
 		this.id = id;
 	}
 
-	public Product(Integer id, String name, int rating, int price)
-	{
+	public Product(Integer id, String name, int rating, int price) {
 		this.id = id;
 		this.name = name;
 		this.rating = rating;
 		this.price = price;
 	}
 
-	public Integer getId()
-	{
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Boolean getAvail()
-	{
+	public Boolean getAvail() {
 		return avail;
 	}
 
-	public void setAvail(Boolean avail)
-	{
+	public void setAvail(Boolean avail) {
 		this.avail = avail;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getRating()
-	{
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating)
-	{
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 
-	public int getPrice()
-	{
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price)
-	{
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
-	public Category getCategory()
-	{
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category)
-	{
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
 	@XmlTransient
-	public List<Photo> getPhotoList()
-	{
+	public List<Photo> getPhotoList() {
 		return photoList;
 	}
 
-	public void setPhotoList(List<Photo> photoList)
-	{
+	public void setPhotoList(List<Photo> photoList) {
 		this.photoList = photoList;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int hash = 0;
 		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object)
-	{
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof Product))
-		{
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Product)) {
 			return false;
 		}
 		Product other = (Product) object;
-		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-		{
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "ru.terra.market.db.entity.controller.Product[ id=" + id + " ]";
 	}
 

@@ -16,27 +16,21 @@ import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityExceptio
 
 @Singleton
 @Component
-public class UsersEngine
-{
+public class UsersEngine {
 
 	private static final Logger logger = LoggerFactory.getLogger(UsersEngine.class);
 
 	private UserJpaController ujpc;
 
-	public UsersEngine()
-	{
+	public UsersEngine() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
 		ujpc = new UserJpaController(emf);
 	}
 
-	public Integer registerUser(String login, String password)
-	{
-		if (ujpc.findUser(login) != null)
-		{
+	public Integer registerUser(String login, String password) {
+		if (ujpc.findUser(login) != null) {
 			return -1;
-		}
-		else
-		{
+		} else {
 			User u = new User();
 			u.setLogin(login);
 			u.setPassword(password);
@@ -45,53 +39,42 @@ public class UsersEngine
 		}
 	}
 
-	public Integer getUserId(String login)
-	{
+	public Integer getUserId(String login) {
 		User u = ujpc.findUser(login);
 		return u != null ? u.getId() : -1;
 	}
 
-	public boolean login(String login, String password)
-	{
+	public boolean login(String login, String password) {
 		User u = ujpc.findUser(login, password);
 		return u != null;
 	}
 
-	public User getUser(Integer uid)
-	{
+	public User getUser(Integer uid) {
 		return ujpc.findUser(uid);
 	}
 
-	public User findUserByName(String name)
-	{
+	public User findUserByName(String name) {
 		logger.info("findUserByName " + name);
 		User u = null;
-		try
-		{
+		try {
 			u = ujpc.findUser(name);
-		} catch (NoResultException e)
-		{
+		} catch (NoResultException e) {
 			logger.info("error while loading user " + e.getMessage());
 			e.printStackTrace();
 		}
 		return u;
 	}
 
-	public boolean saveUser(User u)
-	{
-		try
-		{
+	public boolean saveUser(User u) {
+		try {
 			ujpc.edit(u);
-		} catch (IllegalOrphanException e)
-		{
+		} catch (IllegalOrphanException e) {
 			e.printStackTrace();
 			return false;
-		} catch (NonexistentEntityException e)
-		{
+		} catch (NonexistentEntityException e) {
 			e.printStackTrace();
 			return false;
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

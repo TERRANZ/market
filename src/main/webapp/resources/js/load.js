@@ -37,7 +37,9 @@ function loadLatestAdds() {
 		type : 'get',
 		dataType : 'jsonp',
 		data : {
-			limit : 3
+			all : false,
+			perpage : 3,
+			page : 1
 		},
 		success : function(data) {
 			if (data.size != -1) {
@@ -59,7 +61,9 @@ function loadRecommended() {
 		type : 'get',
 		dataType : 'jsonp',
 		data : {
-			limit : 3
+			all : false,
+			perpage : 3,
+			page : 1
 		},
 		success : function(data) {
 			if (data.size != -1) {
@@ -131,15 +135,19 @@ function buildProductInfo(product) {
 	return htmlRet;
 }
 
-function loadCategoryProducts() {
+function loadCategoryProducts(page) {
 	var catId = $("#category_id").val();
+	// var page = $("#page").text();
+	var perpage = $("#perpage").val();
 	$.ajax({
 		url : '/market/product/get.products.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',
 		data : {
-			category : catId
+			category : catId,
+			page : page - 1,
+			perpage : perpage
 		},
 		success : function(data) {
 			if (data.size != -1) {
@@ -148,9 +156,21 @@ function loadCategoryProducts() {
 					htmlRet += buildProductInfo(product);
 				});
 				$("#category_products").html(htmlRet);
+				$("#paging").pagination({
+					items : data.full,
+					itemsOnPage : perpage,
+					cssStyle : 'compact-theme',
+					currentPage : page,
+					prevText: '<=',
+					nextText: '=>',
+					onPageClick : function(pageNumber, event) {
+						loadCategoryProducts(pageNumber);
+					}
+				});
 			}
 		}
 	});
+
 }
 
 function loadSearch() {

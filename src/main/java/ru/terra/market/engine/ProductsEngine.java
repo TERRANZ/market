@@ -21,49 +21,42 @@ import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityExceptio
 
 @Singleton
 @Component
-public class ProductsEngine
-{
+public class ProductsEngine {
 
-	private static final Logger logger = LoggerFactory.getLogger(ProductsEngine.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private ProductJpaController pjc;
 	private CategoryJpaController cjc;
 
-	public ProductsEngine()
-	{
+	public ProductsEngine() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
 		pjc = new ProductJpaController(emf);
 		cjc = new CategoryJpaController(emf);
 	}
 
-	public List<Product> getAllProducts()
-	{
+	public List<Product> getAllProducts() {
 		return pjc.findProductEntities();
 	}
 
-	public List<Product> getProducts(Integer categoryId)
-	{
+	public List<Product> getProducts(Integer categoryId) {
 		Category cat = cjc.findCategory(categoryId);
 		if (cat != null)
 			return cat.getProductList();
 		return null;
 	}
 
-	public Long getProductCount(Integer categoryId)
-	{
+	public Long getProductCount(Integer categoryId) {
 		Category cat = cjc.findCategory(categoryId);
 		if (cat != null)
 			return pjc.getProductCount(cat);
 		return -1L;
 	}
 
-	public Product getProduct(Integer id)
-	{
+	public Product getProduct(Integer id) {
 		return pjc.findProduct(id);
 	}
 
-	public Product createProduct(Integer category, String name, Integer rating, Boolean avail)
-	{
+	public Product createProduct(Integer category, String name, Integer rating, Boolean avail) {
 		Product p = new Product();
 		p.setCategory(cjc.findCategory(category));
 		p.setAvail(avail);
@@ -72,38 +65,27 @@ public class ProductsEngine
 		return p;
 	}
 
-	public void updateProduct(Product p)
-	{
-		try
-		{
-			pjc.create(p);
-		} catch (PreexistingEntityException e)
-		{
-			// TODO Auto-generated catch block
+	public void updateProduct(Product p) {
+		try {
+			pjc.edit(p);
+		} catch (PreexistingEntityException e) {
 			e.printStackTrace();
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void bulkCreate(List<Product> prods)
-	{
+	public void bulkCreate(List<Product> prods) {
 		pjc.create(prods);
 	}
 
-	public List<Product> getProducts(Integer catId, Integer lim)
-	{
+	public List<Product> getProducts(Integer catId, Boolean all, Integer page, Integer perpage) {
 		List<Product> ret = new ArrayList<Product>();
-		ret.addAll(loadProductsFromCategory(catId, lim));
-		if (ret.size() > 0)
-		{
-			Collections.sort(ret, new Comparator<Product>()
-			{
+		ret.addAll(loadProductsFromCategory(catId, all, page, perpage));
+		if (ret.size() > 0) {
+			Collections.sort(ret, new Comparator<Product>() {
 				@Override
-				public int compare(Product o1, Product o2)
-				{
+				public int compare(Product o1, Product o2) {
 					if (o1.getRating() < o2.getRating())
 						return -1;
 					else if (o1.getRating() == o2.getRating())
@@ -116,37 +98,25 @@ public class ProductsEngine
 		return ret;
 	}
 
-	private List<Product> loadProductsFromCategory(Integer catId, Integer lim)
-	{
-		// logger.info("loadProductsFromCategory : category " + catId);
+	private List<Product> loadProductsFromCategory(Integer catId, Boolean all, Integer page, Integer perpage) {
 		Category cat = cjc.findCategory(catId);
 		List<Product> ret = new ArrayList<Product>();
-		if (cat != null)
-		{
-			List<Product> prods = pjc.findProductByCategory(cat, lim);
+		if (cat != null) {
+			List<Product> prods = pjc.findProductByCategory(cat, all, page, perpage);
 			if (prods != null)
-			{
 				ret.addAll(prods);
-				// logger.info("loaded " + prods.size() + " products in category");
-			}
 			for (Category c : cjc.findCategoryByParent(cat.getId()))
-			{
-				// logger.info("loading products from " + c.getId() + " category ");
-				ret.addAll(loadProductsFromCategory(c.getId(), lim));
-			}
+				ret.addAll(loadProductsFromCategory(c.getId(), all, page, perpage));
 		}
 		return ret;
 	}
 
-	public List<Product> getAllProductsLimited(Integer lim)
-	{
+	public List<Product> getAllProductsLimited(Boolean all, Integer page, Integer perpage) {
 		List<Product> ret = new ArrayList<Product>();
-		ret = pjc.findProductEntities(lim, 0);
-		Collections.sort(ret, new Comparator<Product>()
-		{
+		ret = pjc.findProductEntities(all, perpage, perpage * page);
+		Collections.sort(ret, new Comparator<Product>() {
 			@Override
-			public int compare(Product o1, Product o2)
-			{
+			public int compare(Product o1, Product o2) {
 				if (o1.getRating() < o2.getRating())
 					return -1;
 				else if (o1.getRating() == o2.getRating())
@@ -158,15 +128,12 @@ public class ProductsEngine
 		return ret;
 	}
 
-	public List<Product> findProductsByName(String name)
-	{
+	public List<Product> findProductsByName(String name) {
 		List<Product> ret = new ArrayList<Product>();
 		ret = pjc.findProductsByName(name);
-		Collections.sort(ret, new Comparator<Product>()
-		{
+		Collections.sort(ret, new Comparator<Product>() {
 			@Override
-			public int compare(Product o1, Product o2)
-			{
+			public int compare(Product o1, Product o2) {
 				if (o1.getRating() < o2.getRating())
 					return -1;
 				else if (o1.getRating() == o2.getRating())

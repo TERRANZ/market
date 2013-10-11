@@ -13,24 +13,20 @@ import org.springframework.security.web.authentication.session.ConcurrentSession
 import ru.terra.market.db.entity.User;
 import ru.terra.market.web.security.TUserDetails;
 
-public class SessionControlStrategy extends ConcurrentSessionControlStrategy
-{
+public class SessionControlStrategy extends ConcurrentSessionControlStrategy {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionControlStrategy.class);
 
-	public SessionControlStrategy(SessionRegistry sessionRegistry)
-	{
+	public SessionControlStrategy(SessionRegistry sessionRegistry) {
 		super(sessionRegistry);
 	}
 
 	@Override
-	public void onAuthentication(Authentication authentication, HttpServletRequest request, HttpServletResponse response)
-	{
+	public void onAuthentication(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
 		// Allow the parent to create a new session if necessary
 		HttpSession session = request.getSession();
 		Object principal = authentication.getPrincipal();
 		User user = null;
-		if (principal instanceof TUserDetails)
-		{
+		if (principal instanceof TUserDetails) {
 			user = ((TUserDetails) principal).getIUser();
 			// UserSettingsUtil.loadSettings(iUser, session);
 			// new SessionTimeRating(iUser.getId()).rate(null, 0);

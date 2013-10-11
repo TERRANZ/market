@@ -12,20 +12,17 @@ import ru.terra.market.db.entity.controller.PhotoJpaController;
 
 @Singleton
 @Component
-public class PhotoEngine
-{
+public class PhotoEngine {
 	private PhotoJpaController pjc;
 	@Inject
 	private ProductsEngine pe;
 
-	public PhotoEngine()
-	{
+	public PhotoEngine() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
 		pjc = new PhotoJpaController(emf);
 	}
 
-	public Photo newPhoto(String name, String path, Integer productId)
-	{
+	public Photo newPhoto(String name, String path, Integer productId) {
 		Photo p = new Photo();
 		p.setName(name != null ? name : "Без имени");
 		p.setPath(path);

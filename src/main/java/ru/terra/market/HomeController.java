@@ -13,11 +13,9 @@ import ru.terra.market.constants.URLConstants;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController
-{
+public class HomeController {
 	@RequestMapping(value = URLConstants.Pages.HOME, method = RequestMethod.GET)
-	public String home(Locale locale, Model model)
-	{
+	public String home(Locale locale, Model model) {
 		return "redirect:/" + URLConstants.Views.MARKET_HOME;
 	}
 

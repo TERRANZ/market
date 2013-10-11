@@ -12,21 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.helper.QRHelper;
 
-public class QRServlet extends HttpServlet
-{
+public class QRServlet extends HttpServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3095083436034592947L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String qrtext = request.getParameter("text");
 		String prodId = request.getParameter("product");
-		if (prodId != null)
-		{
+		if (prodId != null) {
 			qrtext = URLConstants.SERVER_URL + URLConstants.Pages.PRODUCT + "?id=" + prodId;
 		}
 		response.setContentType("image/png");

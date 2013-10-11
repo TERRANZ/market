@@ -16,27 +16,23 @@ import ru.terra.market.db.entity.Product;
 import ru.terra.market.engine.ProductsEngine;
 
 @Controller
-public class ProductController
-{
+public class ProductController {
 	@Inject
 	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.Pages.PRODUCT, method = { RequestMethod.GET, RequestMethod.POST })
-	private String product(HttpServletRequest request, Locale locale, Model model)
-	{
+	private String product(HttpServletRequest request, Locale locale, Model model) {
 		if (request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID) == null)
 			return URLConstants.Views.ERROR404;
 		Integer prodId = 0;
-		try
-		{
+		try {
 			prodId = Integer.parseInt(request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID));
 			Product prod = pe.getProduct(prodId);
 			if (prod == null)
 				return URLConstants.Views.ERROR404;
 			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getCategory().getId());
 			model.addAttribute(URLConstants.DoJson.Products.PRODUCT_PARAM_ID, prodId);
-		} catch (NumberFormatException e)
-		{
+		} catch (NumberFormatException e) {
 			return URLConstants.Views.ERROR404;
 		}
 		return URLConstants.Views.PRODUCT;

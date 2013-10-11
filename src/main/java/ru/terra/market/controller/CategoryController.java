@@ -18,37 +18,29 @@ import ru.terra.market.db.entity.Category;
 import ru.terra.market.engine.CategoriesEngine;
 
 @Controller
-public class CategoryController
-{
+public class CategoryController {
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 	@Inject
 	private CategoriesEngine ce;
 
 	@RequestMapping(value = URLConstants.Pages.CATEGORY, method = { RequestMethod.GET, RequestMethod.POST })
-	private String category(HttpServletRequest request, Locale locale, Model model)
-	{
+	private String category(HttpServletRequest request, Locale locale, Model model) {
 		String id = request.getParameter(URLConstants.DoJson.Category.CATEGORY_PARAM_ID);
-		if (id != null)
-		{
+		if (id != null) {
 			// egory id = " + id);
 
 			Integer catId = null;
-			try
-			{
+			try {
 				catId = Integer.parseInt(id);
-			} catch (NumberFormatException e)
-			{
+			} catch (NumberFormatException e) {
 				return URLConstants.Views.ERROR404;
 			}
 
 			Category category = ce.getCategory(catId);
-			if (category != null)
-			{
+			if (category != null) {
 				model.addAttribute(ModelConstants.CATEGORY_ID, id);
 				model.addAttribute(ModelConstants.CATEGORY_NAME, category.getName());
-			}
-			else
-			{
+			} else {
 				return URLConstants.Views.ERROR404;
 			}
 		}

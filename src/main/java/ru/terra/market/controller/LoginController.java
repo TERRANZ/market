@@ -34,8 +34,7 @@ import ru.terra.market.web.security.SessionHelper;
 import flexjson.JSONSerializer;
 
 @Controller
-public class LoginController
-{
+public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Inject
@@ -44,8 +43,7 @@ public class LoginController
 	@Resource(name = "passwordEncoder")
 	private PasswordEncoder passwordEncoder;
 
-	private HttpURLConnection prepareConnection(URL url) throws IOException
-	{
+	private HttpURLConnection prepareConnection(URL url) throws IOException {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setDoInput(true);
 		conn.setDoOutput(true);
@@ -61,8 +59,7 @@ public class LoginController
 		return conn;
 	}
 
-	private String prepareData(String user, String pass) throws UnsupportedEncodingException
-	{
+	private String prepareData(String user, String pass) throws UnsupportedEncodingException {
 		String data = URLEncoder.encode("j_username", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
 		data += "&" + URLEncoder.encode("j_password", "UTF-8") + "=" + URLEncoder.encode(pass, "UTF-8");
 		return data;
@@ -70,11 +67,9 @@ public class LoginController
 
 	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_LOGIN_JSON, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> mobileLogin(HttpServletRequest request, @RequestParam(required = true, defaultValue = "") String user,
-			@RequestParam(required = true, defaultValue = "") String pass)
-	{
+			@RequestParam(required = true, defaultValue = "") String pass) {
 		LoginDTO ret = new LoginDTO();
-		try
-		{
+		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Type", "application/json; charset=utf-8");
 			final String address = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -90,60 +85,46 @@ public class LoginController
 			String location = conn.getHeaderField("Location");
 			String headerName = null;
 			String cookie = "";
-			for (int i = 1; (headerName = conn.getHeaderFieldKey(i)) != null; i++)
-			{
-				if (headerName.equals("Set-Cookie"))
-				{
+			for (int i = 1; (headerName = conn.getHeaderFieldKey(i)) != null; i++) {
+				if (headerName.equals("Set-Cookie")) {
 					cookie = conn.getHeaderField(i);
 					headers.add("Set-Cookie", cookie);
 				}
 			}
 
-			if (location != null)
-			{
-				if (location.contains("banned"))
-				{
+			if (location != null) {
+				if (location.contains("banned")) {
 					// user banned
-				}
-				else if (location.contains("/login"))
-				{
+				} else if (location.contains("/login")) {
 					// user invalid
 					ret.logged = false;
-				}
-				else
-				{
+				} else {
 					// user valid!
 					// code 200
 					logger.info("cookie = " + cookie);
 					ret.session = cookie.length() > 0 ? cookie.substring(cookie.indexOf("JSESSIONID=") + 11, cookie.indexOf(";")) : "";
 					ret.logged = true;
 				}
-			}
-			else
-			{
+			} else {
 				// user valid!
 				// code 200
 				logger.info("cookie = " + cookie);
 				ret.session = cookie.length() > 0 ? cookie.substring(cookie.indexOf("JSESSIONID=") + 11, cookie.indexOf(";")) : "";
 				ret.logged = true;
 			}
-			try
-			{
+			try {
 				BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				String line;
-				while ((line = rd.readLine()) != null)
-				{
+				while ((line = rd.readLine()) != null) {
 					// logger.info("HTTP POST respone: " + line);
 				}
 				wr.close();
 				rd.close();
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				ret.session = "";
 				ret.logged = false;
 			}
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			logger.info("Exception while reading responce from server " + e.getMessage());
 			// e.printStackTrace();
 		}
@@ -152,29 +133,22 @@ public class LoginController
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_REGISTER_JSON, method = RequestMethod.POST)
-	public ResponseEntity<String> register(HttpServletRequest request)
-	{
+	public ResponseEntity<String> register(HttpServletRequest request) {
 		LoginDTO ret = new LoginDTO();
 		String login = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_USER);
-		if (login != null && le.findUserByName(login) == null)
-		{
+		if (login != null && le.findUserByName(login) == null) {
 			String pass = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_PASS);
-			if (login != null && pass != null)
-			{
+			if (login != null && pass != null) {
 				Integer retId = le.registerUser(login, pass);
 				ret.logged = true;
 				ret.id = retId;
 				User u = le.getUser(retId);
 				u.setPassword(passwordEncoder.encodePassword(pass, u.getId()));
 				le.saveUser(u);
-			}
-			else
-			{
+			} else {
 				ret.logged = false;
 			}
-		}
-		else
-		{
+		} else {
 			ret.logged = false;
 			ret.message = "User already exists";
 		}
@@ -183,24 +157,20 @@ public class LoginController
 	}
 
 	@RequestMapping(value = URLConstants.Pages.LOGIN, method = RequestMethod.GET)
-	public String login(Locale locale, Model model)
-	{
+	public String login(Locale locale, Model model) {
 		return URLConstants.Views.LOGIN;
 	}
 
 	@RequestMapping(value = URLConstants.Pages.REGISTER, method = RequestMethod.GET)
-	public String register(Locale locale, Model model)
-	{
+	public String register(Locale locale, Model model) {
 		return URLConstants.Views.REGISTER;
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_GET_MY_ID, method = RequestMethod.GET)
-	public ResponseEntity<String> getMyId(HttpServletRequest request)
-	{
+	public ResponseEntity<String> getMyId(HttpServletRequest request) {
 		LoginDTO ret = new LoginDTO();
 		User u = SessionHelper.getCurrentIUser();
-		if (u != null)
-		{
+		if (u != null) {
 			ret.id = u.getId();
 		}
 		String json = new JSONSerializer().serialize(ret);

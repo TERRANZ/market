@@ -22,185 +22,147 @@ import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityExceptio
  * 
  * @author terranz
  */
-public class PhotoJpaController implements Serializable
-{
+public class PhotoJpaController implements Serializable {
 
-	public PhotoJpaController(EntityManagerFactory emf)
-	{
+	public PhotoJpaController(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	private EntityManagerFactory emf = null;
 
-	public EntityManager getEntityManager()
-	{
+	public EntityManager getEntityManager() {
 		return emf.createEntityManager();
 	}
 
-	public void create(Photo photo)
-	{
+	public void create(Photo photo) {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Product productId = photo.getProduct();
-			if (productId != null)
-			{
+			if (productId != null) {
 				productId = em.getReference(productId.getClass(), productId.getId());
 				photo.setProduct(productId);
 			}
 			em.persist(photo);
-			if (productId != null)
-			{
+			if (productId != null) {
 				productId.getPhotoList().add(photo);
 				productId = em.merge(productId);
 			}
 			em.getTransaction().commit();
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public void edit(Photo photo) throws NonexistentEntityException, Exception
-	{
+	public void edit(Photo photo) throws NonexistentEntityException, Exception {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Photo persistentPhoto = em.find(Photo.class, photo.getId());
 			Product productIdOld = persistentPhoto.getProduct();
 			Product productIdNew = photo.getProduct();
-			if (productIdNew != null)
-			{
+			if (productIdNew != null) {
 				productIdNew = em.getReference(productIdNew.getClass(), productIdNew.getId());
 				photo.setProduct(productIdNew);
 			}
 			photo = em.merge(photo);
-			if (productIdOld != null && !productIdOld.equals(productIdNew))
-			{
+			if (productIdOld != null && !productIdOld.equals(productIdNew)) {
 				productIdOld.getPhotoList().remove(photo);
 				productIdOld = em.merge(productIdOld);
 			}
-			if (productIdNew != null && !productIdNew.equals(productIdOld))
-			{
+			if (productIdNew != null && !productIdNew.equals(productIdOld)) {
 				productIdNew.getPhotoList().add(photo);
 				productIdNew = em.merge(productIdNew);
 			}
 			em.getTransaction().commit();
-		} catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			String msg = ex.getLocalizedMessage();
-			if (msg == null || msg.length() == 0)
-			{
+			if (msg == null || msg.length() == 0) {
 				Integer id = photo.getId();
-				if (findPhoto(id) == null)
-				{
+				if (findPhoto(id) == null) {
 					throw new NonexistentEntityException("The photo with id " + id + " no longer exists.");
 				}
 			}
 			throw ex;
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public void destroy(Integer id) throws NonexistentEntityException
-	{
+	public void destroy(Integer id) throws NonexistentEntityException {
 		EntityManager em = null;
-		try
-		{
+		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Photo photo;
-			try
-			{
+			try {
 				photo = em.getReference(Photo.class, id);
 				photo.getId();
-			} catch (EntityNotFoundException enfe)
-			{
+			} catch (EntityNotFoundException enfe) {
 				throw new NonexistentEntityException("The photo with id " + id + " no longer exists.", enfe);
 			}
 			Product productId = photo.getProduct();
-			if (productId != null)
-			{
+			if (productId != null) {
 				productId.getPhotoList().remove(photo);
 				productId = em.merge(productId);
 			}
 			em.remove(photo);
 			em.getTransaction().commit();
-		} finally
-		{
-			if (em != null)
-			{
+		} finally {
+			if (em != null) {
 				em.close();
 			}
 		}
 	}
 
-	public List<Photo> findPhotoEntities()
-	{
+	public List<Photo> findPhotoEntities() {
 		return findPhotoEntities(true, -1, -1);
 	}
 
-	public List<Photo> findPhotoEntities(int maxResults, int firstResult)
-	{
+	public List<Photo> findPhotoEntities(int maxResults, int firstResult) {
 		return findPhotoEntities(false, maxResults, firstResult);
 	}
 
-	private List<Photo> findPhotoEntities(boolean all, int maxResults, int firstResult)
-	{
+	private List<Photo> findPhotoEntities(boolean all, int maxResults, int firstResult) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 			cq.select(cq.from(Photo.class));
 			Query q = em.createQuery(cq);
-			if (!all)
-			{
+			if (!all) {
 				q.setMaxResults(maxResults);
 				q.setFirstResult(firstResult);
 			}
 			return q.getResultList();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public Photo findPhoto(Integer id)
-	{
+	public Photo findPhoto(Integer id) {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			return em.find(Photo.class, id);
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}
 
-	public int getPhotoCount()
-	{
+	public int getPhotoCount() {
 		EntityManager em = getEntityManager();
-		try
-		{
+		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 			Root<Photo> rt = cq.from(Photo.class);
 			cq.select(em.getCriteriaBuilder().count(rt));
 			Query q = em.createQuery(cq);
 			return ((Long) q.getSingleResult()).intValue();
-		} finally
-		{
+		} finally {
 			em.close();
 		}
 	}

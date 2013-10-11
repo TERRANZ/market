@@ -13,29 +13,23 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-public class QRHelper
-{
-	public static ByteArrayOutputStream gen(String text)
-	{
+public class QRHelper {
+	public static ByteArrayOutputStream gen(String text) {
 		Charset charset = Charset.forName("UTF-8");
 		CharsetEncoder encoder = charset.newEncoder();
 		byte[] b = null;
-		try
-		{
+		try {
 			// Convert a string to ISO-8859-1 bytes in a ByteBuffer
 			ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(text));
 			b = bbuf.array();
-		} catch (CharacterCodingException e)
-		{
+		} catch (CharacterCodingException e) {
 			System.out.println(e.getMessage());
 		}
 
 		String data = null;
-		try
-		{
+		try {
 			data = new String(b, "UTF-8");
-		} catch (UnsupportedEncodingException e)
-		{
+		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -44,20 +38,16 @@ public class QRHelper
 		int h = 500;
 		int w = 500;
 		com.google.zxing.Writer writer = new QRCodeWriter();
-		try
-		{
+		try {
 			matrix = writer.encode(data, com.google.zxing.BarcodeFormat.QR_CODE, w, h);
-		} catch (com.google.zxing.WriterException e)
-		{
+		} catch (com.google.zxing.WriterException e) {
 			System.out.println(e.getMessage());
 		}
 
 		ByteArrayOutputStream ret = new ByteArrayOutputStream();
-		try
-		{
+		try {
 			MatrixToImageWriter.writeToStream(matrix, "PNG", ret);
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 		return ret;

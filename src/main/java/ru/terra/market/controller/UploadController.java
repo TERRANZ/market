@@ -24,47 +24,37 @@ import ru.terra.market.util.FilePathUtil;
 import ru.terra.market.web.security.SessionHelper;
 
 @Controller
-public class UploadController
-{
+public class UploadController {
 
 	@Inject
 	private PhotoEngine pe;
 	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
 	@RequestMapping(value = URLConstants.Pages.UPLOAD, method = RequestMethod.GET)
-	public String getUploadForm(HttpServletRequest request, Model model)
-	{
-		if (SessionHelper.isUserCurrentAuthorized())
-		{
+	public String getUploadForm(HttpServletRequest request, Model model) {
+		if (SessionHelper.isUserCurrentAuthorized()) {
 			UploadDTO uploadDTO = new UploadDTO();
 
 			uploadDTO.setTarget("product");
-			try
-			{
+			try {
 				uploadDTO.setTargetId(Integer.parseInt(request.getParameter("product")));
 				logger.info("target id = " + Integer.parseInt(request.getParameter("product")));
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				uploadDTO.setTargetId(0);
 				logger.info("unable to parse target id: ", e);
 			}
 			model.addAttribute(uploadDTO);
 			return URLConstants.Views.UPLOAD;
-		}
-		else
-		{
+		} else {
 			return URLConstants.Views.ERROR404;
 		}
 	}
 
 	@RequestMapping(value = URLConstants.Pages.UPLOAD, method = RequestMethod.POST)
-	public String create(HttpServletRequest request, UploadDTO uploadDTO, BindingResult result)
-	{
+	public String create(HttpServletRequest request, UploadDTO uploadDTO, BindingResult result) {
 		logger.info("create : targetId = " + request.getParameter("targetId"));
-		if (result.hasErrors())
-		{
-			for (ObjectError error : result.getAllErrors())
-			{
+		if (result.hasErrors()) {
+			for (ObjectError error : result.getAllErrors()) {
 				System.err.println("Error: " + error.getCode() + " - " + error.getDefaultMessage());
 			}
 			return URLConstants.Views.UPLOAD;
@@ -77,20 +67,16 @@ public class UploadController
 		String basePath = fpu.getAbsoluteWebContextPath();
 		String subPath = FilePathConstants.PRODUCT_IMAGES_DIR;
 		File dir = new File(basePath + subPath);
-		if (!dir.exists())
-		{
+		if (!dir.exists()) {
 			dir.mkdir();
 		}
 		String outFileName = multipartFile.getOriginalFilename();
 		File localFile = new File(basePath + subPath + "/" + outFileName);
-		try
-		{
+		try {
 			multipartFile.transferTo(localFile);
-		} catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Product;
@@ -19,76 +20,45 @@ import ru.terra.market.util.ResponceUtils;
 import flexjson.JSONSerializer;
 
 @Controller
-public class JsonProductController
-{
+public class JsonProductController {
 
 	@Inject
 	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, method = { RequestMethod.GET, RequestMethod.POST })
-	private ResponseEntity<String> getProducts(HttpServletRequest request)
-	{
+	private ResponseEntity<String> getProducts(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer page,
+			@RequestParam(required = true, defaultValue = "3") Integer perpage, @RequestParam(required = true, defaultValue = "false") Boolean all,
+			@RequestParam(required = true, defaultValue = "") String name, @RequestParam(required = true, defaultValue = "-1") Integer category) {
 		ProductListDTO ret = new ProductListDTO();
-		String cat = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_CATEGORY);
-		String name = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_NAME);
-		if (cat != null)
-		{
-			String limit = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_LIMIT);
-			Integer lim = -1;
-			try
-			{
-				if (limit != null)
-				{
-					lim = Integer.parseInt(limit);
-				}
-			} catch (NumberFormatException e)
-			{
-				ret.size = -1;
-			}
-			try
-			{
-				Integer catId = Integer.parseInt(cat);
-				List<Product> products = pe.getProducts(catId, lim);
-				if (products != null)
-				{
-					for (Product p : products)
-					{
+		if (!category.equals(-1)) {
+			try {
+				List<Product> products = pe.getProducts(category, all, page, perpage);
+				if (products != null) {
+					for (Product p : products) {
 						ret.data.add(new ProductDTO(p));
 					}
 					ret.size = ret.data.size();
-				}
-				else
-				{
+					ret.full = pe.getProductCount(category);
+				} else {
 					ret.size = -1;
 				}
-			} catch (NumberFormatException e)
-			{
+			} catch (NumberFormatException e) {
 				ret.size = -1;
 			}
-		}
-		else if (name != null)
-		{
+		} else if (name != null) {
 			List<Product> products = pe.findProductsByName(name);
-			if (products != null)
-			{
-				for (Product p : products)
-				{
+			if (products != null) {
+				for (Product p : products) {
 					ret.data.add(new ProductDTO(p));
 				}
 				ret.size = ret.data.size();
-			}
-			else
-			{
+			} else {
 				ret.size = -1;
 			}
-		}
-		else
-		{
+		} else {
 			List<Product> products = pe.getAllProducts();
-			if (products != null)
-			{
-				for (Product p : products)
-				{
+			if (products != null) {
+				for (Product p : products) {
 					ret.data.add(new ProductDTO(p));
 				}
 				ret.size = ret.data.size();
@@ -99,67 +69,27 @@ public class JsonProductController
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCT, method = { RequestMethod.GET, RequestMethod.POST })
-	private ResponseEntity<String> getProduct(HttpServletRequest request)
-	{
-		String id = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID);
+	private ResponseEntity<String> getProduct(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer id) {
 		ProductDTO ret = new ProductDTO();
-		if (id != null)
-		{
-			try
-			{
-				Integer pid = Integer.parseInt(id);
-				Product p = pe.getProduct(pid);
-				if (p != null)
-				{
-					ret = new ProductDTO(p);
-				}
-				else
-				{
-					ret.ok = false;
-				}
-
-			} catch (NumberFormatException e)
-			{
-				ret.ok = false;
-			}
-		}
+		Product p = pe.getProduct(id);
+		if (p != null)
+			ret = new ProductDTO(p);
 		else
-		{
 			ret.ok = false;
-		}
-
-		String json = new JSONSerializer().deepSerialize(ret);
-		return ResponceUtils.makeResponce(json);
+		return ResponceUtils.makeResponce(new JSONSerializer().deepSerialize(ret));
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_MAIN_PRODUCTS, method = { RequestMethod.GET, RequestMethod.POST })
-	public ResponseEntity<String> getProductMainProducts(HttpServletRequest request)
-	{
+	public ResponseEntity<String> getProductMainProducts(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer page,
+			@RequestParam(required = true, defaultValue = "3") Integer perpage, @RequestParam(required = true, defaultValue = "false") Boolean all) {
 		ProductListDTO ret = new ProductListDTO();
-		String limit = request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_LIMIT);
-		Integer lim = -1;
-		try
-		{
-			if (limit != null)
-			{
-				lim = Integer.parseInt(limit);
-			}
-		} catch (NumberFormatException e)
-		{
-		}
-		List<Product> products = pe.getAllProductsLimited(lim);
-		if (products != null)
-		{
+		List<Product> products = pe.getAllProductsLimited(all, page, perpage);
+		if (products != null) {
 			for (Product p : products)
-			{
 				ret.data.add(new ProductDTO(p));
-			}
 			ret.size = ret.data.size();
-		}
-		else
-		{
+		} else
 			ret.size = -1;
-		}
 		String json = new JSONSerializer().deepSerialize(ret);
 		return ResponceUtils.makeResponce(json);
 	}

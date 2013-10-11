@@ -3,8 +3,7 @@ package ru.terra.market.dto.category;
 import ru.terra.market.db.entity.Category;
 import ru.terra.market.engine.ProductsEngine;
 
-public class CategoryDTO
-{
+public class CategoryDTO {
 	public Integer id;
 	public String name;
 	public Integer parent;
@@ -12,8 +11,7 @@ public class CategoryDTO
 
 	private ProductsEngine pe = new ProductsEngine();
 
-	public CategoryDTO(Category c)
-	{
+	public CategoryDTO(Category c) {
 		this.id = c.getId();
 		this.name = c.getName();
 		this.parent = c.getParent();

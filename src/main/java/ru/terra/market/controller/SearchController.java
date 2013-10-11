@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.terra.market.constants.URLConstants;
 
 @Controller
-public class SearchController
-{
+public class SearchController {
 	@RequestMapping(value = URLConstants.Pages.SEARCH, method = RequestMethod.GET)
-	public String search(HttpServletRequest request, Locale locale, Model model)
-	{
+	public String search(HttpServletRequest request, Locale locale, Model model) {
 		String name = request.getParameter("name");
 		if (name == null)
 			return URLConstants.Views.ERROR404;

@@ -21,8 +21,7 @@
 
 				<div class="banner_adds">
 
-					<a href="#"><img src="resources/images/bann2.jpg" alt="" title=""
-						border="0" /></a>
+					
 				</div>
 
 

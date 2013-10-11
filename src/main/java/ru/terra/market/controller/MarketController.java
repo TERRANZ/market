@@ -10,17 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.terra.market.constants.URLConstants;
 
 @Controller
-public class MarketController
-{
+public class MarketController {
 	@RequestMapping(value = URLConstants.Pages.MARKET_HOME, method = RequestMethod.GET)
-	public String mhome(Locale locale, Model model)
-	{
+	public String mhome(Locale locale, Model model) {
 		return URLConstants.Views.MARKET_HOME;
 	}
 
 	@RequestMapping(value = URLConstants.Pages.ABOUT, method = RequestMethod.GET)
-	public String about(Locale locale, Model model)
-	{
+	public String about(Locale locale, Model model) {
 		return URLConstants.Views.ABOUT;
 	}
 }

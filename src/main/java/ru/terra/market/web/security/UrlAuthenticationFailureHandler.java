@@ -2,10 +2,10 @@ package ru.terra.market.web.security;
 
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-public class UrlAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler
-{
+public class UrlAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-	// public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "j_username";
+	// public static final String SPRING_SECURITY_FORM_USERNAME_KEY =
+	// "j_username";
 
 	// public UrlAuthenticationFailureHandler()
 	// {
@@ -17,7 +17,8 @@ public class UrlAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
 	// super(defaultFailureUrl);
 	// }
 	//
-	// public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+	// public void onAuthenticationFailure(HttpServletRequest request,
+	// HttpServletResponse response, AuthenticationException exception)
 	// throws IOException, ServletException
 	// {
 	//
