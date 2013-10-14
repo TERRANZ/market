@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.terra.market.constants.URLConstants;
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.dto.category.CategoryDTO;
 import ru.terra.market.dto.category.CategoryListDTO;
 import ru.terra.market.dto.category.CategoryTreeDTO;
@@ -39,7 +39,7 @@ public class JsonCategoryController {
 			parentId = "-1";
 		try {
 			Integer pid = Integer.parseInt(parentId);
-			for (Category cat : ce.getCategoriesByParent(pid)) {
+			for (Group cat : ce.getCategoriesByParent(pid)) {
 				ret.data.add(new CategoryDTO(cat));
 			}
 			ret.size = ret.data.size();
@@ -52,7 +52,7 @@ public class JsonCategoryController {
 
 	private CategoryTreeDTO getCategoriesRecursive(Integer parent) {
 		List<CategoryTreeDTO> childs = new ArrayList<CategoryTreeDTO>();
-		for (Category child : ce.getCategoriesByParent(parent)) {
+		for (Group child : ce.getCategoriesByParent(parent)) {
 			childs.add(getCategoriesRecursive(child.getId()));
 		}
 		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getCategory(parent)));
@@ -61,7 +61,7 @@ public class JsonCategoryController {
 	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORIES, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> getCategories(HttpServletRequest request) {
 		CategoryListDTO ret = new CategoryListDTO();
-		for (Category cat : ce.getCategories())
+		for (Group cat : ce.getCategories())
 			ret.data.add(new CategoryDTO(cat));
 		ret.size = ret.data.size();
 		String json = new JSONSerializer().deepSerialize(ret);

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.terra.market.db.entity;
 
 import java.io.Serializable;
@@ -33,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "Product.findByAvail", query = "SELECT p FROM Product p WHERE p.avail = :avail"),
 		@NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
 		@NamedQuery(name = "Product.findByRating", query = "SELECT p FROM Product p WHERE p.rating = :rating"),
-		@NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category = :category"),
+		@NamedQuery(name = "Product.findByGroup", query = "SELECT p FROM Product p WHERE p.group = :group"),
 		@NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price") })
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -52,9 +48,9 @@ public class Product implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "price", nullable = false)
 	private Integer price;
-	@JoinColumn(name = "category", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
 	@ManyToOne(optional = false)
-	private Category category;
+	private Group group;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
 	private List<Photo> photoList;
 	@Basic(optional = true)
@@ -123,12 +119,12 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 
-	public Category getCategory() {
-		return category;
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	@XmlTransient

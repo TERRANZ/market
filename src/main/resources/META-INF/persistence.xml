@@ -7,7 +7,7 @@
 		<class>ru.terra.market.db.entity.Product</class>
 		<class>ru.terra.market.db.entity.Settings</class>
 		<class>ru.terra.market.db.entity.User</class>
-		<class>ru.terra.market.db.entity.Category</class>
+		<class>ru.terra.market.db.entity.Group</class>
 		<class>ru.terra.market.db.entity.Photo</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>

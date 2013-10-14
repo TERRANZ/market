@@ -26,7 +26,7 @@ public class ProductDTO {
 		this.name = p.getName();
 		this.rating = p.getRating();
 		this.avail = p.getAvail();
-		this.category = p.getCategory().getId();
+		this.category = p.getGroup().getId();
 		this.photos = new ArrayList<PhotoDTO>();
 		if (p.getPhotoList().size() > 0) {
 			for (Photo photo : p.getPhotoList()) {

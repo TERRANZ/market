@@ -1,6 +1,6 @@
 package ru.terra.market.dto.category;
 
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.engine.ProductsEngine;
 
 public class CategoryDTO {
@@ -11,7 +11,7 @@ public class CategoryDTO {
 
 	private ProductsEngine pe = new ProductsEngine();
 
-	public CategoryDTO(Category c) {
+	public CategoryDTO(Group c) {
 		this.id = c.getId();
 		this.name = c.getName();
 		this.parent = c.getParent();

@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
 import ru.terra.market.db.entity.controller.ProductJpaController;
@@ -39,14 +39,14 @@ public class ProductsEngine {
 	}
 
 	public List<Product> getProducts(Integer categoryId) {
-		Category cat = cjc.findCategory(categoryId);
+		Group cat = cjc.findCategory(categoryId);
 		if (cat != null)
 			return cat.getProductList();
 		return null;
 	}
 
 	public Long getProductCount(Integer categoryId) {
-		Category cat = cjc.findCategory(categoryId);
+		Group cat = cjc.findCategory(categoryId);
 		if (cat != null)
 			return pjc.getProductCount(cat);
 		return -1L;
@@ -58,7 +58,7 @@ public class ProductsEngine {
 
 	public Product createProduct(Integer category, String name, Integer rating, Boolean avail) {
 		Product p = new Product();
-		p.setCategory(cjc.findCategory(category));
+		p.setGroup(cjc.findCategory(category));
 		p.setAvail(avail);
 		p.setName(name);
 		p.setRating(rating);
@@ -99,13 +99,13 @@ public class ProductsEngine {
 	}
 
 	private List<Product> loadProductsFromCategory(Integer catId, Boolean all, Integer page, Integer perpage) {
-		Category cat = cjc.findCategory(catId);
+		Group cat = cjc.findCategory(catId);
 		List<Product> ret = new ArrayList<Product>();
 		if (cat != null) {
 			List<Product> prods = pjc.findProductByCategory(cat, all, page, perpage);
 			if (prods != null)
 				ret.addAll(prods);
-			for (Category c : cjc.findCategoryByParent(cat.getId()))
+			for (Group c : cjc.findCategoryByParent(cat.getId()))
 				ret.addAll(loadProductsFromCategory(c.getId(), all, page, perpage));
 		}
 		return ret;

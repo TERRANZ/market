@@ -30,7 +30,7 @@ public class ProductController {
 			Product prod = pe.getProduct(prodId);
 			if (prod == null)
 				return URLConstants.Views.ERROR404;
-			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getCategory().getId());
+			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getGroup().getId());
 			model.addAttribute(URLConstants.DoJson.Products.PRODUCT_PARAM_ID, prodId);
 		} catch (NumberFormatException e) {
 			return URLConstants.Views.ERROR404;

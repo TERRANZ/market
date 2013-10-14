@@ -16,7 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Photo;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.exceptions.IllegalOrphanException;
@@ -48,10 +48,10 @@ public class ProductJpaController implements Serializable {
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			Category category = product.getCategory();
+			Group category = product.getGroup();
 			if (category != null) {
 				category = em.getReference(category.getClass(), category.getId());
-				product.setCategory(category);
+				product.setGroup(category);
 			}
 			List<Photo> attachedPhotoList = new ArrayList<Photo>();
 			for (Photo photoListPhotoToAttach : product.getPhotoList()) {
@@ -92,8 +92,8 @@ public class ProductJpaController implements Serializable {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Product persistentProduct = em.find(Product.class, product.getId());
-			Category categoryOld = persistentProduct.getCategory();
-			Category categoryNew = product.getCategory();
+			Group categoryOld = persistentProduct.getGroup();
+			Group categoryNew = product.getGroup();
 			List<Photo> photoListOld = persistentProduct.getPhotoList();
 			List<Photo> photoListNew = product.getPhotoList();
 			List<String> illegalOrphanMessages = null;
@@ -110,7 +110,7 @@ public class ProductJpaController implements Serializable {
 			}
 			if (categoryNew != null) {
 				categoryNew = em.getReference(categoryNew.getClass(), categoryNew.getId());
-				product.setCategory(categoryNew);
+				product.setGroup(categoryNew);
 			}
 			List<Photo> attachedPhotoListNew = new ArrayList<Photo>();
 			for (Photo photoListNewPhotoToAttach : photoListNew) {
@@ -180,7 +180,7 @@ public class ProductJpaController implements Serializable {
 			if (illegalOrphanMessages != null) {
 				throw new IllegalOrphanException(illegalOrphanMessages);
 			}
-			Category category = product.getCategory();
+			Group category = product.getGroup();
 			if (category != null) {
 				category.getProductList().remove(product);
 				category = em.merge(category);
@@ -246,10 +246,10 @@ public class ProductJpaController implements Serializable {
 			em = getEntityManager();
 			em.getTransaction().begin();
 			for (Product product : prods) {
-				Category category = product.getCategory();
+				Group category = product.getGroup();
 				if (category != null) {
 					category = em.getReference(category.getClass(), category.getId());
-					product.setCategory(category);
+					product.setGroup(category);
 				}
 				em.persist(product);
 				if (category != null) {
@@ -265,10 +265,10 @@ public class ProductJpaController implements Serializable {
 		}
 	}
 
-	public List<Product> findProductByCategory(Category cat, Boolean all, Integer page, Integer perpage) {
+	public List<Product> findProductByCategory(Group cat, Boolean all, Integer page, Integer perpage) {
 		EntityManager em = getEntityManager();
 		try {
-			Query q = em.createNamedQuery("Product.findByCategory").setParameter("category", cat);
+			Query q = em.createNamedQuery("Product.findByGroup").setParameter("group", cat);
 			if (!all) {
 				q.setMaxResults(perpage);
 				q.setFirstResult(page * perpage);
@@ -281,10 +281,10 @@ public class ProductJpaController implements Serializable {
 		}
 	}
 
-	public Long getProductCount(Category cat) {
+	public Long getProductCount(Group cat) {
 		EntityManager em = getEntityManager();
 		try {
-			Query q = em.createNativeQuery("select count(id) from product where category = " + cat.getId());
+			Query q = em.createNativeQuery("select count(id) from product where group_id = " + cat.getId());
 			return (Long) q.getSingleResult();
 		} finally {
 			em.close();

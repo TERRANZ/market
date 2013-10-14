@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.terra.market.db.entity;
 
 import java.io.Serializable;
@@ -26,14 +22,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author terranz
  */
 @Entity
-@Table(name = "category", catalog = "market", schema = "")
+@Table(name = "group", catalog = "market", schema = "")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-		@NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-		@NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name"),
-		@NamedQuery(name = "Category.findByParent", query = "SELECT c FROM Category c WHERE c.parent = :parent") })
-public class Category implements Serializable {
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+@NamedQueries({ @NamedQuery(name = "Group.findAll", query = "SELECT c FROM Group c"),
+		@NamedQuery(name = "Group.findById", query = "SELECT c FROM Group c WHERE c.id = :id"),
+		@NamedQuery(name = "Group.findByName", query = "SELECT c FROM Group c WHERE c.name = :name"),
+		@NamedQuery(name = "Group.findByParent", query = "SELECT c FROM Group c WHERE c.parent = :parent") })
+public class Group implements Serializable {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,17 +42,17 @@ public class Category implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "parent", nullable = false)
 	private int parent;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
 	private List<Product> productList;
 
-	public Category() {
+	public Group() {
 	}
 
-	public Category(Integer id) {
+	public Group(Integer id) {
 		this.id = id;
 	}
 
-	public Category(Integer id, String name, int parent) {
+	public Group(Integer id, String name, int parent) {
 		this.id = id;
 		this.name = name;
 		this.parent = parent;
@@ -104,10 +100,10 @@ public class Category implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof Category)) {
+		if (!(object instanceof Group)) {
 			return false;
 		}
-		Category other = (Category) object;
+		Group other = (Group) object;
 		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
@@ -116,6 +112,6 @@ public class Category implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ru.terra.market.db.entity.Category[ id=" + id + " ]";
+		return "ru.terra.market.db.entity.Group[ id=" + id + " ]";
 	}
 }

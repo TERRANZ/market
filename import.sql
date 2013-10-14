@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v9.50 
-MySQL - 5.5.28-1-log : Database - market
+SQLyog Trial v11.11 (32 bit)
+MySQL - 5.5.33-1-log : Database - market
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.5.28-1-log : Database - market
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`market` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`market` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 
 USE `market`;
 
@@ -28,22 +28,22 @@ CREATE TABLE `SEQUENCE` (
 
 /*Data for the table `SEQUENCE` */
 
-insert  into `SEQUENCE`(`SEQ_NAME`,`SEQ_COUNT`) values ('SEQ_GEN_TABLE','10000');
+insert  into `SEQUENCE`(`SEQ_NAME`,`SEQ_COUNT`) values ('SEQ_GEN_TABLE',10000);
 
-/*Table structure for table `category` */
+/*Table structure for table `group` */
 
-DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `group`;
 
-CREATE TABLE `category` (
+CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(512) NOT NULL,
   `parent` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
 
-/*Data for the table `category` */
+/*Data for the table `group` */
 
-insert  into `category`(`id`,`name`,`parent`) values (1,'Товары',0),(102,'\"Белая техника\"',1),(103,'Шнуры',1),(104,'Телефоны',1),(105,'Радиоприёмники \"Лира\"',1),(106,'DECT Телефоны',104),(107,'Товары для телефонов',104),(108,'Электроплитки',109),(109,'Кухонная техника',102),(110,'Техника для гигиены',102),(111,'Кофемолки',109),(112,'Блендеры',109),(113,'Электробритвы',110),(114,'Ногтевые станки',110),(115,'Комплектующие',1),(116,'Товары для радиолюбителей',115),(117,'Паяльные принадлежности',115);
+insert  into `group`(`id`,`name`,`parent`) values (1,'Товары',0),(103,'Шнуры',1),(105,'Радиоприёмники \"Лира\"',1),(118,'Шнуры Premier',103);
 
 /*Table structure for table `photo` */
 
@@ -58,11 +58,13 @@ CREATE TABLE `photo` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 /*Data for the table `photo` */
+
+insert  into `photo`(`id`,`path`,`name`,`product_id`,`user_id`) values (23,'resources/market/lira/249.jpg','a',16,1),(24,'resources/market/lira/260.jpg','a',18,1),(25,'resources/market/lira/260-1.jpg','a',19,1),(26,'resources/market/lira/234-1.jpg','a',5,1),(27,'resources/market/lira/236.jpg','a',8,1),(28,'resources/market/lira/238.jpg','a',9,1),(29,'resources/market/lira/238-2.jpg','a',11,1),(30,'resources/market/lira/246.jpg','a',12,1),(31,'resources/market/lira/248.jpg','a',13,1),(32,'resources/market/lira/248-1.jpg','a',15,1),(34,'resources/market/lira/238.jpg','a',10,1);
 
 /*Table structure for table `product` */
 
@@ -73,17 +75,18 @@ CREATE TABLE `product` (
   `avail` tinyint(1) DEFAULT '0',
   `name` varchar(512) NOT NULL,
   `rating` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
   `price` int(11) unsigned NOT NULL DEFAULT '0',
   `comment` varchar(512) DEFAULT NULL,
+  `barcode` varchar(256) DEFAULT NULL,
+  `group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_product_category` (`category`),
-  CONSTRAINT `FK_product_category` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+  KEY `group_id` (`group_id`),
+  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`avail`,`name`,`rating`,`category`,`price`,`comment`) values (1,0,'Электроплита мечта',1,108,0,'awdawd'),(2,0,'Электроплита малютка',2,108,0,'awdawd'),(3,0,'Ногтевая студия микма',1,114,0,'awdawd'),(4,0,'Машинка для обработки ногтей',1,114,0,'awdawd'),(5,0,'Кофемолка микма',1,111,0,'awdawd'),(6,0,'Кофемолка бинатон',0,111,0,'awdawd'),(7,0,'Блендер малютка',1,112,0,'awdawd'),(8,0,'Блендер бинатон',1,112,0,'awdawd'),(9,0,'Электробритва микма',1,113,0,'awdawd'),(10,0,'Электробритва браун',1,113,0,'awdawd'),(11,0,'Шнур hdmi-hdmi',1,103,0,'awdawd'),(12,0,'Шнур 3,5-3,5 1 метр',1,103,0,'awdawd'),(13,0,'Шнур скарт-джек',1,103,0,'awdawd'),(14,0,'Телефон самсунг',1,106,0,'awdawd'),(15,0,'Телефон LG',0,106,0,'awdawd'),(16,0,'Зарядка для телефона самсунг',1,107,0,'awdawd'),(17,0,'Шнур для телефона LG',1,107,0,'awdawd'),(18,0,'Радиоприёмник лира 1',1,105,0,'awdawd'),(19,0,'Радиоприёмник лира 2',1,105,0,'awdawd'),(20,0,'Припой пос-60',1,116,0,'awdawd'),(21,0,'Флюс',1,116,0,'awdawd'),(22,0,'Паяльник 40 ватт',5,117,0,'awdawd'),(23,0,'Плата макетная 30х30см',5,117,0,'awdawd');
+insert  into `product`(`id`,`avail`,`name`,`rating`,`price`,`comment`,`barcode`,`group_id`) values (5,1,'Лира РП-234-1',0,120,NULL,'1',105),(8,1,'Лира РП-236',0,300,NULL,'2',105),(9,1,'Лира РП-238',0,400,NULL,'3',105),(10,1,'Лира РП-238-1',0,500,NULL,'4',105),(11,1,'Лира РП-238-2',0,600,NULL,'5',105),(12,1,'Лира РП-246',0,700,NULL,'6',105),(13,1,'Лира РП-248',0,800,NULL,'7',105),(15,1,'Лира РП-248-1',0,900,NULL,'8',105),(16,1,'Лира РП-249',0,1000,NULL,'9',105),(18,1,'Лира РП-260',0,1100,NULL,'10',105),(19,1,'Лира РП-260-1',0,1200,NULL,'11',105);
 
 /*Table structure for table `settings` */
 
@@ -111,6 +114,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
+
+insert  into `users`(`id`,`level`,`login`,`password`) values (1,0,'a','a');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

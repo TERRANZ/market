@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.engine.CategoriesEngine;
 
 @Controller
@@ -36,7 +36,7 @@ public class CategoryController {
 				return URLConstants.Views.ERROR404;
 			}
 
-			Category category = ce.getCategory(catId);
+			Group category = ce.getCategory(catId);
 			if (category != null) {
 				model.addAttribute(ModelConstants.CATEGORY_ID, id);
 				model.addAttribute(ModelConstants.CATEGORY_NAME, category.getName());

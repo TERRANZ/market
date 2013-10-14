@@ -16,7 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.exceptions.IllegalOrphanException;
 import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityException;
@@ -37,7 +37,7 @@ public class CategoryJpaController implements Serializable {
 		return emf.createEntityManager();
 	}
 
-	public void create(Category category) {
+	public void create(Group category) {
 		if (category.getProductList() == null) {
 			category.setProductList(new ArrayList<Product>());
 		}
@@ -53,8 +53,8 @@ public class CategoryJpaController implements Serializable {
 			category.setProductList(attachedProductList);
 			em.persist(category);
 			for (Product productListProduct : category.getProductList()) {
-				Category oldCategoryOfProductListProduct = productListProduct.getCategory();
-				productListProduct.setCategory(category);
+				Group oldCategoryOfProductListProduct = productListProduct.getGroup();
+				productListProduct.setGroup(category);
 				productListProduct = em.merge(productListProduct);
 				if (oldCategoryOfProductListProduct != null) {
 					oldCategoryOfProductListProduct.getProductList().remove(productListProduct);
@@ -69,12 +69,12 @@ public class CategoryJpaController implements Serializable {
 		}
 	}
 
-	public void create(List<Category> cats) {
+	public void create(List<Group> cats) {
 		EntityManager em = null;
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			for (Category category : cats) {
+			for (Group category : cats) {
 				if (category.getProductList() == null) {
 					category.setProductList(new ArrayList<Product>());
 				}
@@ -86,8 +86,8 @@ public class CategoryJpaController implements Serializable {
 				category.setProductList(attachedProductList);
 				em.persist(category);
 				for (Product productListProduct : category.getProductList()) {
-					Category oldCategoryOfProductListProduct = productListProduct.getCategory();
-					productListProduct.setCategory(category);
+					Group oldCategoryOfProductListProduct = productListProduct.getGroup();
+					productListProduct.setGroup(category);
 					productListProduct = em.merge(productListProduct);
 					if (oldCategoryOfProductListProduct != null) {
 						oldCategoryOfProductListProduct.getProductList().remove(productListProduct);
@@ -104,12 +104,12 @@ public class CategoryJpaController implements Serializable {
 
 	}
 
-	public void edit(Category category) throws IllegalOrphanException, NonexistentEntityException, Exception {
+	public void edit(Group category) throws IllegalOrphanException, NonexistentEntityException, Exception {
 		EntityManager em = null;
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			Category persistentCategory = em.find(Category.class, category.getId());
+			Group persistentCategory = em.find(Group.class, category.getId());
 			List<Product> productListOld = persistentCategory.getProductList();
 			List<Product> productListNew = category.getProductList();
 			List<String> illegalOrphanMessages = null;
@@ -134,8 +134,8 @@ public class CategoryJpaController implements Serializable {
 			category = em.merge(category);
 			for (Product productListNewProduct : productListNew) {
 				if (!productListOld.contains(productListNewProduct)) {
-					Category oldCategoryOfProductListNewProduct = productListNewProduct.getCategory();
-					productListNewProduct.setCategory(category);
+					Group oldCategoryOfProductListNewProduct = productListNewProduct.getGroup();
+					productListNewProduct.setGroup(category);
 					productListNewProduct = em.merge(productListNewProduct);
 					if (oldCategoryOfProductListNewProduct != null && !oldCategoryOfProductListNewProduct.equals(category)) {
 						oldCategoryOfProductListNewProduct.getProductList().remove(productListNewProduct);
@@ -165,9 +165,9 @@ public class CategoryJpaController implements Serializable {
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			Category category;
+			Group category;
 			try {
-				category = em.getReference(Category.class, id);
+				category = em.getReference(Group.class, id);
 				category.getId();
 			} catch (EntityNotFoundException enfe) {
 				throw new NonexistentEntityException("The category with id " + id + " no longer exists.", enfe);
@@ -193,19 +193,19 @@ public class CategoryJpaController implements Serializable {
 		}
 	}
 
-	public List<Category> findCategoryEntities() {
+	public List<Group> findCategoryEntities() {
 		return findCategoryEntities(true, -1, -1);
 	}
 
-	public List<Category> findCategoryEntities(int maxResults, int firstResult) {
+	public List<Group> findCategoryEntities(int maxResults, int firstResult) {
 		return findCategoryEntities(false, maxResults, firstResult);
 	}
 
-	private List<Category> findCategoryEntities(boolean all, int maxResults, int firstResult) {
+	private List<Group> findCategoryEntities(boolean all, int maxResults, int firstResult) {
 		EntityManager em = getEntityManager();
 		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-			cq.select(cq.from(Category.class));
+			cq.select(cq.from(Group.class));
 			Query q = em.createQuery(cq);
 			if (!all) {
 				q.setMaxResults(maxResults);
@@ -217,10 +217,10 @@ public class CategoryJpaController implements Serializable {
 		}
 	}
 
-	public Category findCategory(Integer id) {
+	public Group findCategory(Integer id) {
 		EntityManager em = getEntityManager();
 		try {
-			return em.find(Category.class, id);
+			return em.find(Group.class, id);
 		} finally {
 			em.close();
 		}
@@ -230,7 +230,7 @@ public class CategoryJpaController implements Serializable {
 		EntityManager em = getEntityManager();
 		try {
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-			Root<Category> rt = cq.from(Category.class);
+			Root<Group> rt = cq.from(Group.class);
 			cq.select(em.getCriteriaBuilder().count(rt));
 			Query q = em.createQuery(cq);
 			return ((Long) q.getSingleResult()).intValue();
@@ -239,10 +239,10 @@ public class CategoryJpaController implements Serializable {
 		}
 	}
 
-	public List<Category> findCategoryByParent(Integer parentId) {
+	public List<Group> findCategoryByParent(Integer parentId) {
 		EntityManager em = getEntityManager();
 		try {
-			return em.createNamedQuery("Category.findByParent").setParameter("parent", parentId).getResultList();
+			return em.createNamedQuery("Group.findByParent").setParameter("parent", parentId).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} finally {

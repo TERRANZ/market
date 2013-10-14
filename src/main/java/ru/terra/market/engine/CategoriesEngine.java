@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Component;
 
-import ru.terra.market.db.entity.Category;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.db.entity.controller.CategoryJpaController;
 
@@ -24,25 +24,25 @@ public class CategoriesEngine {
 		cjc = new CategoryJpaController(emf);
 	}
 
-	public List<Category> getCategories() {
+	public List<Group> getCategories() {
 		return cjc.findCategoryEntities();
 	}
 
-	public Category getCategory(Integer id) {
+	public Group getCategory(Integer id) {
 		if (id != null)
 			return cjc.findCategory(id);
 		return null;
 	}
 
-	public List<Category> getCategoriesByParent(Integer parentId) {
+	public List<Group> getCategoriesByParent(Integer parentId) {
 		if (parentId == -1)
 			return cjc.findCategoryEntities();
 		else
 			return cjc.findCategoryByParent(parentId);
 	}
 
-	public Category createCategory(String name) {
-		Category c = new Category();
+	public Group createCategory(String name) {
+		Group c = new Group();
 		c.setName(name);
 		c.setParent(0);
 		c.setProductList(new ArrayList<Product>());
