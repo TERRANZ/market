@@ -1,6 +1,5 @@
 package ru.terra.et.core.cache;
 
-public class ProductsInCategoryCache
-{
+public class ProductsInCategoryCache {
 
 }
