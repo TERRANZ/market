@@ -11,7 +11,19 @@ function loadLeftCategories() {
 			categoryWrapper.html(newHtml);
 			var prepared = processTreeJson(true, data);
 			categoryWrapper.dynatree({
-				children : prepared
+				children : prepared,
+				onActivate : function(node) {
+					if (!node.data.isFolder)
+						var url = document.URL;
+						if (url.indexOf("category") < 0)
+							window.location.href = "/market/category?id=" + node.data.key;
+						else {
+							$("#category_id").val(node.data.key);
+							$("#catname").text(node.data.title);
+							loadCategoryProducts(1);
+						}
+
+				},
 			});
 		}
 	});

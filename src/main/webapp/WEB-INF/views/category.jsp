@@ -7,7 +7,7 @@
 <div class="center_content">
 	<input type="hidden" id="category_id" value=${ categoryId } />
 	<div class="center_title_bar">
-		Товары в категории: ${ catname }
+		Товары в категории: <span id="catname"> ${ catname }</span>
 		На странице 
 		<select id="perpage">
 			<option>3</option>
