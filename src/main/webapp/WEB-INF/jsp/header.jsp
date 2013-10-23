@@ -7,6 +7,7 @@
 	content="text/html; charset=UTF-8" />
 <title>РадиоЭлектроТовары</title>
 <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/ui.dynatree.css" />
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" href="resources/css/iecss.css" />
 <![endif]-->

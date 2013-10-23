@@ -9,24 +9,50 @@ function loadLeftCategories() {
 			var newHtml = "";
 			newHtml += buildCategoryTree(data, 0);
 			categoryWrapper.html(newHtml);
+			var prepared = processTreeJson(true, data);
+			categoryWrapper.dynatree({
+				children : prepared
+			});
 		}
 	});
+
+}
+
+function processTreeJson(first, categoryTree) {
+	var children = [];
+	var data = {
+		title : categoryTree.category.name,
+		isFolder : categoryTree.hasChilds,
+		key : categoryTree.category.id,
+		children : []
+	};
+	children.push(data);
+	if (categoryTree.hasChilds)
+		for ( var i = 0; i < categoryTree.childs.length; i++) {
+			data.children.push(processTreeJson(false, categoryTree.childs[i]));
+		}
+	if (first)
+		return children;
+	return data;
 }
 
 function buildCategoryTree(categoryTree, level) {
-	var newHtml = "";
+	var newHtml = "<ul class='folder'>";
 	var id = categoryTree.category.id;
 	var padding = 10 * level;
-	newHtml += "<li class='odd'>";
-	newHtml += "<a style='padding-left: " + padding + "px;' class='category_link' id='" + id + "'href=/market/category?id=" + id + "> "
-			+ categoryTree.category.name + "</a>";
-	newHtml += "</li>";
+	newHtml += "<li class='odd'>" + categoryTree.category.name;
+	// newHtml += "<a style='padding-left: " + padding + "px;'
+	// class='category_link' id='" + id + "'href=/market/category?id=" + id + ">
+	// "
+	// + categoryTree.category.name + "</a>";
+	// newHtml += "</li>";
 	if (categoryTree.hasChilds) {
 		var newLevel = level + 1;
 		$.each(categoryTree.childs, function(i, d) {
 			newHtml += buildCategoryTree(d, newLevel);
 		});
 	}
+	newHtml += "</ul>";
 	return newHtml;
 }
 
@@ -161,8 +187,8 @@ function loadCategoryProducts(page) {
 					itemsOnPage : perpage,
 					cssStyle : 'compact-theme',
 					currentPage : page,
-					prevText: '<=',
-					nextText: '=>',
+					prevText : '<=',
+					nextText : '=>',
 					onPageClick : function(pageNumber, event) {
 						loadCategoryProducts(pageNumber);
 					}
