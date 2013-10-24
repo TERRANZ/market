@@ -15,13 +15,13 @@ function loadLeftCategories() {
 				onActivate : function(node) {
 					if (!node.data.isFolder)
 						var url = document.URL;
-						if (url.indexOf("category") < 0)
-							window.location.href = "/market/category?id=" + node.data.key;
-						else {
-							$("#category_id").val(node.data.key);
-							$("#catname").text(node.data.title);
-							loadCategoryProducts(1);
-						}
+					if (url.indexOf("category") < 0)
+						window.location.href = "/market/category?id=" + node.data.key;
+					else {
+						$("#category_id").val(node.data.key);
+						$("#catname").text(node.data.title);
+						loadCategoryProducts(1);
+					}
 
 				},
 			});
@@ -147,12 +147,14 @@ function buildProductInfo(product) {
 	htmlRet += '<div class="center_prod_box">';
 	htmlRet += '<div class="product_title">';
 	htmlRet += '<a href="/market/product?id=' + product.id + '">' + product.name + '</a>';
+	if (product.comment != null)
+		htmlRet += '<p style="font-size:9px;">' + product.comment + "</p>";
 	htmlRet += '</div>';
 	if (product.photos.length > 0) {
 		$.each(product.photos, function(i, photo) {
 			htmlRet += '<div class="product_img">';
 			htmlRet += '<a href="/market/product?id=' + product.id + '"><img src="' + photo.path
-					+ '" width=200 heigth=200 alt="" title="" border="0" /></a>';
+					+ '" width=100 heigth=100 alt="" title="" border="0" /></a>';
 			htmlRet += '</div>';
 		});
 	} else {
@@ -163,6 +165,7 @@ function buildProductInfo(product) {
 	}
 	htmlRet += '<div class="prod_price">';
 	htmlRet += '<span class="price">' + product.price + ' руб.</span>';
+
 	htmlRet += '</div>';
 	htmlRet += '</div>';
 	htmlRet += '<div class="prod_details_tab">';
