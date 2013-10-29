@@ -35,10 +35,11 @@ public class QRServlet extends HttpServlet {
 		}
 		response.setContentType("image/png");
 		ByteArrayOutputStream out = getFromCache(request, qrtext);
-		if (out == null)
+		if (out == null) {
 			out = QRHelper.gen(qrtext);
+			writeToCache(request, out, qrtext);
+		}
 
-		writeToCache(request, out, qrtext);
 		response.sendRedirect("/market" + FilePathConstants.QR_DIR + "/" + String.valueOf(qrtext.hashCode()) + ".png");
 		// response.setContentLength(out.size());
 		// OutputStream outStream = response.getOutputStream();
