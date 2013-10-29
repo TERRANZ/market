@@ -51,7 +51,7 @@
 					<li><a href="#" onclick="loadLatest(); return false;" class="nav">Новинки</a></li>
 					<li class="divider"></li>
 					<% if (SessionHelper.isUserCurrentAuthorized()){ %>
-					<li><a href="/market/my" class="nav">Мой аккаунт</a></li>
+					<li><a href="/market/admin_main" class="nav">Админка</a></li>
 					<li class="divider"></li>
 					<% }else{ %>
 					<li><a href="/market/login" class="nav">Авторизация</a></li>

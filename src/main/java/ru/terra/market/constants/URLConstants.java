@@ -16,6 +16,11 @@ public class URLConstants {
 		public static final String REGISTER = "registration";
 		public static final String SEARCH = "search";
 		public static final String UPLOAD = "upload";
+		public static final String ADMIN = "admin_main";
+		public static final String ADMIN_PRODUCTS = "admin_products";
+		public static final String ADMIN_GROUPS = "admin_groups";
+		public static final String NEW_PRODUCTS = "newprods";
+		public static final String CREATE_PRODUCTS = "createproduct";
 	}
 
 	public class DoJson {
@@ -34,10 +39,11 @@ public class URLConstants {
 			public static final String PRODUCT_GET_PRODUCT = "/product/get.product.json";
 			public static final String PRODUCT_GET_RECOMMEND_PRODUCTS = "/product/get.products.recommend.json";
 			public static final String PRODUCT_GET_LATEST_PRODUCTS = "/product/get.products.latest.json";
+			public static final String PRODUCT_CREATE = "/product/do.create.json";
 
 			public static final String PRODUCT_PARAM_ID = "id";
 			public static final String PRODUCT_PARAM_CATEGORY = "category";
-			public static final String PRODUCT_PARAM_NAME = "name";			
+			public static final String PRODUCT_PARAM_NAME = "name";
 			public static final String PRODUCT_PARAM_PAGE = "page";
 			public static final String PRODUCT_PARAM_PERPAGE = "perpage";
 		}
@@ -62,5 +68,9 @@ public class URLConstants {
 		public static final String REGISTER = "reg";
 		public static final String SEARCH = "search";
 		public static final String UPLOAD = "upload";
+		public static final String ADMIN = "admin_main";
+		public static final String ADMIN_PRODUCTS = "admin_products";
+		public static final String ADMIN_GROUPS = "admin_groups";
+		public static final String NEW_PRODUCTS = "newprods";
 	}
 }

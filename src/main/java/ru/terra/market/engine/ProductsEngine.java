@@ -19,7 +19,6 @@ import ru.terra.market.db.entity.controller.CategoryJpaController;
 import ru.terra.market.db.entity.controller.ProductJpaController;
 import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityException;
 
-@Singleton
 @Component
 public class ProductsEngine {
 
@@ -56,12 +55,15 @@ public class ProductsEngine {
 		return pjc.findProduct(id);
 	}
 
-	public Product createProduct(Integer category, String name, Integer rating, Boolean avail) {
+	public Product createProduct(Integer category, String name, String comment, Integer rating, Boolean avail) throws PreexistingEntityException, Exception {
 		Product p = new Product();
 		p.setGroup(cjc.findCategory(category));
 		p.setAvail(avail);
 		p.setName(name);
+		p.setComment(comment);
 		p.setRating(rating);
+		p.setPrice(0);
+		pjc.create(p);
 		return p;
 	}
 

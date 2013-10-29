@@ -132,29 +132,29 @@ public class LoginController {
 		return ResponceUtils.makeResponce(json);
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_REGISTER_JSON, method = RequestMethod.POST)
-	public ResponseEntity<String> register(HttpServletRequest request) {
-		LoginDTO ret = new LoginDTO();
-		String login = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_USER);
-		if (login != null && le.findUserByName(login) == null) {
-			String pass = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_PASS);
-			if (login != null && pass != null) {
-				Integer retId = le.registerUser(login, pass);
-				ret.logged = true;
-				ret.id = retId;
-				User u = le.getUser(retId);
-				u.setPassword(passwordEncoder.encodePassword(pass, u.getId()));
-				le.saveUser(u);
-			} else {
-				ret.logged = false;
-			}
-		} else {
-			ret.logged = false;
-			ret.message = "User already exists";
-		}
-		String json = new JSONSerializer().serialize(ret);
-		return ResponceUtils.makeResponce(json);
-	}
+//	@RequestMapping(value = URLConstants.DoJson.Login.LOGIN_DO_REGISTER_JSON, method = { RequestMethod.GET, RequestMethod.POST })
+//	public ResponseEntity<String> register(HttpServletRequest request) {
+//		LoginDTO ret = new LoginDTO();
+//		String login = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_USER);
+//		if (login != null && le.findUserByName(login) == null) {
+//			String pass = request.getParameter(URLConstants.DoJson.Login.LOGIN_PARAM_PASS);
+//			if (login != null && pass != null) {
+//				Integer retId = le.registerUser(login, pass);
+//				ret.logged = true;
+//				ret.id = retId;
+//				User u = le.getUser(retId);
+//				u.setPassword(passwordEncoder.encodePassword(pass, u.getId()));
+//				le.saveUser(u);
+//			} else {
+//				ret.logged = false;
+//			}
+//		} else {
+//			ret.logged = false;
+//			ret.message = "User already exists";
+//		}
+//		String json = new JSONSerializer().serialize(ret);
+//		return ResponceUtils.makeResponce(json);
+//	}
 
 	@RequestMapping(value = URLConstants.Pages.LOGIN, method = RequestMethod.GET)
 	public String login(Locale locale, Model model) {

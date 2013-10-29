@@ -11,23 +11,7 @@
 
 
 
-	<div class="shopping_cart">
-		<!-- 					<div class="title_box">Shopping cart</div> -->
 
-		<!-- 					<div class="cart_details"> -->
-		<!-- 						3 items <br /> <span class="border_cart"></span> Total: <span -->
-		<!-- 							class="price">350$</span> -->
-		<!-- 					</div> -->
-
-		<!-- 					<div class="cart_icon"> -->
-		<!-- 						<a href="#" title=""><img src="resources/images/shoppingcart.png" alt="" -->
-		<!-- 							title="" width="35" height="35" border="0" /></a> -->
-		<!-- 					</div> -->
-
-	</div>
-
-
-	<div class="title_box">Что нового?</div>
 	<div class="border_box">
 		
 	</div>
