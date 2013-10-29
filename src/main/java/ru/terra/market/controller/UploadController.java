@@ -68,7 +68,7 @@ public class UploadController {
 		String subPath = FilePathConstants.PRODUCT_IMAGES_DIR;
 		File dir = new File(basePath + subPath);
 		if (!dir.exists()) {
-			dir.mkdir();
+			dir.mkdirs();
 		}
 		String outFileName = multipartFile.getOriginalFilename();
 		File localFile = new File(basePath + subPath + "/" + outFileName);

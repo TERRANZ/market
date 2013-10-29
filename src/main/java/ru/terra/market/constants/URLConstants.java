@@ -1,7 +1,7 @@
 package ru.terra.market.constants;
 
 public class URLConstants {
-	public static final String SERVER_URL = "http://terranout.ath.cx/market/";
+	public static final String SERVER_URL = "http://xn--80aafhfrpg0adapheyc1nya.xn--p1ai/market/";
 
 	public class Pages {
 		public static final String SPRING_LOGIN = "/market/do.login";
