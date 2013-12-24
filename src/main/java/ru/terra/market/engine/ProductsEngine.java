@@ -13,11 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.db.controller.CategoryJpaController;
+import ru.terra.market.db.controller.ProductJpaController;
+import ru.terra.market.db.controller.exceptions.PreexistingEntityException;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
-import ru.terra.market.db.entity.controller.CategoryJpaController;
-import ru.terra.market.db.entity.controller.ProductJpaController;
-import ru.terra.market.db.entity.controller.exceptions.PreexistingEntityException;
 
 @Component
 public class ProductsEngine {

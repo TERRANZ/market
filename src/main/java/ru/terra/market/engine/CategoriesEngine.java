@@ -9,9 +9,9 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.db.controller.CategoryJpaController;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
-import ru.terra.market.db.entity.controller.CategoryJpaController;
 
 @Singleton
 @Component

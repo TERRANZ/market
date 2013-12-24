@@ -11,7 +11,7 @@
 		<class>ru.terra.market.db.entity.Photo</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/market" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/market" />
 			<property name="javax.persistence.jdbc.password" value="spending" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.user" value="spending" />

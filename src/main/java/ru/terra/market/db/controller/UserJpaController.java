@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.terra.market.db.entity.controller;
+package ru.terra.market.db.controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,8 +15,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import ru.terra.market.db.controller.exceptions.NonexistentEntityException;
 import ru.terra.market.db.entity.User;
-import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityException;
 
 /**
  * 

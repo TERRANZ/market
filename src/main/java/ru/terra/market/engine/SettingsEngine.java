@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Component;
 
-import ru.terra.market.db.entity.controller.SettingsJpaController;
+import ru.terra.market.db.controller.SettingsJpaController;
 
 @Singleton
 @Component

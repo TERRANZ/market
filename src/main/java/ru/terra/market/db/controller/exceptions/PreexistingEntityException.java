@@ -1,4 +1,4 @@
-package ru.terra.market.db.entity.controller.exceptions;
+package ru.terra.market.db.controller.exceptions;
 
 public class PreexistingEntityException extends Exception {
 	public PreexistingEntityException(String message, Throwable cause) {

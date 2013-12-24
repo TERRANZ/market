@@ -23,12 +23,10 @@ function loadLeftCategories() {
 						loadCategoryProducts(1);
 						window.history.pushState('category'+node.data.key, 'Категория '+node.data.title, "/market/category?id=" + node.data.key);
 					}
-
 				},
 			});
 		}
 	});
-
 }
 
 function processTreeJson(first, categoryTree) {

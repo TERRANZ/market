@@ -1,4 +1,4 @@
-package ru.terra.market.db.entity.controller.exceptions;
+package ru.terra.market.db.controller.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.terra.market.db.entity.controller.exceptions;
+package ru.terra.market.db.controller.exceptions;
 
 public class NonexistentEntityException extends Exception {
 	public NonexistentEntityException(String message, Throwable cause) {

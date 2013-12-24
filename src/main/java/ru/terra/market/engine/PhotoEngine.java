@@ -7,8 +7,8 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.db.controller.PhotoJpaController;
 import ru.terra.market.db.entity.Photo;
-import ru.terra.market.db.entity.controller.PhotoJpaController;
 
 @Singleton
 @Component

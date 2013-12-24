@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.db.controller.UserJpaController;
+import ru.terra.market.db.controller.exceptions.IllegalOrphanException;
+import ru.terra.market.db.controller.exceptions.NonexistentEntityException;
 import ru.terra.market.db.entity.User;
-import ru.terra.market.db.entity.controller.UserJpaController;
-import ru.terra.market.db.entity.controller.exceptions.IllegalOrphanException;
-import ru.terra.market.db.entity.controller.exceptions.NonexistentEntityException;
 
 @Singleton
 @Component
