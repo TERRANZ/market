@@ -55,13 +55,13 @@ public class JsonCategoryController {
 		for (Group child : ce.getCategoriesByParent(parent)) {
 			childs.add(getCategoriesRecursive(child.getId()));
 		}
-		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getCategory(parent)));
+		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getBean(parent)));
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORIES, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> getCategories(HttpServletRequest request) {
 		CategoryListDTO ret = new CategoryListDTO();
-		for (Group cat : ce.getCategories())
+		for (Group cat : ce.listBeans(true, -1, -1))
 			ret.data.add(new CategoryDTO(cat));
 		ret.size = ret.data.size();
 		String json = new JSONSerializer().deepSerialize(ret);

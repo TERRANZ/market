@@ -5,10 +5,10 @@ import java.util.List;
 
 import ru.terra.market.db.entity.Photo;
 import ru.terra.market.db.entity.Product;
+import ru.terra.market.dto.CommonDTO;
 import ru.terra.market.dto.photo.PhotoDTO;
 
-public class ProductDTO {
-	public Integer id;
+public class ProductDTO extends CommonDTO {	
 	public String name;
 	public Integer rating;
 	public Boolean avail;

@@ -9,36 +9,41 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.core.AbstractEngine;
 import ru.terra.market.db.controller.CategoryJpaController;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
+import ru.terra.market.dto.category.CategoryDTO;
 
 @Singleton
 @Component
-public class CategoriesEngine {
-
-	private CategoryJpaController cjc;
+public class CategoriesEngine extends AbstractEngine<Group, CategoryDTO> {
 
 	public CategoriesEngine() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
-		cjc = new CategoryJpaController(emf);
+		super(new CategoryJpaController());
 	}
 
-	public List<Group> getCategories() {
-		return cjc.findCategoryEntities();
+	@Override
+	public void dtoToEntity(CategoryDTO dto, Group entity) {
+		if (dto == null)
+			return;
+		if (entity == null)
+			entity = new Group();
+		entity.setId(dto.id);
+		entity.setName(dto.name);
+		entity.setParent(dto.parent);
 	}
 
-	public Group getCategory(Integer id) {
-		if (id != null)
-			return cjc.findCategory(id);
-		return null;
+	@Override
+	public CategoryDTO entityToDto(Group entity) {
+		return new CategoryDTO(entity);
 	}
 
 	public List<Group> getCategoriesByParent(Integer parentId) {
 		if (parentId == -1)
-			return cjc.findCategoryEntities();
+			return listBeans(true, -1, -1);
 		else
-			return cjc.findCategoryByParent(parentId);
+			return ((CategoryJpaController) jpaController).findCategoryByParent(parentId);
 	}
 
 	public Group createCategory(String name) {
@@ -46,7 +51,7 @@ public class CategoriesEngine {
 		c.setName(name);
 		c.setParent(0);
 		c.setProductList(new ArrayList<Product>());
-		cjc.create(c);
+		createBean(c);
 		return c;
 	}
 

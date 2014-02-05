@@ -2,9 +2,9 @@ package ru.terra.market.dto.photo;
 
 import ru.terra.market.db.entity.Photo;
 import ru.terra.market.db.entity.User;
+import ru.terra.market.dto.CommonDTO;
 
-public class PhotoDTO {
-	public Integer id;
+public class PhotoDTO extends CommonDTO {
 	public String path;
 	public String name;
 	public Integer productId;

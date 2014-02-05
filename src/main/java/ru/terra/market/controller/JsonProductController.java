@@ -56,7 +56,7 @@ public class JsonProductController {
 				ret.size = -1;
 			}
 		} else {
-			List<Product> products = pe.getAllProducts();
+			List<Product> products = pe.listBeans(true, -1, -1);
 			if (products != null) {
 				for (Product p : products) {
 					ret.data.add(new ProductDTO(p));
@@ -71,7 +71,7 @@ public class JsonProductController {
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCT, method = { RequestMethod.GET, RequestMethod.POST })
 	private ResponseEntity<String> getProduct(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer id) {
 		ProductDTO ret = new ProductDTO();
-		Product p = pe.getProduct(id);
+		Product p = pe.getBean(id);
 		if (p != null)
 			ret = new ProductDTO(p);
 		else
@@ -83,7 +83,7 @@ public class JsonProductController {
 	public ResponseEntity<String> getProductMainProducts(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer page,
 			@RequestParam(required = true, defaultValue = "3") Integer perpage, @RequestParam(required = true, defaultValue = "false") Boolean all) {
 		ProductListDTO ret = new ProductListDTO();
-		List<Product> products = pe.getAllProductsLimited(all, page, perpage);
+		List<Product> products = pe.listBeans(all, page, perpage);
 		if (products != null) {
 			for (Product p : products)
 				ret.data.add(new ProductDTO(p));

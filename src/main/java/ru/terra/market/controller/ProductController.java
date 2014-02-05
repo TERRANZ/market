@@ -27,7 +27,7 @@ public class ProductController {
 		Integer prodId = 0;
 		try {
 			prodId = Integer.parseInt(request.getParameter(URLConstants.DoJson.Products.PRODUCT_PARAM_ID));
-			Product prod = pe.getProduct(prodId);
+			Product prod = pe.getBean(prodId);
 			if (prod == null)
 				return URLConstants.Views.ERROR404;
 			model.addAttribute(ModelConstants.CATEGORY_ID, prod.getGroup().getId());

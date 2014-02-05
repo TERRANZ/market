@@ -1,10 +1,10 @@
 package ru.terra.market.dto.category;
 
 import ru.terra.market.db.entity.Group;
+import ru.terra.market.dto.CommonDTO;
 import ru.terra.market.engine.ProductsEngine;
 
-public class CategoryDTO {
-	public Integer id;
+public class CategoryDTO extends CommonDTO {	
 	public String name;
 	public Integer parent;
 	public Long count;

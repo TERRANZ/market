@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -13,72 +14,53 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ru.terra.market.core.AbstractEngine;
 import ru.terra.market.db.controller.CategoryJpaController;
 import ru.terra.market.db.controller.ProductJpaController;
 import ru.terra.market.db.controller.exceptions.PreexistingEntityException;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
+import ru.terra.market.dto.product.ProductDTO;
 
 @Component
-public class ProductsEngine {
+public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	private ProductJpaController pjc;
-	private CategoryJpaController cjc;
+	@Inject
+	private CategoriesEngine categoriesEngine;
 
 	public ProductsEngine() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("market-dbPU");
-		pjc = new ProductJpaController(emf);
-		cjc = new CategoryJpaController(emf);
-	}
-
-	public List<Product> getAllProducts() {
-		return pjc.findProductEntities();
+		super(new ProductJpaController());
 	}
 
 	public List<Product> getProducts(Integer categoryId) {
-		Group cat = cjc.findCategory(categoryId);
+		Group cat = categoriesEngine.getBean(categoryId);
 		if (cat != null)
 			return cat.getProductList();
 		return null;
 	}
 
 	public Long getProductCount(Integer categoryId) {
-		Group cat = cjc.findCategory(categoryId);
+		Group cat = categoriesEngine.getBean(categoryId);
 		if (cat != null)
-			return pjc.getProductCount(cat);
+			return ((ProductJpaController) jpaController).getProductCount(cat);
 		return -1L;
 	}
 
-	public Product getProduct(Integer id) {
-		return pjc.findProduct(id);
-	}
-
-	public Product createProduct(Integer category, String name, String comment, Integer rating, Boolean avail) throws PreexistingEntityException, Exception {
+	public Product createProduct(Integer category, String name, String comment, Integer rating, Boolean avail) throws PreexistingEntityException,
+			Exception {
 		Product p = new Product();
-		p.setGroup(cjc.findCategory(category));
+		p.setGroup(categoriesEngine.getBean(category));
 		p.setAvail(avail);
 		p.setName(name);
 		p.setComment(comment);
 		p.setRating(rating);
 		p.setPrice(0);
-		pjc.create(p);
+		createBean(p);
 		return p;
 	}
 
-	public void updateProduct(Product p) {
-		try {
-			pjc.edit(p);
-		} catch (PreexistingEntityException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void bulkCreate(List<Product> prods) {
-		pjc.create(prods);
+		((ProductJpaController) jpaController).create(prods);
 	}
 
 	public List<Product> getProducts(Integer catId, Boolean all, Integer page, Integer perpage) {
@@ -101,21 +83,21 @@ public class ProductsEngine {
 	}
 
 	private List<Product> loadProductsFromCategory(Integer catId, Boolean all, Integer page, Integer perpage) {
-		Group cat = cjc.findCategory(catId);
+		Group cat = categoriesEngine.getBean(catId);
 		List<Product> ret = new ArrayList<Product>();
 		if (cat != null) {
-			List<Product> prods = pjc.findProductByCategory(cat, all, page, perpage);
+			List<Product> prods = ((ProductJpaController) jpaController).findProductByCategory(cat, all, page, perpage);
 			if (prods != null)
 				ret.addAll(prods);
-			for (Group c : cjc.findCategoryByParent(cat.getId()))
+			for (Group c : categoriesEngine.getCategoriesByParent(cat.getId()))
 				ret.addAll(loadProductsFromCategory(c.getId(), all, page, perpage));
 		}
 		return ret;
 	}
 
-	public List<Product> getAllProductsLimited(Boolean all, Integer page, Integer perpage) {
+	public List<Product> findProductsByName(String name) {
 		List<Product> ret = new ArrayList<Product>();
-		ret = pjc.findProductEntities(all, perpage, perpage * page);
+		ret = ((ProductJpaController) jpaController).findProductsByName(name);
 		Collections.sort(ret, new Comparator<Product>() {
 			@Override
 			public int compare(Product o1, Product o2) {
@@ -130,20 +112,23 @@ public class ProductsEngine {
 		return ret;
 	}
 
-	public List<Product> findProductsByName(String name) {
-		List<Product> ret = new ArrayList<Product>();
-		ret = pjc.findProductsByName(name);
-		Collections.sort(ret, new Comparator<Product>() {
-			@Override
-			public int compare(Product o1, Product o2) {
-				if (o1.getRating() < o2.getRating())
-					return -1;
-				else if (o1.getRating() == o2.getRating())
-					return 0;
-				else
-					return 1;
-			}
-		});
-		return ret;
+	@Override
+	public void dtoToEntity(ProductDTO dto, Product entity) {
+		if (dto == null)
+			return;
+		if (entity == null)
+			entity = new Product();
+		entity.setAvail(dto.avail);
+		entity.setComment(dto.comment);
+		entity.setGroup(categoriesEngine.getBean(dto.category));
+		entity.setId(dto.id);
+		entity.setName(dto.name);
+		entity.setPrice(dto.price);
+		entity.setRating(dto.rating);
+	}
+
+	@Override
+	public ProductDTO entityToDto(Product entity) {
+		return new ProductDTO(entity);
 	}
 }

@@ -36,7 +36,7 @@ public class CategoryController {
 				return URLConstants.Views.ERROR404;
 			}
 
-			Group category = ce.getCategory(catId);
+			Group category = ce.getBean(catId);
 			if (category != null) {
 				model.addAttribute(ModelConstants.CATEGORY_ID, id);
 				model.addAttribute(ModelConstants.CATEGORY_NAME, category.getName());
