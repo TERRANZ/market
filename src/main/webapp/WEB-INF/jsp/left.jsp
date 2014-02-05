@@ -3,7 +3,7 @@
 <div class="left_content">
 	<div class="title_box">Категории</div>
 
-	<div class="left_menu" id="categories" ></div>
+	<div class="left_menu" id="groups" ></div>
 
 	<div class="title_box">Новинки</div>
 	<div class="border_box"></div>

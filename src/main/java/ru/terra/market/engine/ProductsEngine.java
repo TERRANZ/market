@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import ru.terra.market.core.AbstractEngine;
-import ru.terra.market.db.controller.CategoryJpaController;
+import ru.terra.market.db.controller.GroupJpaController;
 import ru.terra.market.db.controller.ProductJpaController;
 import ru.terra.market.db.controller.exceptions.PreexistingEntityException;
 import ru.terra.market.db.entity.Group;
@@ -26,7 +26,7 @@ import ru.terra.market.dto.product.ProductDTO;
 public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 
 	@Inject
-	private CategoriesEngine categoriesEngine;
+	private GroupEngine categoriesEngine;
 
 	public ProductsEngine() {
 		super(new ProductJpaController());
@@ -42,7 +42,7 @@ public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 	public Long getProductCount(Integer categoryId) {
 		Group cat = categoriesEngine.getBean(categoryId);
 		if (cat != null)
-			return ((ProductJpaController) jpaController).getProductCount(cat);
+			return ((ProductJpaController) jpaController).getProductCountByGroup(cat);
 		return -1L;
 	}
 
@@ -86,7 +86,7 @@ public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 		Group cat = categoriesEngine.getBean(catId);
 		List<Product> ret = new ArrayList<Product>();
 		if (cat != null) {
-			List<Product> prods = ((ProductJpaController) jpaController).findProductByCategory(cat, all, page, perpage);
+			List<Product> prods = ((ProductJpaController) jpaController).findProductByGroup(cat, all, page, perpage);
 			if (prods != null)
 				ret.addAll(prods);
 			for (Group c : categoriesEngine.getCategoriesByParent(cat.getId()))

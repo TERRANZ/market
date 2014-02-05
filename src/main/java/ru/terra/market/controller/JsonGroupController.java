@@ -13,34 +13,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Group;
-import ru.terra.market.dto.category.CategoryDTO;
-import ru.terra.market.dto.category.CategoryListDTO;
-import ru.terra.market.dto.category.CategoryTreeDTO;
-import ru.terra.market.engine.CategoriesEngine;
+import ru.terra.market.dto.category.GroupDTO;
+import ru.terra.market.dto.category.GroupListDTO;
+import ru.terra.market.dto.category.GroupTreeDTO;
+import ru.terra.market.engine.GroupEngine;
 import ru.terra.market.util.ResponceUtils;
 import flexjson.JSONSerializer;
 
 @Controller
-public class JsonCategoryController {
+public class JsonGroupController {
 	@Inject
-	private CategoriesEngine ce;
+	private GroupEngine ce;
 
-	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORY_TREE, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = URLConstants.DoJson.Group.GET_GROUP_TREE, method = { RequestMethod.GET, RequestMethod.POST })
 	private ResponseEntity<String> getCategoryTree(HttpServletRequest request) {
-		String json = new JSONSerializer().deepSerialize(getCategoriesRecursive(1));
+		String json = new JSONSerializer().deepSerialize(getGroupsRecursive(1));
 		return ResponceUtils.makeResponce(json);
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_BY_PARENT, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = URLConstants.DoJson.Group.GET_BY_PARENT, method = { RequestMethod.GET, RequestMethod.POST })
 	private ResponseEntity<String> getCategoryByParent(HttpServletRequest request) {
-		String parentId = request.getParameter(URLConstants.DoJson.Category.CATEGORY_PARAM_ID);
-		CategoryListDTO ret = new CategoryListDTO();
+		String parentId = request.getParameter(URLConstants.DoJson.Group.GROUP_PARAM_ID);
+		GroupListDTO ret = new GroupListDTO();
 		if (parentId == null)
 			parentId = "-1";
 		try {
 			Integer pid = Integer.parseInt(parentId);
 			for (Group cat : ce.getCategoriesByParent(pid)) {
-				ret.data.add(new CategoryDTO(cat));
+				ret.data.add(new GroupDTO(cat));
 			}
 			ret.size = ret.data.size();
 			String json = new JSONSerializer().deepSerialize(ret);
@@ -50,19 +50,19 @@ public class JsonCategoryController {
 		}
 	}
 
-	private CategoryTreeDTO getCategoriesRecursive(Integer parent) {
-		List<CategoryTreeDTO> childs = new ArrayList<CategoryTreeDTO>();
+	private GroupTreeDTO getGroupsRecursive(Integer parent) {
+		List<GroupTreeDTO> childs = new ArrayList<GroupTreeDTO>();
 		for (Group child : ce.getCategoriesByParent(parent)) {
-			childs.add(getCategoriesRecursive(child.getId()));
+			childs.add(getGroupsRecursive(child.getId()));
 		}
-		return new CategoryTreeDTO(childs, new CategoryDTO(ce.getBean(parent)));
+		return new GroupTreeDTO(childs, new GroupDTO(ce.getBean(parent)));
 	}
 
-	@RequestMapping(value = URLConstants.DoJson.Category.CATEGORY_GET_CATEGORIES, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = URLConstants.DoJson.Group.GET_GROUPS, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> getCategories(HttpServletRequest request) {
-		CategoryListDTO ret = new CategoryListDTO();
+		GroupListDTO ret = new GroupListDTO();
 		for (Group cat : ce.listBeans(true, -1, -1))
-			ret.data.add(new CategoryDTO(cat));
+			ret.data.add(new GroupDTO(cat));
 		ret.size = ret.data.size();
 		String json = new JSONSerializer().deepSerialize(ret);
 		return ResponceUtils.makeResponce(json);

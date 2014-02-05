@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.terra.market.constants.ModelConstants;
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Group;
-import ru.terra.market.engine.CategoriesEngine;
+import ru.terra.market.engine.GroupEngine;
 
 @Controller
-public class CategoryController {
-	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+public class GroupController {
+	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	@Inject
-	private CategoriesEngine ce;
+	private GroupEngine ge;
 
-	@RequestMapping(value = URLConstants.Pages.CATEGORY, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = URLConstants.Pages.GROUP, method = { RequestMethod.GET, RequestMethod.POST })
 	private String category(HttpServletRequest request, Locale locale, Model model) {
-		String id = request.getParameter(URLConstants.DoJson.Category.CATEGORY_PARAM_ID);
+		String id = request.getParameter(URLConstants.DoJson.Group.GROUP_PARAM_ID);
 		if (id != null) {
 			// egory id = " + id);
 
@@ -36,15 +36,15 @@ public class CategoryController {
 				return URLConstants.Views.ERROR404;
 			}
 
-			Group category = ce.getBean(catId);
-			if (category != null) {
-				model.addAttribute(ModelConstants.CATEGORY_ID, id);
-				model.addAttribute(ModelConstants.CATEGORY_NAME, category.getName());
+			Group group = ge.getBean(catId);
+			if (group != null) {
+				model.addAttribute(ModelConstants.GROUP_ID, id);
+				model.addAttribute(ModelConstants.GROUP_NAME, group.getName());
 			} else {
 				return URLConstants.Views.ERROR404;
 			}
 		}
-		return URLConstants.Views.CATEGORY;
+		return URLConstants.Views.GROUP;
 
 	}
 }

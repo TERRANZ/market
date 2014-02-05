@@ -12,11 +12,7 @@
 
 			<div class="product_img_big">
 			<img id="product_img_main" src="" alt="" title="" width="100" height="100" border="0" />
-				<!--                  <a href="javascript:popImage('images/big_pic.jpg','Some Title')" title="header=[Zoom] body=[&nbsp;] fade=[on]"><img src="images/p3.jpg" alt="" title="" border="0" /></a> -->
-				<div class="thumbs">
-					<!--                  <a href="#" title="header=[Thumb1] body=[] fade=[on]"><img src="images/thumb1.jpg" alt="" title="" border="0" /></a> -->
-					<!--                  <a href="#" title="header=[Thumb2] body=[] fade=[on]"><img src="images/thumb2.jpg" alt="" title="" border="0" /></a> -->
-					<!--                  <a href="#" title="header=[Thumb3] body=[] fade=[on]"><img src="images/thumb1.jpg" alt="" title="" border="0" /></a> -->
+				<div class="thumbs">					
 				</div>
 			</div>
 			<div class="details_big_box">

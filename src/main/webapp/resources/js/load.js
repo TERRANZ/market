@@ -1,27 +1,27 @@
-function loadLeftCategories() {
-	var categoryWrapper = $("#categories");
+function loadLeftGroups() {
+	var groupWrapper = $("#groups");
 	$.ajax({
-		url : '/market/category/get.category.tree.json',
+		url : '/market/group/get.group.tree.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',
 		success : function(data) {
 			var newHtml = "";
-			newHtml += buildCategoryTree(data, 0);
-			categoryWrapper.html(newHtml);
+			newHtml += buildGroupTree(data, 0);
+			groupWrapper.html(newHtml);
 			var prepared = processTreeJson(true, data);
-			categoryWrapper.dynatree({
+			groupWrapper.dynatree({
 				children : prepared,
 				onActivate : function(node) {
 					if (!node.data.isFolder)
 						var url = document.URL;
-					if (url.indexOf("category") < 0)
-						window.location.href = "/market/category?id=" + node.data.key;
+					if (url.indexOf("group") < 0)
+						window.location.href = "/market/group?id=" + node.data.key;
 					else {
-						$("#category_id").val(node.data.key);
-						$("#catname").text(node.data.title);
-						loadCategoryProducts(1);
-						window.history.pushState('category'+node.data.key, 'Категория '+node.data.title, "/market/category?id=" + node.data.key);
+						$("#group_id").val(node.data.key);
+						$("#groupname").text(node.data.title);
+						loadGroupProducts(1);
+						window.history.pushState('group'+node.data.key, 'Категория '+node.data.title, "/market/group?id=" + node.data.key);
 					}
 				},
 			});
@@ -29,38 +29,33 @@ function loadLeftCategories() {
 	});
 }
 
-function processTreeJson(first, categoryTree) {
+function processTreeJson(first, groupTree) {
 	var children = [];
 	var data = {
-		title : categoryTree.category.name,
-		isFolder : categoryTree.hasChilds,
-		key : categoryTree.category.id,
+		title : groupTree.group.name,
+		isFolder : groupTree.hasChilds,
+		key : groupTree.group.id,
 		children : []
 	};
 	children.push(data);
-	if (categoryTree.hasChilds)
-		for ( var i = 0; i < categoryTree.childs.length; i++) {
-			data.children.push(processTreeJson(false, categoryTree.childs[i]));
+	if (groupTree.hasChilds)
+		for ( var i = 0; i < groupTree.childs.length; i++) {
+			data.children.push(processTreeJson(false, groupTree.childs[i]));
 		}
 	if (first)
 		return children;
 	return data;
 }
 
-function buildCategoryTree(categoryTree, level) {
+function buildGroupTree(groupTree, level) {
 	var newHtml = "<ul class='folder'>";
-	var id = categoryTree.category.id;
+	var id = groupTree.group.id;
 	var padding = 10 * level;
-	newHtml += "<li class='odd'>" + categoryTree.category.name;
-	// newHtml += "<a style='padding-left: " + padding + "px;'
-	// class='category_link' id='" + id + "'href=/market/category?id=" + id + ">
-	// "
-	// + categoryTree.category.name + "</a>";
-	// newHtml += "</li>";
-	if (categoryTree.hasChilds) {
+	newHtml += "<li class='odd'>" + groupTree.group.name;
+	if (groupTree.hasChilds) {
 		var newLevel = level + 1;
-		$.each(categoryTree.childs, function(i, d) {
-			newHtml += buildCategoryTree(d, newLevel);
+		$.each(groupTree.childs, function(i, d) {
+			newHtml += buildGroupTree(d, newLevel);
 		});
 	}
 	newHtml += "</ul>";
@@ -175,8 +170,8 @@ function buildProductInfo(product) {
 	return htmlRet;
 }
 
-function loadCategoryProducts(page) {
-	var catId = $("#category_id").val();
+function loadGroupProducts(page) {
+	var groupId = $("#group_id").val();
 	// var page = $("#page").text();
 	var perpage = $("#perpage").val();
 	$.ajax({
@@ -185,7 +180,7 @@ function loadCategoryProducts(page) {
 		type : 'get',
 		dataType : 'jsonp',
 		data : {
-			category : catId,
+			group : groupId,
 			page : page - 1,
 			perpage : perpage
 		},
@@ -195,7 +190,7 @@ function loadCategoryProducts(page) {
 				$.each(data.data, function(i, product) {
 					htmlRet += buildProductInfo(product);
 				});
-				$("#category_products").html(htmlRet);
+				$("#group_products").html(htmlRet);
 				$("#paging").pagination({
 					items : data.full,
 					itemsOnPage : perpage,
@@ -204,7 +199,7 @@ function loadCategoryProducts(page) {
 					prevText : '<=',
 					nextText : '=>',
 					onPageClick : function(pageNumber, event) {
-						loadCategoryProducts(pageNumber);
+						loadGroupProducts(pageNumber);
 					}
 				});
 			}

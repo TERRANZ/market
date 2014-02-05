@@ -1,4 +1,4 @@
-$("#category_products").ready(loadCategoryProducts(1));
+$("#group_products").ready(loadGroupProducts(1));
 $('#perpage').on('change', function() {
-	loadCategoryProducts(1);
+	loadGroupProducts(1);
 });

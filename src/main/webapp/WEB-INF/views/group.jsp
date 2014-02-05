@@ -5,9 +5,9 @@
 <script type="text/javascript" src="resources/js/jquery.simplePagination.js"></script>
 <link type="text/css" rel="stylesheet" href="resources/css/simplePagination.css"/>
 <div class="center_content">
-	<input type="hidden" id="category_id" value=${ categoryId } />
+	<input type="hidden" id="group_id" value=${ groupId } />
 	<div class="center_title_bar">
-		Товары в категории: <span id="catname"> ${ catname }</span>
+		Товары в категории: <span id="groupname"> ${ groupname }</span>
 		На странице 
 		<select id="perpage">
 			<option>3</option>
@@ -16,8 +16,8 @@
 			<option>24</option>
 		</select>		
 	</div>
-	<div id="category_products"></div>
+	<div id="group_products"></div>
 	<div class="center_content" id="paging" ></div>
 </div>
-<script src="resources/js/category.js"></script>
+<script src="resources/js/group.js"></script>
 <%@include file="/WEB-INF/jsp/footer.jsp"%>

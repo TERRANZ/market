@@ -9,10 +9,10 @@
 		<div class="oferta_title">Новые товары</div>
 		<div class="oferta_text">
 			<label>Категория</label>
-			<div id='category_wrapper'></div>
+			<div id='group_wrapper'></div>
 			</br>
 			<script type="text/javascript" class="source below">
-				loadCategories();
+				loadGroups();
 			</script>
 			<label>Список товаров, заголовок и имя разделены табом</label></br>
 			<textarea id="products" rows="5" cols="40"></textarea>

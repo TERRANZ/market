@@ -18,11 +18,11 @@ import ru.terra.market.db.entity.Product;
  * 
  * @author terranz
  */
-public class CategoryJpaController extends AbstractJpaController<Group> implements Serializable {
+public class GroupJpaController extends AbstractJpaController<Group> implements Serializable {
 
 	private static final long serialVersionUID = 590457729913843210L;
 
-	public CategoryJpaController() {
+	public GroupJpaController() {
 		super(Group.class);
 	}
 
@@ -101,8 +101,8 @@ public class CategoryJpaController extends AbstractJpaController<Group> implemen
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			Group persistentCategory = em.find(Group.class, entity.getId());
-			List<Product> productListOld = persistentCategory.getProductList();
+			Group persistentGroup = em.find(Group.class, entity.getId());
+			List<Product> productListOld = persistentGroup.getProductList();
 			List<Product> productListNew = entity.getProductList();
 			List<String> illegalOrphanMessages = null;
 			for (Product productListOldProduct : productListOld) {
@@ -126,12 +126,12 @@ public class CategoryJpaController extends AbstractJpaController<Group> implemen
 			entity = em.merge(entity);
 			for (Product productListNewProduct : productListNew) {
 				if (!productListOld.contains(productListNewProduct)) {
-					Group oldCategoryOfProductListNewProduct = productListNewProduct.getGroup();
+					Group oldGroupOfProductListNewProduct = productListNewProduct.getGroup();
 					productListNewProduct.setGroup(entity);
 					productListNewProduct = em.merge(productListNewProduct);
-					if (oldCategoryOfProductListNewProduct != null && !oldCategoryOfProductListNewProduct.equals(entity)) {
-						oldCategoryOfProductListNewProduct.getProductList().remove(productListNewProduct);
-						oldCategoryOfProductListNewProduct = em.merge(oldCategoryOfProductListNewProduct);
+					if (oldGroupOfProductListNewProduct != null && !oldGroupOfProductListNewProduct.equals(entity)) {
+						oldGroupOfProductListNewProduct.getProductList().remove(productListNewProduct);
+						oldGroupOfProductListNewProduct = em.merge(oldGroupOfProductListNewProduct);
 					}
 				}
 			}
@@ -154,29 +154,29 @@ public class CategoryJpaController extends AbstractJpaController<Group> implemen
 	}
 
 	//
-	public void create(List<Group> cats) {
+	public void create(List<Group> groups) {
 		EntityManager em = null;
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			for (Group category : cats) {
-				if (category.getProductList() == null) {
-					category.setProductList(new ArrayList<Product>());
+			for (Group group : groups) {
+				if (group.getProductList() == null) {
+					group.setProductList(new ArrayList<Product>());
 				}
 				List<Product> attachedProductList = new ArrayList<Product>();
-				for (Product productListProductToAttach : category.getProductList()) {
+				for (Product productListProductToAttach : group.getProductList()) {
 					productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getId());
 					attachedProductList.add(productListProductToAttach);
 				}
-				category.setProductList(attachedProductList);
-				em.persist(category);
-				for (Product productListProduct : category.getProductList()) {
-					Group oldCategoryOfProductListProduct = productListProduct.getGroup();
-					productListProduct.setGroup(category);
+				group.setProductList(attachedProductList);
+				em.persist(group);
+				for (Product productListProduct : group.getProductList()) {
+					Group oldGroupOfProductListProduct = productListProduct.getGroup();
+					productListProduct.setGroup(group);
 					productListProduct = em.merge(productListProduct);
-					if (oldCategoryOfProductListProduct != null) {
-						oldCategoryOfProductListProduct.getProductList().remove(productListProduct);
-						oldCategoryOfProductListProduct = em.merge(oldCategoryOfProductListProduct);
+					if (oldGroupOfProductListProduct != null) {
+						oldGroupOfProductListProduct.getProductList().remove(productListProduct);
+						oldGroupOfProductListProduct = em.merge(oldGroupOfProductListProduct);
 					}
 				}
 			}
@@ -189,7 +189,7 @@ public class CategoryJpaController extends AbstractJpaController<Group> implemen
 
 	}
 
-	public List<Group> findCategoryByParent(Integer parentId) {
+	public List<Group> findGroupByParent(Integer parentId) {
 		EntityManager em = getEntityManager();
 		try {
 			return em.createNamedQuery("Group.findByParent").setParameter("parent", parentId).getResultList();

@@ -1,13 +1,11 @@
 function createProduct() {
 	var prods = $("#products").val();
-	var category = $("#category").val();
+	var group = $("#group").val();
 	var products = prods.toString().split(/\n/);
-	// alert(products);
 	for (prod in products) {
 		var splitted = products[prod].split(/\t/);
 		var t = splitted[0];
 		var c = splitted[1];
-		// alert("group = " + g + " product = " + p);
 		$.ajax({
 			url : '/market/product/do.create.json',
 			async : false,
@@ -16,7 +14,7 @@ function createProduct() {
 			data : {
 				title : t,
 				comment : c,
-				category : category
+				group : group
 			},
 			success : function(data) {
 
@@ -27,17 +25,17 @@ function createProduct() {
 
 function loadCategories() {
 	$.ajax({
-		url : '/market/category/get.categories.json',
+		url : '/market/group/get.group.json',
 		async : false,
 		type : 'get',
 		dataType : 'jsonp',
 		success : function(data) {
-			var html = "<select id='category'>";
+			var html = "<select id='group'>";
 			$.each(data.data, function(i, c) {
 				html += "<option value=" + c.id + ">" + c.name + "</option>";
 			});
 			html += "</select>";
-			$("#category_wrapper").html(html);
+			$("#group_wrapper").html(html);
 		}
 	});
 }

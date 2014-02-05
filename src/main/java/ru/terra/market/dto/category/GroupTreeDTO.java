@@ -2,12 +2,12 @@ package ru.terra.market.dto.category;
 
 import java.util.List;
 
-public class CategoryTreeDTO {
-	public List<CategoryTreeDTO> childs;
-	public CategoryDTO category;
+public class GroupTreeDTO {
+	public List<GroupTreeDTO> childs;
+	public GroupDTO category;
 	private boolean hasChilds = false;
 
-	public CategoryTreeDTO(List<CategoryTreeDTO> childs, CategoryDTO category) {
+	public GroupTreeDTO(List<GroupTreeDTO> childs, GroupDTO category) {
 		this.childs = childs;
 		this.category = category;
 	}

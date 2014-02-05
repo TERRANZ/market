@@ -46,6 +46,6 @@
 
 </div>
 <!-- end of main_container -->
-<script src="resources/js/categories.js"></script>
+<script src="resources/js/groups.js"></script>
 </body>
 </html>

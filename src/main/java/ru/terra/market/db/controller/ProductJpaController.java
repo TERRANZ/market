@@ -34,15 +34,15 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			em = getEntityManager();
 			em.getTransaction().begin();
 			for (Product product : prods) {
-				Group category = product.getGroup();
-				if (category != null) {
-					category = em.getReference(category.getClass(), category.getId());
-					product.setGroup(category);
+				Group group = product.getGroup();
+				if (group != null) {
+					group = em.getReference(group.getClass(), group.getId());
+					product.setGroup(group);
 				}
 				em.persist(product);
-				if (category != null) {
-					category.getProductList().add(product);
-					category = em.merge(category);
+				if (group != null) {
+					group.getProductList().add(product);
+					group = em.merge(group);
 				}
 			}
 			em.getTransaction().commit();
@@ -53,10 +53,10 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 		}
 	}
 
-	public List<Product> findProductByCategory(Group cat, Boolean all, Integer page, Integer perpage) {
+	public List<Product> findProductByGroup(Group group, Boolean all, Integer page, Integer perpage) {
 		EntityManager em = getEntityManager();
 		try {
-			Query q = em.createNamedQuery("Product.findByGroup").setParameter("group", cat);
+			Query q = em.createNamedQuery("Product.findByGroup").setParameter("group", group);
 			if (!all) {
 				q.setMaxResults(perpage);
 				q.setFirstResult(page * perpage);
@@ -69,10 +69,10 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 		}
 	}
 
-	public Long getProductCount(Group cat) {
+	public Long getProductCountByGroup(Group group) {
 		EntityManager em = getEntityManager();
 		try {
-			Query q = em.createNativeQuery("select count(id) from product where group_id = " + cat.getId());
+			Query q = em.createNativeQuery("select count(id) from product where group_id = " + group.getId());
 			return (Long) q.getSingleResult();
 		} finally {
 			em.close();
@@ -98,10 +98,10 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 		try {
 			em = getEntityManager();
 			em.getTransaction().begin();
-			Group category = entity.getGroup();
-			if (category != null) {
-				category = em.getReference(category.getClass(), category.getId());
-				entity.setGroup(category);
+			Group group = entity.getGroup();
+			if (group != null) {
+				group = em.getReference(group.getClass(), group.getId());
+				entity.setGroup(group);
 			}
 			List<Photo> attachedPhotoList = new ArrayList<Photo>();
 			for (Photo photoListPhotoToAttach : entity.getPhotoList()) {
@@ -110,9 +110,9 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			}
 			entity.setPhotoList(attachedPhotoList);
 			em.persist(entity);
-			if (category != null) {
-				category.getProductList().add(entity);
-				category = em.merge(category);
+			if (group != null) {
+				group.getProductList().add(entity);
+				group = em.merge(group);
 			}
 			for (Photo photoListPhoto : entity.getPhotoList()) {
 				Product oldProductIdOfPhotoListPhoto = photoListPhoto.getProduct();
@@ -162,10 +162,10 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			if (illegalOrphanMessages != null) {
 				throw new IllegalOrphanException(illegalOrphanMessages);
 			}
-			Group category = product.getGroup();
-			if (category != null) {
-				category.getProductList().remove(product);
-				category = em.merge(category);
+			Group group = product.getGroup();
+			if (group != null) {
+				group.getProductList().remove(product);
+				group = em.merge(group);
 			}
 			em.remove(product);
 			em.getTransaction().commit();
@@ -183,8 +183,8 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			em = getEntityManager();
 			em.getTransaction().begin();
 			Product persistentProduct = em.find(Product.class, entity.getId());
-			Group categoryOld = persistentProduct.getGroup();
-			Group categoryNew = entity.getGroup();
+			Group groupOld = persistentProduct.getGroup();
+			Group groupNew = entity.getGroup();
 			List<Photo> photoListOld = persistentProduct.getPhotoList();
 			List<Photo> photoListNew = entity.getPhotoList();
 			List<String> illegalOrphanMessages = null;
@@ -199,9 +199,9 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			if (illegalOrphanMessages != null) {
 				throw new IllegalOrphanException(illegalOrphanMessages);
 			}
-			if (categoryNew != null) {
-				categoryNew = em.getReference(categoryNew.getClass(), categoryNew.getId());
-				entity.setGroup(categoryNew);
+			if (groupNew != null) {
+				groupNew = em.getReference(groupNew.getClass(), groupNew.getId());
+				entity.setGroup(groupNew);
 			}
 			List<Photo> attachedPhotoListNew = new ArrayList<Photo>();
 			for (Photo photoListNewPhotoToAttach : photoListNew) {
@@ -211,13 +211,13 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 			photoListNew = attachedPhotoListNew;
 			entity.setPhotoList(photoListNew);
 			entity = em.merge(entity);
-			if (categoryOld != null && !categoryOld.equals(categoryNew)) {
-				categoryOld.getProductList().remove(entity);
-				categoryOld = em.merge(categoryOld);
+			if (groupOld != null && !groupOld.equals(groupNew)) {
+				groupOld.getProductList().remove(entity);
+				groupOld = em.merge(groupOld);
 			}
-			if (categoryNew != null && !categoryNew.equals(categoryOld)) {
-				categoryNew.getProductList().add(entity);
-				categoryNew = em.merge(categoryNew);
+			if (groupNew != null && !groupNew.equals(groupOld)) {
+				groupNew.getProductList().add(entity);
+				groupNew = em.merge(groupNew);
 			}
 			for (Photo photoListNewPhoto : photoListNew) {
 				if (!photoListOld.contains(photoListNewPhoto)) {

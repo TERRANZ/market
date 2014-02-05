@@ -7,7 +7,7 @@ public class URLConstants {
 		public static final String SPRING_LOGIN = "/market/do.login";
 		public static final String HOME = "/";
 		public static final String ABOUT = "about";
-		public static final String CATEGORY = "category";
+		public static final String GROUP = "group";
 		public static final String ERROR404 = "error404";
 		public static final String LOGIN = "login";
 		public static final String MARKET_HOME = "market";
@@ -42,24 +42,24 @@ public class URLConstants {
 			public static final String PRODUCT_CREATE = "/product/do.create.json";
 
 			public static final String PRODUCT_PARAM_ID = "id";
-			public static final String PRODUCT_PARAM_CATEGORY = "category";
+			public static final String PRODUCT_PARAM_CATEGORY = "group";
 			public static final String PRODUCT_PARAM_NAME = "name";
 			public static final String PRODUCT_PARAM_PAGE = "page";
 			public static final String PRODUCT_PARAM_PERPAGE = "perpage";
 		}
 
-		public class Category {
-			public static final String CATEGORY_GET_CATEGORY_TREE = "/category/get.category.tree.json";
-			public static final String CATEGORY_GET_CATEGORY = "/category/get.category.json";
-			public static final String CATEGORY_GET_CATEGORIES = "/category/get.categories.json";
-			public static final String CATEGORY_GET_BY_PARENT = "/category/get.categories.byparent.json";
-			public static final String CATEGORY_PARAM_ID = "id";
+		public class Group {
+			public static final String GET_GROUP_TREE = "/group/get.group.tree.json";
+			public static final String GET_GROUP = "/group/get.group.json";
+			public static final String GET_GROUPS = "/group/get.group.json";
+			public static final String GET_BY_PARENT = "/group/get.group.byparent.json";
+			public static final String GROUP_PARAM_ID = "id";
 		}
 	}
 
 	public class Views {
 		public static final String ABOUT = "about";
-		public static final String CATEGORY = "category";
+		public static final String GROUP = "group";
 		public static final String ERROR404 = "error404";
 		public static final String LOGIN = "login";
 		public static final String MARKET_HOME = "market";

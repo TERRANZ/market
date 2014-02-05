@@ -10,21 +10,21 @@ import javax.persistence.Persistence;
 import org.springframework.stereotype.Component;
 
 import ru.terra.market.core.AbstractEngine;
-import ru.terra.market.db.controller.CategoryJpaController;
+import ru.terra.market.db.controller.GroupJpaController;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
-import ru.terra.market.dto.category.CategoryDTO;
+import ru.terra.market.dto.category.GroupDTO;
 
 @Singleton
 @Component
-public class CategoriesEngine extends AbstractEngine<Group, CategoryDTO> {
+public class GroupEngine extends AbstractEngine<Group, GroupDTO> {
 
-	public CategoriesEngine() {
-		super(new CategoryJpaController());
+	public GroupEngine() {
+		super(new GroupJpaController());
 	}
 
 	@Override
-	public void dtoToEntity(CategoryDTO dto, Group entity) {
+	public void dtoToEntity(GroupDTO dto, Group entity) {
 		if (dto == null)
 			return;
 		if (entity == null)
@@ -35,15 +35,15 @@ public class CategoriesEngine extends AbstractEngine<Group, CategoryDTO> {
 	}
 
 	@Override
-	public CategoryDTO entityToDto(Group entity) {
-		return new CategoryDTO(entity);
+	public GroupDTO entityToDto(Group entity) {
+		return new GroupDTO(entity);
 	}
 
 	public List<Group> getCategoriesByParent(Integer parentId) {
 		if (parentId == -1)
 			return listBeans(true, -1, -1);
 		else
-			return ((CategoryJpaController) jpaController).findCategoryByParent(parentId);
+			return ((GroupJpaController) jpaController).findGroupByParent(parentId);
 	}
 
 	public Group createCategory(String name) {
