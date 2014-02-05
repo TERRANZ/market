@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ import flexjson.JSONSerializer;
 
 @Controller
 public class JsonGroupController {
-	@Inject
+	@Autowired
 	private GroupEngine ce;
 
 	@RequestMapping(value = URLConstants.DoJson.Group.GET_GROUP_TREE, method = { RequestMethod.GET, RequestMethod.POST })
@@ -39,7 +40,7 @@ public class JsonGroupController {
 			parentId = "-1";
 		try {
 			Integer pid = Integer.parseInt(parentId);
-			for (Group cat : ce.getCategoriesByParent(pid)) {
+			for (Group cat : ce.getGroupsByParent(pid)) {
 				ret.data.add(new GroupDTO(cat));
 			}
 			ret.size = ret.data.size();
@@ -52,7 +53,7 @@ public class JsonGroupController {
 
 	private GroupTreeDTO getGroupsRecursive(Integer parent) {
 		List<GroupTreeDTO> childs = new ArrayList<GroupTreeDTO>();
-		for (Group child : ce.getCategoriesByParent(parent)) {
+		for (Group child : ce.getGroupsByParent(parent)) {
 			childs.add(getGroupsRecursive(child.getId()));
 		}
 		return new GroupTreeDTO(childs, new GroupDTO(ce.getBean(parent)));

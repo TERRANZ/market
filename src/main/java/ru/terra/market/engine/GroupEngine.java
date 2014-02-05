@@ -3,10 +3,6 @@ package ru.terra.market.engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Singleton;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.springframework.stereotype.Component;
 
 import ru.terra.market.core.AbstractEngine;
@@ -15,10 +11,10 @@ import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
 import ru.terra.market.dto.category.GroupDTO;
 
-@Singleton
 @Component
 public class GroupEngine extends AbstractEngine<Group, GroupDTO> {
 
+	
 	public GroupEngine() {
 		super(new GroupJpaController());
 	}
@@ -39,14 +35,14 @@ public class GroupEngine extends AbstractEngine<Group, GroupDTO> {
 		return new GroupDTO(entity);
 	}
 
-	public List<Group> getCategoriesByParent(Integer parentId) {
+	public List<Group> getGroupsByParent(Integer parentId) {
 		if (parentId == -1)
 			return listBeans(true, -1, -1);
 		else
 			return ((GroupJpaController) jpaController).findGroupByParent(parentId);
 	}
 
-	public Group createCategory(String name) {
+	public Group createGroup(String name) {
 		Group c = new Group();
 		c.setName(name);
 		c.setParent(0);
