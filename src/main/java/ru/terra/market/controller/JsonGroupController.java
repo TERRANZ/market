@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Group;
-import ru.terra.market.dto.category.GroupDTO;
-import ru.terra.market.dto.category.GroupListDTO;
-import ru.terra.market.dto.category.GroupTreeDTO;
+import ru.terra.market.dto.group.GroupDTO;
+import ru.terra.market.dto.group.GroupListDTO;
+import ru.terra.market.dto.group.GroupTreeDTO;
 import ru.terra.market.engine.GroupEngine;
+import ru.terra.market.engine.ProductsEngine;
 import ru.terra.market.util.ResponceUtils;
 import flexjson.JSONSerializer;
 
 @Controller
 public class JsonGroupController {
-	@Autowired
+	@Inject
 	private GroupEngine ce;
+	@Inject
+	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.DoJson.Group.GET_GROUP_TREE, method = { RequestMethod.GET, RequestMethod.POST })
 	private ResponseEntity<String> getCategoryTree(HttpServletRequest request) {
@@ -41,7 +44,7 @@ public class JsonGroupController {
 		try {
 			Integer pid = Integer.parseInt(parentId);
 			for (Group cat : ce.getGroupsByParent(pid)) {
-				ret.data.add(new GroupDTO(cat));
+				ret.data.add(new GroupDTO(cat, pe));
 			}
 			ret.size = ret.data.size();
 			String json = new JSONSerializer().deepSerialize(ret);
@@ -56,14 +59,14 @@ public class JsonGroupController {
 		for (Group child : ce.getGroupsByParent(parent)) {
 			childs.add(getGroupsRecursive(child.getId()));
 		}
-		return new GroupTreeDTO(childs, new GroupDTO(ce.getBean(parent)));
+		return new GroupTreeDTO(childs, new GroupDTO(ce.getBean(parent), pe));
 	}
 
 	@RequestMapping(value = URLConstants.DoJson.Group.GET_GROUPS, method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<String> getCategories(HttpServletRequest request) {
 		GroupListDTO ret = new GroupListDTO();
 		for (Group cat : ce.listBeans(true, -1, -1))
-			ret.data.add(new GroupDTO(cat));
+			ret.data.add(new GroupDTO(cat, pe));
 		ret.size = ret.data.size();
 		String json = new JSONSerializer().deepSerialize(ret);
 		return ResponceUtils.makeResponce(json);

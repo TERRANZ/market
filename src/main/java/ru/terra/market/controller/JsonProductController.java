@@ -28,24 +28,24 @@ public class JsonProductController {
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, method = { RequestMethod.GET, RequestMethod.POST })
 	private ResponseEntity<String> getProducts(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer page,
 			@RequestParam(required = true, defaultValue = "3") Integer perpage, @RequestParam(required = true, defaultValue = "false") Boolean all,
-			@RequestParam(required = true, defaultValue = "") String name, @RequestParam(required = true, defaultValue = "-1") Integer category) {
+			@RequestParam(required = true, defaultValue = "") String name, @RequestParam(required = true, defaultValue = "-1") Integer group) {
 		ProductListDTO ret = new ProductListDTO();
-		if (!category.equals(-1)) {
+		if (!group.equals(-1)) {
 			try {
-				List<Product> products = pe.getProducts(category, all, page, perpage);
+				List<Product> products = pe.getProducts(group, all, page, perpage);
 				if (products != null) {
 					for (Product p : products) {
 						ret.data.add(new ProductDTO(p));
 					}
 					ret.size = ret.data.size();
-					ret.full = pe.getProductCount(category);
+					ret.full = pe.getProductCount(group);
 				} else {
 					ret.size = -1;
 				}
 			} catch (NumberFormatException e) {
 				ret.size = -1;
 			}
-		} else if (name != null) {
+		} else if (name != null && !name.isEmpty()) {
 			List<Product> products = pe.findProductsByName(name);
 			if (products != null) {
 				for (Product p : products) {

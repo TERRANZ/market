@@ -1,17 +1,15 @@
-package ru.terra.market.dto.category;
+package ru.terra.market.dto.group;
 
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.dto.CommonDTO;
 import ru.terra.market.engine.ProductsEngine;
 
-public class GroupDTO extends CommonDTO {	
+public class GroupDTO extends CommonDTO {
 	public String name;
 	public Integer parent;
 	public Long count;
 
-	private ProductsEngine pe = new ProductsEngine();
-
-	public GroupDTO(Group c) {
+	public GroupDTO(Group c, ProductsEngine pe) {
 		this.id = c.getId();
 		this.name = c.getName();
 		this.parent = c.getParent();

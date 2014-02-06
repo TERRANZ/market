@@ -1,15 +1,15 @@
-package ru.terra.market.dto.category;
+package ru.terra.market.dto.group;
 
 import java.util.List;
 
 public class GroupTreeDTO {
 	public List<GroupTreeDTO> childs;
-	public GroupDTO category;
+	public GroupDTO group;
 	private boolean hasChilds = false;
 
 	public GroupTreeDTO(List<GroupTreeDTO> childs, GroupDTO category) {
 		this.childs = childs;
-		this.category = category;
+		this.group = category;
 	}
 
 	public boolean isHasChilds() {

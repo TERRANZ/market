@@ -21,7 +21,7 @@ import ru.terra.market.dto.product.ProductDTO;
 @Component
 public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 
-	@Autowired
+	@Inject
 	private GroupEngine groupsEngine;
 
 	public ProductsEngine() {
@@ -52,7 +52,8 @@ public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 		p.setName(name);
 		p.setComment(comment);
 		p.setRating(rating);
-		p.setPrice(0);
+		p.setPriceOut(0);
+		p.setPriceIn(0);
 		createBean(p);
 		return p;
 	}
@@ -121,7 +122,7 @@ public class ProductsEngine extends AbstractEngine<Product, ProductDTO> {
 		entity.setGroup(groupsEngine.getBean(dto.category));
 		entity.setId(dto.id);
 		entity.setName(dto.name);
-		entity.setPrice(dto.price);
+		entity.setPriceOut(dto.price);
 		entity.setRating(dto.rating);
 	}
 

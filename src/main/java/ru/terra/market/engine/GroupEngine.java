@@ -3,18 +3,23 @@ package ru.terra.market.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.springframework.stereotype.Component;
 
 import ru.terra.market.core.AbstractEngine;
 import ru.terra.market.db.controller.GroupJpaController;
 import ru.terra.market.db.entity.Group;
 import ru.terra.market.db.entity.Product;
-import ru.terra.market.dto.category.GroupDTO;
+import ru.terra.market.dto.group.GroupDTO;
 
 @Component
 public class GroupEngine extends AbstractEngine<Group, GroupDTO> {
 
-	
+	@Inject
+	private ProductsEngine productsEngine;
+
 	public GroupEngine() {
 		super(new GroupJpaController());
 	}
@@ -32,7 +37,7 @@ public class GroupEngine extends AbstractEngine<Group, GroupDTO> {
 
 	@Override
 	public GroupDTO entityToDto(Group entity) {
-		return new GroupDTO(entity);
+		return new GroupDTO(entity, productsEngine);
 	}
 
 	public List<Group> getGroupsByParent(Integer parentId) {

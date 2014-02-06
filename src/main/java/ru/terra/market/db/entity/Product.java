@@ -32,33 +32,44 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
 		@NamedQuery(name = "Product.findByRating", query = "SELECT p FROM Product p WHERE p.rating = :rating"),
 		@NamedQuery(name = "Product.findByGroup", query = "SELECT p FROM Product p WHERE p.group = :group"),
-		@NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price") })
+		@NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.priceOut = :price") })
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Basic(optional = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
 	@Column(name = "id", nullable = false)
 	private Integer id;
-	@Column(name = "avail")
-	private Boolean avail;
 	@Basic(optional = false)
 	@Column(name = "name", nullable = false, length = 512)
 	private String name;
 	@Basic(optional = false)
+	@Column(name = "mincount", nullable = false)
+	private int mincount;
+	@Column(name = "barcode", length = 256)
+	private String barcode;
+	@Basic(optional = false)
+	@Column(name = "qtype", nullable = false)
+	private int qtype;
+	@Basic(optional = false)
+	@Column(name = "price_in", nullable = false)
+	private int priceIn;
+	@Basic(optional = false)
+	@Column(name = "price_out", nullable = false)
+	private int priceOut;
+	@Basic(optional = false)
 	@Column(name = "rating", nullable = false)
 	private int rating;
-	@Basic(optional = false)
-	@Column(name = "price", nullable = false)
-	private Integer price;
 	@JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
 	@ManyToOne(optional = false)
 	private Group group;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
-	private List<Photo> photoList;
 	@Basic(optional = true)
 	@Column(name = "comment", nullable = true, length = 512)
 	private String comment;
+	@Column(name = "avail")
+	private Boolean avail;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+	private List<Photo> photoList;
 
 	public Product() {
 	}
@@ -75,27 +86,12 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public Product(Integer id, String name, int rating, int price) {
-		this.id = id;
-		this.name = name;
-		this.rating = rating;
-		this.price = price;
-	}
-
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Boolean getAvail() {
-		return avail;
-	}
-
-	public void setAvail(Boolean avail) {
-		this.avail = avail;
 	}
 
 	public String getName() {
@@ -112,14 +108,6 @@ public class Product implements Serializable {
 
 	public void setRating(int rating) {
 		this.rating = rating;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public Group getGroup() {
@@ -163,6 +151,54 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "ru.terra.market.db.entity.controller.Product[ id=" + id + " ]";
+	}
+
+	public int getMincount() {
+		return mincount;
+	}
+
+	public void setMincount(int mincount) {
+		this.mincount = mincount;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
+	public int getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(int qtype) {
+		this.qtype = qtype;
+	}
+
+	public int getPriceIn() {
+		return priceIn;
+	}
+
+	public void setPriceIn(int priceIn) {
+		this.priceIn = priceIn;
+	}
+
+	public int getPriceOut() {
+		return priceOut;
+	}
+
+	public void setPriceOut(int priceOut) {
+		this.priceOut = priceOut;
+	}
+
+	public Boolean getAvail() {
+		return avail;
+	}
+
+	public void setAvail(Boolean avail) {
+		this.avail = avail;
 	}
 
 }

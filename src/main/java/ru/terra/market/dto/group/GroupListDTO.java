@@ -1,4 +1,4 @@
-package ru.terra.market.dto.category;
+package ru.terra.market.dto.group;
 
 import java.util.ArrayList;
 import java.util.List;

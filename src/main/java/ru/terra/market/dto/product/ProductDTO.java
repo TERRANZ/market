@@ -36,6 +36,6 @@ public class ProductDTO extends CommonDTO {
 			this.photos.add(new PhotoDTO(this.id));
 		}
 		this.comment = p.getComment();
-		this.price = p.getPrice();
+		this.price = p.getPriceOut();
 	}
 }
