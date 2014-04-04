@@ -33,8 +33,7 @@
 	</div>
 
 	<div class="center_footer">
-		Template name. All Rights Reserved 2008<br /> <a href="http://csscreme.com/freecsstemplates/" title="free css templates"><img
-			src="resources/images/csscreme.jpg" alt="free css templates" border="0" /></a><br /> <img src="resources/images/payment.gif" alt="" title="" />
+		Template name. All Rights Reserved 2008<br /> <a href="http://csscreme.com/freecsstemplates/" title="free css templates">
 	</div>
 
 	<div class="right_footer">

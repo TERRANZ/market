@@ -8,6 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import ru.terra.market.core.AbstractJpaController;
 import ru.terra.market.db.controller.exceptions.IllegalOrphanException;
@@ -82,8 +86,17 @@ public class ProductJpaController extends AbstractJpaController<Product> impleme
 	public List<Product> findProductsByName(String name) {
 		EntityManager em = getEntityManager();
 		try {
-			Query q = em.createNativeQuery("select * from product where name like %%" + name + "%%");
-			return q.getResultList();
+			// Query q =
+			// em.createNativeQuery("select * from product where name like %%" +
+			// name + "%%");
+			// q.setParameter(1, name);
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Product> c = cb.createQuery(Product.class);
+			Root<Product> emp = c.from(Product.class);
+			c.select(emp);
+			c.where(cb.like(emp.<String> get("name"), "%" + name + "%"));
+			return em.createQuery(c).getResultList();
+
 		} finally {
 			em.close();
 		}

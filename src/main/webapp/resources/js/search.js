@@ -1,1 +1,0 @@
-("#searchname$").ready(loadSearch());

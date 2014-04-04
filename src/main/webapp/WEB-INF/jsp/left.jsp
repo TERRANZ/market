@@ -3,16 +3,18 @@
 <div class="left_content">
 	<div class="title_box">Категории</div>
 
-	<div class="left_menu" id="groups" ></div>
+	<div class="left_menu" id="groups"></div>
 
 	<div class="title_box">Новинки</div>
 	<div class="border_box"></div>
 
 
-	<div class="title_box">Новости</div>
+	<div class="title_box">Поиск</div>
 	<div class="border_box">
-		<input type="text" name="newsletter" class="newsletter_input"
-			value="your email" /> <a href="#" class="join">subscribe</a>
+		<form action="/market/search" method="post">
+			<input type="text" name="name" /> <input type="submit"
+				value="Искать" />
+		</form>
 	</div>
 
 	<div class="banner_adds"></div>
