@@ -6,6 +6,7 @@
 	<div class="left_menu" id="groups"></div>
 
 	<div class="title_box">Новинки</div>
+	<div class="title_box">Прайсы</div>
 	<div class="border_box"></div>
 
 
