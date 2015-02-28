@@ -40,11 +40,8 @@ public class URLConstants {
         }
 
         public class Category {
-            public static final String CATEGORY_GET_CATEGORY_TREE = "/category/get.category.tree.json";
-            public static final String CATEGORY_GET_CATEGORY = "/category/get.category.json";
-            public static final String CATEGORY_GET_CATEGORIES = "/category/get.categories.json";
-            public static final String CATEGORY_GET_BY_PARENT = "/category/get.categories.byparent.json";
-            public static final String CATEGORY_PARAM_ID = "id";
+            public static final String CATEGORY_GET_CATEGORY_TREE = "/group/get.group.tree.json";
+            public static final String CATEGORY_GET_CATEGORIES = "/group/get.group.json";
         }
     }
 

@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type"
 	content="text/html; charset=UTF-8" />
+<meta name="google-site-verification" content="O1uZ5DJMN5Bvb8uqijzMZuyRCYBhdF-zw_Gk_bV-JB8" />
 <title>РадиоЭлектроТовары</title>
 <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/ui.dynatree.css" />

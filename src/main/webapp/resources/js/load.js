@@ -21,7 +21,7 @@ function loadLeftGroups() {
 						$("#group_id").val(node.data.key);
 						$("#groupname").text(node.data.title);
 						loadGroupProducts(1);
-						window.history.pushState('group'+node.data.key, 'Категория '+node.data.title, "/market/group?id=" + node.data.key);
+						window.history.pushState('group' + node.data.key, 'Категория ' + node.data.title, "/market/group?id=" + node.data.key);
 					}
 				},
 			});
@@ -140,9 +140,12 @@ function buildProductInfo(product) {
 	htmlRet += '<div class="prod_box">';
 	htmlRet += '<div class="center_prod_box">';
 	htmlRet += '<div class="product_title">';
-	htmlRet += '<a href="/market/product?id=' + product.id + '">' + product.name + '</a>';
-	if (product.comment != null)
-		htmlRet += '<p style="font-size:9px;">' + product.comment + "</p>";
+	var comment = product.comment;
+	if (comment == null)
+		comment = product.name;
+	htmlRet += '<a href="/market/product?id=' + product.id + '">' + comment + '</a>';
+	if (product.name != null)
+		htmlRet += '<p style="font-size:9px;">' + product.name + "</p>";
 	htmlRet += '</div>';
 	if (product.photos.length > 0) {
 		$.each(product.photos, function(i, photo) {
