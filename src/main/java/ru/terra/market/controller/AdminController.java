@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.terra.market.constants.URLConstants;
 import ru.terra.market.db.entity.Group;
+import ru.terra.market.db.entity.Product;
 import ru.terra.market.dto.CommonDTO;
 import ru.terra.market.engine.GroupEngine;
 import ru.terra.market.engine.ProductsEngine;
@@ -44,6 +45,8 @@ public class AdminController {
 	private String adminProds(HttpServletRequest request, Locale locale, Model model) {
 		if (!SessionHelper.isUserCurrentAuthorized())
 			return "redirect:/" + URLConstants.Pages.LOGIN;
+		model.addAttribute("groups", groupEngine.listBeans(true, 0, 0));
+		model.addAttribute("prods", productsEngine.listBeans(true, 0, 0));
 		return URLConstants.Views.ADMIN_PRODUCTS;
 	}
 
@@ -77,9 +80,20 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = URLConstants.Pages.ADMIN_PRODUCT, method = { RequestMethod.GET, RequestMethod.POST })
-	private String adminProduct(HttpServletRequest request, Locale locale, Model model) {
+	private String adminProduct(HttpServletRequest request, Locale locale, Model model, @RequestParam(required = true, defaultValue = "0") Integer id) {
 		if (!SessionHelper.isUserCurrentAuthorized())
 			return "redirect:/" + URLConstants.Pages.LOGIN;
+		Product p = null;
+		if (id > -1)
+			p = productsEngine.getBean(id);
+		else {
+			p = new Product();
+			p.setGroup(groupEngine.getBean(0));
+			p.setName("Новый продукт");
+			p = productsEngine.createBean(p);
+		}
+		model.addAttribute("product",p);
+		model.addAttribute("groups", groupEngine.listBeans(true, 0, 0));
 		return URLConstants.Views.ADMIN_PRODUCT;
 	}
 
@@ -88,7 +102,14 @@ public class AdminController {
 		if (!SessionHelper.isUserCurrentAuthorized())
 			return "redirect:/" + URLConstants.Pages.LOGIN;
 		model.addAttribute("groups", groupEngine.listBeans(true, 0, 0));
-		model.addAttribute("group", groupEngine.getBean(id));
+		Group g = null;
+		if (id > -1)
+			g = groupEngine.getBean(id);
+		else {
+			g = new Group(0, "Новая группа", 0);
+			g = groupEngine.createBean(g);
+		}
+		model.addAttribute("group", g);
 		return URLConstants.Views.ADMIN_GROUP;
 	}
 
@@ -100,6 +121,29 @@ public class AdminController {
 		g.setParent(parent);
 		groupEngine.updateBean(g);
 		return "redirect:/" + URLConstants.Pages.ADMIN_GROUPS;
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_UPDATE, method = RequestMethod.POST)
+	private String adminProdUpdate(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer id,
+			@RequestParam(required = true, defaultValue = "0") String name, @RequestParam(required = true, defaultValue = "0") Integer mincount,
+			@RequestParam(required = true, defaultValue = "0") String barcode, @RequestParam(required = true, defaultValue = "0") Integer qtype,
+			@RequestParam(required = true, defaultValue = "0") Integer priceIn, @RequestParam(required = true, defaultValue = "0") Integer priceOut,
+			@RequestParam(required = true, defaultValue = "0") Integer rating, @RequestParam(required = true, defaultValue = "0") String comment,
+			@RequestParam(required = true, defaultValue = "0") Integer parent) {
+		Group g = groupEngine.getBean(parent);
+		Product p = productsEngine.getBean(id);
+		p.setName(name);
+		p.setMincount(mincount);
+		p.setBarcode(barcode);
+		p.setQtype(qtype);
+		p.setPriceIn(priceIn);
+		p.setPriceOut(priceOut);
+		p.setRating(rating);
+		p.setComment(comment);
+		p.setAvail(false);
+		p.setGroup(g);
+		productsEngine.updateBean(p);
+		return "redirect:/" + URLConstants.Pages.ADMIN_PRODUCTS;
 	}
 
 }

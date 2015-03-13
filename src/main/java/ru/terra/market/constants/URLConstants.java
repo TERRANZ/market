@@ -42,6 +42,7 @@ public class URLConstants {
 			public static final String PRODUCT_GET_RECOMMEND_PRODUCTS = "/product/get.products.recommend.json";
 			public static final String PRODUCT_GET_LATEST_PRODUCTS = "/product/get.products.latest.json";
 			public static final String PRODUCT_CREATE = "/product/do.create.json";
+			public static final String PRODUCT_UPDATE = "/product/update";
 
 			public static final String PRODUCT_PARAM_ID = "id";
 			public static final String PRODUCT_PARAM_CATEGORY = "group";

@@ -10,6 +10,7 @@
 
 
 	<div class="oferta_title">Управление группами</div>
+	<a href="<%=URLConstants.Pages.ADMIN_GROUP%>?id=-1">Создать</a>
 	<table>
 		<thead>
 			<tr>
