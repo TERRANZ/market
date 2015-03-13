@@ -21,6 +21,8 @@ public class URLConstants {
 		public static final String ADMIN_GROUPS = "admin_groups";
 		public static final String NEW_PRODUCTS = "newprods";
 		public static final String CREATE_PRODUCTS = "createproduct";
+		public static final String ADMIN_PRODUCT = "admin_product";
+		public static final String ADMIN_GROUP = "admin_group";
 	}
 
 	public class DoJson {
@@ -54,6 +56,7 @@ public class URLConstants {
 			public static final String GET_GROUPS = "/group/get.group.json";
 			public static final String GET_BY_PARENT = "/group/get.group.byparent.json";
 			public static final String GROUP_PARAM_ID = "id";
+			public static final String UPDATE = "/group/update";
 		}
 	}
 
@@ -72,5 +75,7 @@ public class URLConstants {
 		public static final String ADMIN_PRODUCTS = "admin_products";
 		public static final String ADMIN_GROUPS = "admin_groups";
 		public static final String NEW_PRODUCTS = "newprods";
+		public static final String ADMIN_PRODUCT = "admin_product";
+		public static final String ADMIN_GROUP = "admin_group";
 	}
 }

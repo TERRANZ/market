@@ -20,7 +20,7 @@ import ru.terra.market.engine.GroupEngine;
 @Controller
 public class GroupController {
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
-	
+
 	@Inject
 	private GroupEngine ge;
 

@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="ru.terra.market.db.entity.Group"%>
+<%@page import="java.util.List"%>
 <%@page import="ru.terra.market.constants.URLConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -5,15 +8,29 @@
 <%@include file="/WEB-INF/jsp/header.jsp"%>
 <div class="center_content">
 
-	<div class="oferta">
-		<div class="oferta_details">
-			<div class="oferta_title">Управление товарами</div>
-			<div class="oferta_text">
-			<a href="<%=URLConstants.Pages.NEW_PRODUCTS%>">Добавить товар</a>
-			
-			</div>
-		</div>
-	</div>
+
+	<div class="oferta_title">Управление группами</div>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Наименование</th>
+				<th>Родитель</th>
+				<th>Редактировать</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${groups}" var="group">
+				<tr>
+					<td><c:out value="${group.id}" /></td>
+					<td><c:out value="${group.name}" /></td>
+					<td><c:out value="${group.parent}" /></td>
+					<td><a
+						href="<%=URLConstants.Pages.ADMIN_GROUP%>?id=${group.id}">Редактировать</a></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 
 </div>
 <!-- end of center content -->

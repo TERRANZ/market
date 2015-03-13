@@ -5,8 +5,7 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<!-- Configure Authentication mechanism -->
 	<!-- HTTP security configurations -->
-	<sec:http auto-config="false" use-expressions="true"
-		entry-point-ref="http403EntryPoint">
+	<sec:http auto-config="false" use-expressions="true" entry-point-ref="http403EntryPoint">
 		<logout logout-success-url="/" logout-url="/do.logout" />
 
 		<!-- Configure these elements to secure URIs in your application -->

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.terra.market.constants.URLConstants;
+import ru.terra.market.db.entity.Group;
 import ru.terra.market.dto.CommonDTO;
+import ru.terra.market.engine.GroupEngine;
 import ru.terra.market.engine.ProductsEngine;
 import ru.terra.market.util.ResponceUtils;
 import ru.terra.market.web.security.SessionHelper;
@@ -28,6 +30,8 @@ public class AdminController {
 
 	@Inject
 	private ProductsEngine productsEngine;
+	@Inject
+	private GroupEngine groupEngine;
 
 	@RequestMapping(value = URLConstants.Pages.ADMIN, method = { RequestMethod.GET, RequestMethod.POST })
 	private String admin(HttpServletRequest request, Locale locale, Model model) {
@@ -47,6 +51,7 @@ public class AdminController {
 	private String adminGroups(HttpServletRequest request, Locale locale, Model model) {
 		if (!SessionHelper.isUserCurrentAuthorized())
 			return "redirect:/" + URLConstants.Pages.LOGIN;
+		model.addAttribute("groups", groupEngine.listBeans(true, 0, 0));
 		return URLConstants.Views.ADMIN_GROUPS;
 	}
 
@@ -70,4 +75,31 @@ public class AdminController {
 		}
 		return ResponceUtils.makeResponce(new JSONSerializer().serialize(new CommonDTO()));
 	}
+
+	@RequestMapping(value = URLConstants.Pages.ADMIN_PRODUCT, method = { RequestMethod.GET, RequestMethod.POST })
+	private String adminProduct(HttpServletRequest request, Locale locale, Model model) {
+		if (!SessionHelper.isUserCurrentAuthorized())
+			return "redirect:/" + URLConstants.Pages.LOGIN;
+		return URLConstants.Views.ADMIN_PRODUCT;
+	}
+
+	@RequestMapping(value = URLConstants.Pages.ADMIN_GROUP, method = { RequestMethod.GET, RequestMethod.POST })
+	private String adminGroup(HttpServletRequest request, Locale locale, Model model, @RequestParam(required = true, defaultValue = "0") Integer id) {
+		if (!SessionHelper.isUserCurrentAuthorized())
+			return "redirect:/" + URLConstants.Pages.LOGIN;
+		model.addAttribute("groups", groupEngine.listBeans(true, 0, 0));
+		model.addAttribute("group", groupEngine.getBean(id));
+		return URLConstants.Views.ADMIN_GROUP;
+	}
+
+	@RequestMapping(value = URLConstants.DoJson.Group.UPDATE, method = RequestMethod.POST)
+	private String adminGroupUpdate(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer id,
+			@RequestParam(required = true, defaultValue = "0") String name, @RequestParam(required = true, defaultValue = "0") Integer parent) {
+		Group g = groupEngine.getBean(id);
+		g.setName(name);
+		g.setParent(parent);
+		groupEngine.updateBean(g);
+		return "redirect:/" + URLConstants.Pages.ADMIN_GROUPS;
+	}
+
 }

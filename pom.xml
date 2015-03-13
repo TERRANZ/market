@@ -6,13 +6,13 @@
 	<artifactId>market</artifactId>
 	<name>market</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>1</version>
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.1.0.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
-		<eclipselink.version>2.4.0</eclipselink.version>
+		<eclipselink.version>2.4.2</eclipselink.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -208,9 +208,6 @@
 		</dependency>
 
 
-
-
-
 	</dependencies>
 
 	<repositories>
@@ -269,16 +266,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			 <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <url>http://xn--80aafhfrpg0adapheyc1nya.xn--p1ai/manager</url>
-                    <server>UnixTomcatServer</server>
-                    <path>/market</path>
-                </configuration>
-            </plugin>
 		</plugins>
 	</build>
 </project>
