@@ -50,7 +50,7 @@
 			<div class="col-md-9" id="product_info">
 
 				<div class="thumbnail">
-					<img class="img-responsive" id="pphoto" src="http://placehold.it/800x300" alt="">
+					<img class="img-responsive" id="pphoto" src="http://placehold.it/800x300" alt="" width="800" height="300">
 					<div class="caption-full">
 						<h4 class="pull-right" id="pprice"></h4>
 						<h4>

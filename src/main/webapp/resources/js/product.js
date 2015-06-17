@@ -12,7 +12,7 @@ function loadProduct() {
 			id : id
 		},
 		success : function(product) {
-			$("pname").html(product.name);			
+			$("#pname").html(product.name);			
 			$("#pprice").html(product.price);			
 			if (product.photos.length > 0) {
 				$("#pphoto").attr("src", product.photos[0].path);
