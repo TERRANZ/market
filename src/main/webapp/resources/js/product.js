@@ -1,1 +1,0 @@
-$("#center_content").ready(loadProduct());
