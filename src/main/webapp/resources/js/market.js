@@ -1,4 +1,5 @@
 $("#recommended").ready(loadRecommended());
+$("#categories_list").ready(loadCategories());
 
 function loadRecommended() {
 	$.ajax({
@@ -57,4 +58,32 @@ function buildProductInfo(product) {
 	htmlRet += '</div>';
 	htmlRet += '</div>';
 	return htmlRet;
+}
+
+function loadCategories() {
+	$.ajax({
+		url : '/market/group/get.group.tree.json',
+		async : false,
+		type : 'get',
+		dataType : 'jsonp',
+		success : function(data) {
+			var tree = [];
+			tree.push(buildCatTree(data));
+			$('#categories_list').treeview({data: tree});
+		}
+	});
+}
+
+function buildCatTree(data){
+	
+	var node = {
+			text : data.group.name,
+			href : "/market/group?id=" + data.group.id,
+			nodes : []
+	};	
+	
+	for (c in data.childs)
+		node.nodes.push(buildCatTree(data.childs[c]));	
+	
+	return node;
 }

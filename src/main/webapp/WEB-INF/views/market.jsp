@@ -38,14 +38,7 @@
 
 		<div class="row">
 
-			<div class="col-md-3">
-				<p class="lead">Радиоэлектротовары</p>
-				<div class="list-group" id="categories_list">
-					<a href="#" class="list-group-item active">Категория 1</a>
-					<a href="#" class="list-group-item">Категория 2</a>
-					<a href="#" class="list-group-item">Категория 3</a>
-				</div>
-			</div>
+			<%@include file="/WEB-INF/jsp/groups.jsp"%>
 
 			<div class="col-md-9">
 
@@ -112,11 +105,8 @@
 	</div>
 	<!-- /.container -->
 
-	<!-- jQuery -->
-	<script src="resources/js/jquery.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="resources/js/bootstrap.min.js"></script>
+	<%@include file="/WEB-INF/jsp/js.jsp"%>
+	
 	<script src="resources/js/market.js"></script>
 
 </body>

@@ -16,7 +16,7 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#">О магазине</a></li>					s					
+					<li><a href="#">О магазине</a></li>										
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
