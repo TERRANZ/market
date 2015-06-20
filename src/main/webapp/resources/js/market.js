@@ -69,21 +69,24 @@ function loadCategories() {
 		success : function(data) {
 			var tree = [];
 			tree.push(buildCatTree(data));
-			$('#categories_list').treeview({data: tree});
+			$('#categories_list').treeview({
+				data : tree,
+				enableLinks : true
+			});
 		}
 	});
 }
 
-function buildCatTree(data){
-	
+function buildCatTree(data) {
+
 	var node = {
-			text : data.group.name,
-			href : "/market/group?id=" + data.group.id,
-			nodes : []
-	};	
-	
+		text : data.group.name,
+		href : "/market/group?id=" + data.group.id,
+		nodes : []
+	};
+
 	for (c in data.childs)
-		node.nodes.push(buildCatTree(data.childs[c]));	
-	
+		node.nodes.push(buildCatTree(data.childs[c]));
+
 	return node;
 }

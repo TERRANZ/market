@@ -1,23 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@include file="/WEB-INF/jsp/header.jsp"%>
-<script type="text/javascript" src="resources/js/jquery.simplePagination.js"></script>
-<link type="text/css" rel="stylesheet" href="resources/css/simplePagination.css"/>
-<div class="center_content">
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Категория ${ groupname }</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="resources/css/heroic-features.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+	<!-- Navigation -->
+	<%@include file="/WEB-INF/jsp/navbar.jsp"%>
 	<input type="hidden" id="group_id" value=${ groupId } />
-	<div class="center_title_bar">
-		Товары в категории: <span id="groupname"> ${ groupname }</span>
-		На странице 
-		<select id="perpage">
-			<option>3</option>
-			<option>6</option>
-			<option>12</option>
-			<option>24</option>
-		</select>		
+
+	<!-- Page Content -->
+	<div class="container">
+
+		<!-- Jumbotron Header -->
+		<header class="jumbotron hero-spacer">
+			<h1 id="groupname"> ${ groupname } </h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+				Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero
+				aliquid similique quaerat nam nobis illo aspernatur vitae fugiat
+				numquam repellat.</p>
+			<p>
+				<a class="btn btn-primary btn-large">Call to action!</a>
+			</p>
+		</header>
+
+		<hr>
+
+		<!-- Title -->
+		<div class="row">
+			<div class="col-lg-12">
+				<h3>Товары в категории ${ groupname }</h3>
+			</div>
+		</div>
+		<!-- /.row -->
+
+		<!-- Page Features -->
+		<div class="row text-center" id="items">
+
+			<div class="col-md-3 col-sm-6 hero-feature">
+				<div class="thumbnail">
+					<img src="http://placehold.it/800x500" alt="">
+					<div class="caption">
+						<h3>Feature Label</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						<p>
+							<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-6 hero-feature">
+				<div class="thumbnail">
+					<img src="http://placehold.it/800x500" alt="">
+					<div class="caption">
+						<h3>Feature Label</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						<p>
+							<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#"
+								class="btn btn-default">More Info</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-6 hero-feature">
+				<div class="thumbnail">
+					<img src="http://placehold.it/800x500" alt="">
+					<div class="caption">
+						<h3>Feature Label</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						<p>
+							<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#"
+								class="btn btn-default">More Info</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-6 hero-feature">
+				<div class="thumbnail">
+					<img src="http://placehold.it/800x500" alt="">
+					<div class="caption">
+						<h3>Feature Label</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						<p>
+							<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#"
+								class="btn btn-default">More Info</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /.row -->
+
+		<hr>
+
+		<!-- Footer -->
+		<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>Copyright &copy; Радиоэлектротовары 2015</p>
+				</div>
+			</div>
+		</footer>
+
 	</div>
-	<div id="group_products"></div>
-	<div class="center_content" id="paging" ></div>
-</div>
-<script src="resources/js/group.js"></script>
-<%@include file="/WEB-INF/jsp/footer.jsp"%>
+	<!-- /.container -->
+
+	<%@include file="/WEB-INF/jsp/js.jsp"%>
+	
+	<script src="resources/js/group.js"></script>
+
+</body>
+
+</html>

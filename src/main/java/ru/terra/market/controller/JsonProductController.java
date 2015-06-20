@@ -26,9 +26,9 @@ public class JsonProductController {
 	private ProductsEngine pe;
 
 	@RequestMapping(value = URLConstants.DoJson.Products.PRODUCT_GET_PRODUCTS, method = { RequestMethod.GET, RequestMethod.POST })
-	private ResponseEntity<String> getProducts(HttpServletRequest request, @RequestParam(required = true, defaultValue = "0") Integer page,
-			@RequestParam(required = true, defaultValue = "3") Integer perpage, @RequestParam(required = true, defaultValue = "false") Boolean all,
-			@RequestParam(required = true, defaultValue = "") String name, @RequestParam(required = true, defaultValue = "-1") Integer group) {
+	private ResponseEntity<String> getProducts(HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "3") Integer perpage, @RequestParam(required = false, defaultValue = "false") Boolean all,
+			@RequestParam(required = false, defaultValue = "") String name, @RequestParam(required = true, defaultValue = "-1") Integer group) {
 		ProductListDTO ret = new ProductListDTO();
 		if (!group.equals(-1)) {
 			try {
